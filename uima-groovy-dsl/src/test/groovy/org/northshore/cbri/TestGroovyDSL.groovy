@@ -16,10 +16,10 @@ import org.apache.uima.util.InvalidXMLException
 import org.apache.uima.util.XMLInputSource
 import org.junit.Before
 import org.junit.Test
-import org.uimafit.factory.AggregateBuilder
-import org.uimafit.factory.AnalysisEngineFactory
-import org.uimafit.factory.TypeSystemDescriptionFactory
-import org.uimafit.pipeline.SimplePipeline
+import org.apache.uima.fit.factory.AggregateBuilder
+import org.apache.uima.fit.factory.AnalysisEngineFactory
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory
+import org.apache.uima.fit.pipeline.SimplePipeline
 
 import org.northshore.cbri.AnnotationMatcher
 import org.northshore.cbri.GroovyAnnotator
@@ -32,13 +32,13 @@ class TestGroovyDSL {
 	// to be tested in the first place
 	static {
 		def tsd = TypeSystemDescriptionFactory.createTypeSystemDescription()
-		AnalysisEngineDescription segmenter = AnalysisEngineFactory.createPrimitiveDescription(
+		AnalysisEngineDescription segmenter = AnalysisEngineFactory.createEngineDescription(
 				GroovyAnnotator,
 				GroovyAnnotator.PARAM_SCRIPT_FILE, "groovy/SimpleSegmenter.groovy")
-		AnalysisEngineDescription sentDetector = AnalysisEngineFactory.createPrimitiveDescription(
+		AnalysisEngineDescription sentDetector = AnalysisEngineFactory.createEngineDescription(
 				GroovyAnnotator,
 				GroovyAnnotator.PARAM_SCRIPT_FILE, "groovy/TestSentenceDetector.groovy")
-		AnalysisEngineDescription conceptDetector = AnalysisEngineFactory.createPrimitiveDescription(
+		AnalysisEngineDescription conceptDetector = AnalysisEngineFactory.createEngineDescription(
 				GroovyAnnotator,
 				GroovyAnnotator.PARAM_SCRIPT_FILE, "groovy/TestConceptDetector.groovy")
 

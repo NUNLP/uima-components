@@ -14,13 +14,13 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.codehaus.groovy.control.CompilerConfiguration;
-import org.uimafit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 
-public class GroovyAnnotator extends org.uimafit.component.JCasAnnotator_ImplBase {
+public class GroovyAnnotator extends org.apache.uima.fit.component.JCasAnnotator_ImplBase {
 
     public static final String PARAM_SCRIPT_FILE = "scriptFileName";
     public static final String PARAM_SCRIPT_DIR_ENV_VAR = "scriptDirEnvVar";
@@ -50,7 +50,7 @@ public class GroovyAnnotator extends org.uimafit.component.JCasAnnotator_ImplBas
                 }
             }
             else {
-                System.out.println("Loading script file: " + this.scriptFileName);
+                System.out.println("GroovyAnnotator loading script file: " + this.scriptFileName);
                 URL url = Resources.getResource(this.scriptFileName);
                 scriptContents = Resources.toString(url, Charsets.UTF_8);
             }

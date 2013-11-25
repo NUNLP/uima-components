@@ -2608,6 +2608,7 @@
                             </typeDescription>
                         </types>
                     </typeSystemDescription>
+                    <typePriorities/>
                     <fsIndexCollection/>
                     <capabilities/>
                     <operationalProperties>
@@ -5223,6 +5224,7 @@
                             </typeDescription>
                         </types>
                     </typeSystemDescription>
+                    <typePriorities/>
                     <fsIndexCollection/>
                     <capabilities/>
                     <operationalProperties>
@@ -7838,6 +7840,7 @@
                             </typeDescription>
                         </types>
                     </typeSystemDescription>
+                    <typePriorities/>
                     <fsIndexCollection/>
                     <capabilities/>
                     <operationalProperties>

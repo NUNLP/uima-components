@@ -1,7 +1,9 @@
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
+apply plugin: 'maven'
 
 version = '1.0'
+group = 'org.northshore.cbri'
 jar {
     manifest {
         attributes 'Implementation-Version': version
