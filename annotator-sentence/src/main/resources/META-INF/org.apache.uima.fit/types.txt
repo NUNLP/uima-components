@@ -1,0 +1,2 @@
+classpath*:descriptors/opennlp/uima/TypeSystem.xml
+classpath*:org/apache/ctakes/typesystem/types/TypeSystem.xml
