@@ -14,12 +14,24 @@
                 <multiValued>false</multiValued>
                 <mandatory>false</mandatory>
             </configurationParameter>
+            <configurationParameter>
+                <name>opennlp.uima.ContainerType</name>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
         </configurationParameters>
         <configurationParameterSettings>
             <nameValuePair>
                 <name>opennlp.uima.SentenceType</name>
                 <value>
                     <string>org.apache.ctakes.typesystem.type.textspan.Sentence</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>opennlp.uima.ContainerType</name>
+                <value>
+                    <string>org.apache.ctakes.typesystem.type.textspan.Segment</string>
                 </value>
             </nameValuePair>
         </configurationParameterSettings>
