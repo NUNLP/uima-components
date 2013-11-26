@@ -2,12 +2,14 @@ apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-sourceCompatibility = 1.7
 version = '1.0'
-jar {
-    manifest {
-        attributes 'Implementation-Version': version
-    }
+group = 'org.northshore.cbri'
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
 }
 
 repositories {
