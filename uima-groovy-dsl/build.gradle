@@ -4,10 +4,12 @@ apply plugin: 'maven-publish'
 
 version = '1.0'
 group = 'org.northshore.cbri'
-jar {
-    manifest {
-        attributes 'Implementation-Version': version
-    }
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
 }
 
 repositories {
@@ -21,6 +23,14 @@ dependencies {
     compile group: 'org.apache.uima', name: 'uimafit-core', version: '2.0.0'
     compile group: 'org.apache.ctakes', name: 'ctakes-type-system', version: '3.2.0-SNAPSHOT'
     compile group: 'com.google.guava', name: 'guava', version: '15.0'
-    testCompile group: 'junit', name: 'junit', version: '4.+'
+    
+	testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
+uploadArchives {
+	repositories {
+	   flatDir {
+		   dirs 'repos'
+	   }
+	}
+}
