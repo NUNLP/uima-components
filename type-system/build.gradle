@@ -1,11 +1,15 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
 version = '1.0'
-jar {
-    manifest {
-        attributes 'Implementation-Version': version
-    }
+group = 'org.northshore.cbri'
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
 }
 
 repositories {
@@ -16,14 +20,6 @@ repositories {
 dependencies {
     compile group: 'org.apache.uima', name: 'uimaj-core', version: '2.4.2'
     compile group: 'org.apache.uima', name: 'uimafit-core', version: '2.0.0'
-    compile group: 'org.apache.ctakes', name: 'ctakes-type-system', version: '3.2.0-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
-uploadArchives {
-    repositories {
-       flatDir {
-           dirs 'repos'
-       }
-    }
-}
