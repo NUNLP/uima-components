@@ -21,10 +21,15 @@ package org.northshore.cbri;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
+import opennlp.model.AbstractModel;
 import opennlp.tools.sentdetect.DefaultSDContextGenerator;
+import opennlp.tools.sentdetect.EndOfSentenceScanner;
+import opennlp.tools.sentdetect.SDContextGenerator;
+import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
-import opennlp.uima.sentdetect.SentenceModelResource;
+import opennlp.tools.util.StringUtil;
 
 import org.apache.ctakes.typesystem.type.textspan.Segment;
 import org.apache.ctakes.typesystem.type.textspan.Sentence;
@@ -39,20 +44,144 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import com.google.common.io.Resources;
 
-/**
- * Wraps the OpenNLP sentence detector in a UIMA annotator
- * 
- * @author Mayo Clinic
- */
-public class SentenceDetector extends JCasAnnotator_ImplBase {
 
+public class SentenceDetector extends JCasAnnotator_ImplBase {
+    
+    private static class SentenceSpan {
+
+        public static String LF = "\n";
+        public static String CR = "\r";
+        public static String CRLF = "\r\n";
+
+        private int start; // offset of text within larger text
+        private int end;   // offset of end of text within larger text
+        private String text;
+        
+        public SentenceSpan(int s, int e, String t){
+            start = s;
+            end = e;
+            text = t;
+        }
+
+        public int getStart() {return start;}
+        public int getEnd() {return end;}
+        
+        /**
+         * Trim any leading or trailing whitespace.
+         * If there are any end-of-line characters in what's left, split into multiple smaller sentences,
+         * and trim each.
+         * If is entirely whitespace, return an empty list
+         * @param separatorPattern CR LF or CRLF
+         */
+        public List<SentenceSpan> splitAtLineBreaksAndTrim(String separatorPattern) {
+            
+            ArrayList<SentenceSpan> subspans = new ArrayList<SentenceSpan>();
+
+            // Validate input parameter
+            if (!separatorPattern.equals(LF) && !separatorPattern.equals(CR) && !separatorPattern.equals(CRLF)) {
+                
+                int len = separatorPattern.length();
+                System.err.println("Invalid line break: " + len + " characters long.");
+                
+                System.err.print("        line break character values: ");
+                for (int i=0; i<len; i++){
+                    System.err.print(Integer.valueOf(separatorPattern.charAt(i)));
+                    System.err.print(" "); // print a space between values
+                }
+                System.err.println();
+            
+                //System.err.println("Invalid line break: \\0x" + Byte.parseByte(separatorPattern.getBytes("US-ASCII").toString(),16));
+                subspans.add(this);
+                return subspans;
+            }
+            
+            // Check first if contains only whitespace, in which case return an empty list
+            String coveredText = text.substring(0, end-start);
+            String trimmedText = coveredText.trim();
+            int trimmedLen = trimmedText.length();
+            if (trimmedLen == 0) {
+                return subspans;
+            }
+            
+            // If there is any leading or trailing whitespace, determine position of the trimmed section
+            int positionOfNonWhiteSpace = 0;
+            
+            // Split into multiple sentences if contains end-of-line characters
+            // or return just one sentence if no end-of-line characters are within the trimmed string
+            String spans[] = coveredText.split(separatorPattern);
+            int position = start;
+            for (String s : spans) {
+                String t = s.trim();
+                if (t.length()>0) {
+                    positionOfNonWhiteSpace = s.indexOf(t.charAt(0));
+                } else {
+                    positionOfNonWhiteSpace = 0;
+                }
+                // Might have trimmed off some at the beginning of the sentences other than the 1st (#0)
+                position += positionOfNonWhiteSpace; // sf Bugs artifact 3083903: For _each_ sentence, advance past any spaces at beginning of line
+                subspans.add(new SentenceSpan(position, position+t.length(), t));
+                position += (s.length()-positionOfNonWhiteSpace + separatorPattern.length());
+            }
+            
+            return subspans;
+
+        }
+    }
+    
+    /**
+     * 
+     * @author wthompso
+     *
+     */
+    private static class EndOfSentenceScannerImpl implements EndOfSentenceScanner {
+
+        private static final char[] eosCandidates =  {'.', '!', ')', ']', '>', '\"', ':', ';'}; // CTAKES-227
+
+        public EndOfSentenceScannerImpl() {
+            super();
+        }
+
+        public char[] getEndOfSentenceCharacters() {
+            return eosCandidates;
+            
+        }
+
+        public List<Integer> getPositions(String s) {
+            return getPositions(s.toCharArray());
+        }
+
+        public List<Integer> getPositions(StringBuffer sb) {
+            return getPositions(sb.toString().toCharArray());
+        }
+        
+        public List<Integer> getPositions(char[] cb) {
+            List<Integer> positions = new ArrayList<Integer>();
+
+            for (int i=0; i<cb.length; i++) { // for each character in buffer
+                for (int j=0; j<eosCandidates.length; j++) { // for each eosCandidate
+                    if (cb[i]==eosCandidates[j]) { 
+                        positions.add(new Integer(i)); // TODO - don't always create new, use a pool
+                        break; // can't match others if it matched eosCandidates[j]
+                    }
+                }
+            }
+             
+            return positions;
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------------------------
+    // The main class definition starts here
+    //----------------------------------------------------------------------------------------------------------------
+    
     public static final String SD_MODEL_FILE_PARAM = "sentenceModelFile";
 
     @ConfigurationParameter(name = SD_MODEL_FILE_PARAM, mandatory = true, description = "File holding sentence model")
     private String sentenceModelFile;
 
     private opennlp.tools.sentdetect.SentenceModel sdmodel;
-    private SentenceDetectorCtakes sentenceDetector;
+    private SDContextGenerator cgen;
+    private EndOfSentenceScanner scanner;
 
     @Override
     public void initialize(UimaContext aContext) throws ResourceInitializationException {
@@ -65,7 +194,8 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
             EndOfSentenceScannerImpl eoss = new EndOfSentenceScannerImpl();
             char[] eosc = eoss.getEndOfSentenceCharacters();
             DefaultSDContextGenerator cg = new DefaultSDContextGenerator(eosc);
-            sentenceDetector = new SentenceDetectorCtakes(sdmodel.getMaxentModel(), cg, eoss);
+            this.cgen = cg;
+            this.scanner = eoss;
         } catch (Exception ace) {
             throw new ResourceInitializationException(ace);
         }
@@ -74,13 +204,14 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
     /**
      * Entry point for processing.
      */
+    @Override
     public void process(JCas jcas) throws AnalysisEngineProcessException {
 
         int sentenceCount = 0;
 
         String text = jcas.getDocumentText();
 
-        ////(new Segment(jcas, 0, text.length())).addToIndexes();
+        // //(new Segment(jcas, 0, text.length())).addToIndexes();
         JFSIndexRepository indexes = jcas.getJFSIndexRepository();
         Iterator<?> sectionItr = indexes.getAnnotationIndex(Segment.type).iterator();
         while (sectionItr.hasNext()) {
@@ -119,7 +250,7 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
         // Use OpenNLP tools to split text into sentences
         // The sentence detector returns the offsets of the sentence-endings it
         // detects within the string
-        int[] sentenceBreaks = sentenceDetector.sentPosDetect(text.substring(b, e));
+        int[] sentenceBreaks = sentPosDetect(text.substring(b, e));
 
         int numSentences = sentenceBreaks.length;
         // There might be text after the last sentence-ending found by detector,
@@ -181,5 +312,89 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
             }
         }
         return sentenceCount;
+    }
+    
+    // ---------------------------------------------------------------------------------------------------------
+
+    /**
+     * Detect sentences in a String.
+     * 
+     * @param s
+     *            The string to be processed.
+     * 
+     * @return A string array containing individual sentences as elements.
+     */
+    public String[] sentDetect(String s) {
+        int[] endsOfSentences = sentPosDetect(s);
+        String sentences[];
+        if (endsOfSentences.length != 0) {
+
+            sentences = new String[endsOfSentences.length];
+
+            int begin = 0;
+            for (int si = 0; si < endsOfSentences.length; si++) {
+                sentences[si] = s.substring(begin, endsOfSentences[si] + 1);
+                begin = endsOfSentences[si] + 1;
+            }
+        } else {
+            sentences = new String[] {};
+        }
+        return sentences;
+    }
+
+    private int getFirstWS(String s, int pos) {
+        while (pos < s.length() && !StringUtil.isWhitespace(s.charAt(pos)))
+            pos++;
+        return pos;
+    }
+
+    private int getFirstNonWS(String s, int pos) {
+        while (pos < s.length() && StringUtil.isWhitespace(s.charAt(pos)))
+            pos++;
+        return pos;
+    }
+
+    /**
+     * Detect the position of the first words of sentences in a String.
+     * 
+     * @param s
+     *            The string to be processed.
+     * @return A integer array containing the positions of the end index of
+     *         every sentence
+     * 
+     * @see SentenceDetectorME#sentPosDetect(String)
+     */
+    public int[] sentPosDetect(String s) {
+        StringBuffer sb = new StringBuffer(s);
+        List<Integer> enders = scanner.getPositions(s);
+        List<Integer> positions = new ArrayList<Integer>(enders.size());
+
+        for (int i = 0, end = enders.size(), index = 0; i < end; i++) {
+            Integer candidate = enders.get(i);
+            int cint = candidate;
+            // skip over the leading parts of non-token final delimiters
+            int fws = getFirstWS(s, cint + 1);
+            if (i + 1 < end && enders.get(i + 1) < fws) {
+                continue;
+            }
+
+            AbstractModel model = this.sdmodel.getMaxentModel();
+            double[] probs = model.eval(cgen.getContext(sb, cint));
+            String bestOutcome = model.getBestOutcome(probs);
+            if (bestOutcome.equals("s")) {
+                if (index != cint) {
+                    positions.add(getFirstNonWS(s, cint));
+                }
+                index = cint + 1;
+            }
+        }
+
+        int[] sentenceBreaks = new int[positions.size()];
+        for (int i = 0; i < sentenceBreaks.length; i++) {
+            sentenceBreaks[i] = positions.get(i) + 1;
+        }
+
+        return sentenceBreaks;
+
     }
 }
