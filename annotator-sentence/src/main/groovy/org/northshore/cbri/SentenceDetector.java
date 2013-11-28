@@ -190,23 +190,15 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
         try {
             InputStream modelIn = Resources.getResource(sentenceModelFile).openStream();
             this.sdmodel = new SentenceModel(modelIn);
-            EndOfSentenceScannerImpl eoss = new EndOfSentenceScannerImpl();
-            char[] eosc = eoss.getEndOfSentenceCharacters();
-            DefaultSDContextGenerator cg = new DefaultSDContextGenerator(eosc);
-            this.cgen = cg;
-            this.scanner = eoss;
+            this.scanner = new EndOfSentenceScannerImpl();
+            this.cgen = new DefaultSDContextGenerator(this.scanner.getEndOfSentenceCharacters());
         } catch (Exception ace) {
             throw new ResourceInitializationException(ace);
         }
     }
-
-    /**
-     * Entry point for processing.
-     */
+    
     @Override
     public void process(JCas jcas) throws AnalysisEngineProcessException {
-
-        int sentenceCount = 0;
 
         String text = jcas.getDocumentText();
 
@@ -215,9 +207,13 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
         Iterator<?> sectionItr = indexes.getAnnotationIndex(Segment.type).iterator();
         while (sectionItr.hasNext()) {
             Segment sa = (Segment) sectionItr.next();
-            sentenceCount = annotateRange(jcas, text, sa, sentenceCount);
+            annotateRange(jcas, text, sa, 0);
         }
     }
+
+    // ---------------------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------------------
 
     /**
      * Detect sentences within a section of the text and add annotations to the
@@ -243,26 +239,27 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
     private int annotateRange(JCas jcas, String text, Segment section, int sentenceCount)
             throws AnalysisEngineProcessException {
 
-        int b = section.getBegin();
-        int e = section.getEnd();
+        int sectBegin = section.getBegin();
+        int sectEnd = section.getEnd();
 
         // Use OpenNLP tools to split text into sentences
         // The sentence detector returns the offsets of the sentence-endings it
         // detects within the string
-        int[] sentenceBreaks = sentPosDetect(text.substring(b, e));
+        int[] sentenceBreaks = sentPosDetect(text.substring(sectBegin, sectEnd));
 
         int numSentences = sentenceBreaks.length;
         // There might be text after the last sentence-ending found by detector,
         // so +1
         SentenceSpan[] potentialSentSpans = new SentenceSpan[numSentences + 1];
 
-        int sentStart = b;
-        int sentEnd = b;
+        int sentStart = sectBegin;
+        int sentEnd = sectBegin;
+        
         // Start by filling in sentence spans from what OpenNLP tools detected
         // Will trim leading or trailing whitespace when check for end-of-line
         // characters
         for (int i = 0; i < numSentences; i++) {
-            sentEnd = sentenceBreaks[i] + b;
+            sentEnd = sentenceBreaks[i] + sectBegin;
             String coveredText = text.substring(sentStart, sentEnd);
             potentialSentSpans[i] = new SentenceSpan(sentStart, sentEnd, coveredText);
             sentStart = sentEnd;
@@ -274,10 +271,10 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
         // whitespace.
         // Will trim leading or trailing whitespace when check for end-of-line
         // characters
-        if (sentEnd < e) {
-            String coveredText = text.substring(sentEnd, e);
+        if (sentEnd < sectEnd) {
+            String coveredText = text.substring(sentEnd, sectEnd);
             if (coveredText.trim() != "") {
-                potentialSentSpans[numSentences] = new SentenceSpan(sentEnd, e, coveredText);
+                potentialSentSpans[numSentences] = new SentenceSpan(sentEnd, sectEnd, coveredText);
                 numSentences++;
             }
         }
@@ -312,9 +309,7 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
         }
         return sentenceCount;
     }
-    
-    // ---------------------------------------------------------------------------------------------------------
-
+        
     private int getFirstWS(String s, int pos) {
         while (pos < s.length() && !StringUtil.isWhitespace(s.charAt(pos)))
             pos++;
@@ -339,7 +334,7 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
      */
     private int[] sentPosDetect(String s) {
         StringBuffer sb = new StringBuffer(s);
-        List<Integer> enders = scanner.getPositions(s);
+        List<Integer> enders = this.scanner.getPositions(s);
         List<Integer> positions = new ArrayList<Integer>(enders.size());
 
         for (int i = 0, end = enders.size(), index = 0; i < end; i++) {
