@@ -143,7 +143,6 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
 
         public char[] getEndOfSentenceCharacters() {
             return eosCandidates;
-            
         }
 
         public List<Integer> getPositions(String s) {
@@ -241,7 +240,7 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
      *         Sentence annotations added to the CAS for this section
      * @throws AnnotatorProcessException
      */
-    protected int annotateRange(JCas jcas, String text, Segment section, int sentenceCount)
+    private int annotateRange(JCas jcas, String text, Segment section, int sentenceCount)
             throws AnalysisEngineProcessException {
 
         int b = section.getBegin();
@@ -316,32 +315,6 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
     
     // ---------------------------------------------------------------------------------------------------------
 
-    /**
-     * Detect sentences in a String.
-     * 
-     * @param s
-     *            The string to be processed.
-     * 
-     * @return A string array containing individual sentences as elements.
-     */
-    public String[] sentDetect(String s) {
-        int[] endsOfSentences = sentPosDetect(s);
-        String sentences[];
-        if (endsOfSentences.length != 0) {
-
-            sentences = new String[endsOfSentences.length];
-
-            int begin = 0;
-            for (int si = 0; si < endsOfSentences.length; si++) {
-                sentences[si] = s.substring(begin, endsOfSentences[si] + 1);
-                begin = endsOfSentences[si] + 1;
-            }
-        } else {
-            sentences = new String[] {};
-        }
-        return sentences;
-    }
-
     private int getFirstWS(String s, int pos) {
         while (pos < s.length() && !StringUtil.isWhitespace(s.charAt(pos)))
             pos++;
@@ -364,7 +337,7 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
      * 
      * @see SentenceDetectorME#sentPosDetect(String)
      */
-    public int[] sentPosDetect(String s) {
+    private int[] sentPosDetect(String s) {
         StringBuffer sb = new StringBuffer(s);
         List<Integer> enders = scanner.getPositions(s);
         List<Integer> positions = new ArrayList<Integer>(enders.size());
@@ -395,6 +368,5 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
         }
 
         return sentenceBreaks;
-
     }
 }
