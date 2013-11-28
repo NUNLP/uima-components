@@ -46,7 +46,6 @@ class TestGroovyDSL {
 		builder.add(segmenter)
 		builder.add(sentDetector)
 		builder.add(conceptDetector)
-		builder.createAggregateDescription().toXML(new FileWriter(new File("src/test/resources/descriptors/AggregateDesc.xml")))
 		engine = builder.createAggregate()
 		jcas = engine.newJCas()
 	}
