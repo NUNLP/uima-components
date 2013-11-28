@@ -10,15 +10,16 @@
         <vendor>org.northshore.cbri</vendor>
         <configurationParameters>
             <configurationParameter>
-                <name>SentenceModelFile</name>
+                <name>sentenceModelFile</name>
+                <description>File holding sentence model</description>
                 <type>String</type>
                 <multiValued>false</multiValued>
-                <mandatory>false</mandatory>
+                <mandatory>true</mandatory>
             </configurationParameter>
         </configurationParameters>
         <configurationParameterSettings>
             <nameValuePair>
-                <name>SentenceModelFile</name>
+                <name>sentenceModelFile</name>
                 <value>
                     <string>models/sd-med-model.zip</string>
                 </value>
