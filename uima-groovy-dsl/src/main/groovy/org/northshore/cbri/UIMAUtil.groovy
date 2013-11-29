@@ -5,8 +5,14 @@ import static org.apache.uima.fit.util.JCasUtil.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-import org.apache.ctakes.typesystem.type.refsem.OntologyConcept
-import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
+import org.apache.ctakes.typesystem.type.refsem.*
+import org.apache.ctakes.typesystem.type.relation.*
+import org.apache.ctakes.typesystem.type.structured.*
+import org.apache.ctakes.typesystem.type.syntax.*
+import org.apache.ctakes.typesystem.type.textsem.*
+import org.apache.ctakes.typesystem.type.textspan.*
+import org.apache.ctakes.typesystem.type.util.*
+
 import org.apache.uima.cas.text.AnnotationFS
 import org.apache.uima.jcas.JCas
 import org.apache.uima.jcas.cas.FSArray
@@ -36,7 +42,7 @@ class UIMAUtil extends Script {
             return (delegate.ontologyConceptArr == null ? []:
             select(delegate.ontologyConceptArr, OntologyConcept))
         }
-        IdentifiedAnnotation.metaClass.setOntologyConcepts = { List concepts ->
+        IdentifiedAnnotation.metaClass.setOntologyConcepts = { concepts ->
             FSArray array = new FSArray(jcas, concepts.size())
             int i = 0
             concepts.each {
@@ -79,7 +85,7 @@ class UIMAUtil extends Script {
         Pattern.metaClass.matcher = { Map args ->
             Annotation coveringAnn = (args.coveringAnn ?: jcas.documentAnnotationFs)
             Boolean includeText = (args.includeText == false ? false : true)
-            List<Class<Annotation>> types = (args.types ?: [])
+            java.util.List<Class<Annotation>> types = (args.types ?: [])
             return new AnnotationMatcher(jcas, coveringAnn, types, delegate, includeText)
         }
     }
@@ -118,7 +124,7 @@ class UIMAUtil extends Script {
      * Apply a set of regex patterns to a collection of annotations. For each match, apply
      * the specified closure
      */
-    def static applyPatterns = { Collection<Annotation> anns, List<Pattern> patterns, Closure action ->
+    def static applyPatterns = { Collection<Annotation> anns, java.util.List<Pattern> patterns, Closure action ->
         anns.each { ann ->
             patterns.each { p ->
                 AnnotationMatcher m = p.matcher(coveringAnn:ann); m.each {
@@ -133,13 +139,13 @@ class UIMAUtil extends Script {
      * @param args
      * @return
      */
-    def static List<IdentifiedAnnotation> createMentions(Map args) {
+    def static java.util.List<IdentifiedAnnotation> createMentions(Map args) {
         Map patterns = args.patterns
         Collection searchSet = args.searchSet
         Class mentionType = args.mentionType
         Closure inferConcepts = args.inferConcepts
 
-        List<IdentifiedAnnotation> mentions = []
+        java.util.List<IdentifiedAnnotation> mentions = []
         searchSet.each { Annotation ann ->
             patterns.each { Pattern pattern, Map vals ->
                 Matcher matcher = ann.coveredText =~ pattern
@@ -157,7 +163,7 @@ class UIMAUtil extends Script {
                     if (concept.oid == null) {
                         concept.oid = "${vals.code}#${vals.codingScheme}"
                     }
-                    List<OntologyConcept> concepts = [concept]
+                    java.util.List<OntologyConcept> concepts = [concept]
                     if (inferConcepts) {
                         concepts = concepts + inferConcepts.call(concept)
                     }
