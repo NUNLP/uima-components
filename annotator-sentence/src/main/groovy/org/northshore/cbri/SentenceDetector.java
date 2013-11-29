@@ -18,9 +18,13 @@
  */
 package org.northshore.cbri;
 
+import groovy.lang.GroovyShell;
+
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
 
 import opennlp.model.AbstractModel;
@@ -38,10 +42,13 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.analysis_engine.annotator.AnnotatorProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.JFSIndexRepository;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.codehaus.groovy.control.CompilationFailedException;
+import org.codehaus.groovy.control.CompilerConfiguration;
 
+import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 
@@ -174,9 +181,13 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
     //----------------------------------------------------------------------------------------------------------------
     
     public static final String SD_MODEL_FILE_PARAM = "sentenceModelFile";
+    public static final String SD_SEGMENTS_TO_PARSE = "segmentsToParse";
 
     @ConfigurationParameter(name = SD_MODEL_FILE_PARAM, mandatory = true, description = "File holding sentence model")
     private String sentenceModelFile;
+    
+    @ConfigurationParameter(name = SD_SEGMENTS_TO_PARSE, mandatory = false, description = "Script providing input segments")
+    private String segmentsToParse;
 
     private opennlp.tools.sentdetect.SentenceModel sdmodel;
     private SDContextGenerator cgen;
@@ -199,15 +210,39 @@ public class SentenceDetector extends JCasAnnotator_ImplBase {
     
     @Override
     public void process(JCas jcas) throws AnalysisEngineProcessException {
+        
+        //------------------------------------------------------------------------------------------------------------
+        // TODO: this is experimental code on injecting a Groovy script to determine
+        // which Segments should be run through the sentence detector annotator.
+        Collection<Segment> segs = null;
+        try {
+            if (segmentsToParse != null) {
+                CompilerConfiguration config = new CompilerConfiguration();
+                config.setScriptBaseClass("org.northshore.cbri.UIMAUtil");
+                ////Binding binding = new Binding();
+                GroovyShell shell = new GroovyShell(config);
+                
+                System.out.println("GroovyAnnotator loading script file: " + this.segmentsToParse);
+                URL url = Resources.getResource(this.segmentsToParse);
+                String scriptContents = Resources.toString(url, Charsets.UTF_8);
+                segs = (Collection<Segment>)shell.evaluate(scriptContents);
+            }
+            else {
+                segs = JCasUtil.select(jcas, Segment.class);
+            }
+        } catch (CompilationFailedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }       
+        //------------------------------------------------------------------------------------------------------------
 
         String text = jcas.getDocumentText();
-
-        // //(new Segment(jcas, 0, text.length())).addToIndexes();
-        JFSIndexRepository indexes = jcas.getJFSIndexRepository();
-        Iterator<?> sectionItr = indexes.getAnnotationIndex(Segment.type).iterator();
-        while (sectionItr.hasNext()) {
-            Segment sa = (Segment) sectionItr.next();
-            annotateRange(jcas, text, sa, 0);
+        
+         for (Segment seg : segs) {
+            annotateRange(jcas, text, seg, 0);
         }
     }
 
