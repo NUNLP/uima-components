@@ -1,5 +1,9 @@
 package org.northshore.cbri
 
+import static org.junit.Assert.*
+
+import java.util.regex.Matcher
+
 import opennlp.uima.util.UimaUtil
 
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
@@ -9,6 +13,7 @@ import org.apache.uima.analysis_engine.AnalysisEngine
 import org.apache.uima.analysis_engine.AnalysisEngineDescription
 import org.apache.uima.fit.factory.AnalysisEngineFactory
 import org.apache.uima.fit.factory.ExternalResourceFactory
+import org.apache.uima.fit.pipeline.SimplePipeline
 import org.apache.uima.jcas.JCas
 import org.junit.After
 import org.junit.Before
@@ -43,16 +48,30 @@ class POSAnnotatorTest {
         URL url = Resources.getResource("data/test-note-1.txt")
         String text = Resources.toString(url, Charsets.UTF_8)
 
-        // create a new CAS and seed with a Segment
+        // create a new CAS and seed with tokens
         JCas jcas = engine.newJCas()
         jcas.setDocumentText(text)
         UIMAUtil.jcas = jcas
         UIMAUtil.create(type:Segment, begin:0, end:text.length())
+        UIMAUtil.create(type:Sentence, begin:0, end:text.length())
+        Matcher m = (text =~ /\b\w+\b/)
+        m.each {
+            UIMAUtil.create(type:BaseToken, begin:m.start(0), end:m.end(0))
+        }
+        Map<String, String> tokenToPos = new HashMap<String, String>()
+        tokenToPos["Tubular"] = "JJ"
+        tokenToPos["adenoma"] = "NN"
+        tokenToPos["in"] = "IN"
+        tokenToPos["the"] = "DT"
+        tokenToPos["sigmoid"] = "JJ"
+        tokenToPos["colon"] = "NN"
 
-//        // apply the sentence detector
-//        sentDetector.process(jcas)
-//        Collection<Sentence> sents = UIMAUtil.select(type:Sentence)
-//        assert sents.size() == 28
-//        sents.each { println "Sentence: \"$it.coveredText\"" }
+        // run the POS tagger
+        SimplePipeline.runPipeline(jcas, engine)
+        Collection<BaseToken> tokens = UIMAUtil.select(type:BaseToken)
+        tokens.each { BaseToken token ->
+            println "$token.coveredText [$token.partOfSpeech]"
+            assertEquals tokenToPos[token.coveredText], token.getPartOfSpeech() 
+        }
     }
 }
