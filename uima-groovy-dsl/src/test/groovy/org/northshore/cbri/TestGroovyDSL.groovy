@@ -34,7 +34,7 @@ class TestGroovyDSL {
 		def tsd = TypeSystemDescriptionFactory.createTypeSystemDescription()
 		AnalysisEngineDescription segmenter = AnalysisEngineFactory.createEngineDescription(
 				GroovyAnnotator,
-				GroovyAnnotator.PARAM_SCRIPT_FILE, "groovy/SimpleSegmenter.groovy")
+				GroovyAnnotator.PARAM_SCRIPT_FILE, "groovy/TestSegmenter.groovy")
 		AnalysisEngineDescription sentDetector = AnalysisEngineFactory.createEngineDescription(
 				GroovyAnnotator,
 				GroovyAnnotator.PARAM_SCRIPT_FILE, "groovy/TestSentenceDetector.groovy")
