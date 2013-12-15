@@ -12,7 +12,6 @@ import org.apache.ctakes.typesystem.type.syntax.*
 import org.apache.ctakes.typesystem.type.textsem.*
 import org.apache.ctakes.typesystem.type.textspan.*
 import org.apache.ctakes.typesystem.type.util.*
-
 import org.apache.uima.cas.text.AnnotationFS
 import org.apache.uima.jcas.JCas
 import org.apache.uima.jcas.cas.FSArray
@@ -96,6 +95,59 @@ class UIMAUtil extends Script {
      */
     static void setJCas(JCas jcas) {
         UIMAUtil.jcas = jcas
+    }
+    
+    /**
+     * 
+     * @param typeName
+     * @return
+     */
+    static Class getIdentifiedAnnotationClass(String typeName) {
+        Class typeClass = null
+        switch (typeName) {
+            case "AnatomicalSiteMention":
+                typeClass = AnatomicalSiteMention;
+                break;
+            case "DiseaseDisorderMention":
+                typeClass = DiseaseDisorderMention;
+                break;
+            case "EventMention":
+                typeClass = EventMention;
+                break;
+            case "FractionAnnotation":
+                typeClass = FractionAnnotation;
+                break;
+            case "LabMention":
+                typeClass = LabMention;
+                break;
+            case "MeasurementAnnotation":
+                typeClass = MeasurementAnnotation;
+                break;
+            case "MedicationMention":
+                typeClass = MedicationMention;
+                break;
+            case "PersonTitleAnnotation":
+                typeClass = PersonTitleAnnotation;
+                break;
+            case "ProcedureMention":
+                typeClass = ProcedureMention;
+                break;
+            case "RangeAnnotation":
+                typeClass = RangeAnnotation;
+                break;
+            case "SignSymptomMention":
+                typeClass = SignSymptomMention;
+                break;
+            case "TimeMention":
+                typeClass = TimeMention;
+                break;
+            case "IdentifiedAnnotation":
+                typeClass = IdentifiedAnnotation;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid type in dictionary entry: $typeName");
+        }
+        return typeClass
     }
 
     // ------------------------------------------------------------------------

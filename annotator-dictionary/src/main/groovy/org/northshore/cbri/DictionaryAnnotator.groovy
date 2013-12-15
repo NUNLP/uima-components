@@ -4,19 +4,26 @@ import static org.apache.uima.fit.util.CasUtil.getType
 import static org.apache.uima.fit.util.JCasUtil.select
 import static org.apache.uima.fit.util.JCasUtil.selectCovered
 
-import org.apache.commons.io.IOUtils
+import java.lang.reflect.Type
+
 import org.apache.ctakes.typesystem.type.refsem.UmlsConcept
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
-import org.apache.ctakes.typesystem.type.textsem.EntityMention
+import org.apache.ctakes.typesystem.type.textsem.AnatomicalSiteMention
+import org.apache.ctakes.typesystem.type.textsem.DiseaseDisorderMention
+import org.apache.ctakes.typesystem.type.textsem.EventMention
+import org.apache.ctakes.typesystem.type.textsem.FractionAnnotation
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
 import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.uima.UimaContext
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException
-import org.apache.uima.cas.Type
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase
 import org.apache.uima.fit.descriptor.ConfigurationParameter
 import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ResourceInitializationException
+
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils
@@ -50,15 +57,11 @@ public class DictionaryAnnotator
 	@ConfigurationParameter(name = ComponentParameters.PARAM_MODEL_ENCODING, mandatory = true, defaultValue="UTF-8")
 	private String modelEncoding
 
-	/**
-	 * The annotation to create on matching phases.
-	 */
-	public static final String PARAM_ANNOTATION_TYPE = "annotationType"
-	@ConfigurationParameter(name = "annotationType", mandatory = false)
-	private String annotationType
-
+    
 	private PhraseTree phrases
     private Map<List<String>, Map<String, String>> phraseSems
+    private Type collectionType
+    
 
 	@Override
 	public void initialize(UimaContext aContext)
@@ -66,49 +69,34 @@ public class DictionaryAnnotator
 	{
 		super.initialize(aContext)
 
-		if (annotationType == null) {
-			annotationType = IdentifiedAnnotation.class.getName()
-		}
+		this.phrases = new PhraseTree()
+        this.phraseSems = new HashMap<>()
+        this.collectionType = new TypeToken<HashMap<String, String>>(){}.getType()
 
-		phrases = new PhraseTree()
-        phraseSems = new HashMap<>()
-
-        // TODO: this should read in from JSON or binary
-		InputStream is = null
-		try {
-			URL phraseFileUrl = ResourceUtils.resolveLocation(phraseFile, aContext)
-			is = phraseFileUrl.openStream()
-			for (String inputLine : IOUtils.readLines(is, modelEncoding)) {
-                String[] parts = inputLine.split(/\|/)
-                assert parts.length > 0
-                
-                // add phrase
-				String[] phraseSplit = parts[0].split(" ")
-				phrases.addPhrase(phraseSplit)
-                
-                // add phrase semantics
-                Map<String, String> sem = new HashMap<>()
-                for (int n = 1; n < parts.length; n++) {
-                    String[] featValPair = parts[n].split(/:/)
-                    sem.put(featValPair[0], featValPair[1])
+            GsonBuilder builder = new GsonBuilder()
+            Gson gson = builder.create()
+            URL dictUrl = ResourceUtils.resolveLocation(phraseFile, aContext)
+            new File(dictUrl.toURI()).withReader(this.modelEncoding) { reader ->
+                // each line is a dictionary entry in json format
+                String line = null
+                while ((line = reader.readLine()) != null) {
+                    Map<String, String> dictEntryMap = gson.fromJson(line, collectionType)
+                    String[] phraseSplit = dictEntryMap['phrase'].split(/ /)
+                    phrases.addPhrase(phraseSplit)
+                    
+                    // add phrase semantics
+                    dictEntryMap.remove("phrase")
+                    this.phraseSems.put(Arrays.asList(phraseSplit), dictEntryMap)
                 }
-                this.phraseSems.put(Arrays.asList(phraseSplit), sem)
-			}
-		}
-		catch (IOException e) {
-			throw new ResourceInitializationException(e)
-		}
-		finally {
-			IOUtils.closeQuietly(is)
-		}
+            }
 	}
 
 	@Override
 	public void process(JCas jcas)
 		throws AnalysisEngineProcessException
 	{
-		Type type = getType(jcas.getCas(), annotationType)
-
+        UIMAUtil.jcas = jcas
+        
 		for (Sentence currSentence : select(jcas, Sentence.class)) {
 			ArrayList<BaseToken> tokens = new ArrayList<BaseToken>(selectCovered(BaseToken.class, currSentence))
 
@@ -126,14 +114,12 @@ public class DictionaryAnnotator
 					BaseToken beginToken = tokens.get(i)
 					BaseToken endToken = tokens.get(i + longestMatch.length - 1)
 
-//					AnnotationFS newFound = jcas.getCas().createAnnotation(type,
-//							beginToken.getBegin(), endToken.getEnd())
-//                    jcas.getCas().addFsToIndexes(newFound)
                     Map vals = this.phraseSems.get(Arrays.asList(longestMatch))
                     
-                    UIMAUtil.jcas = jcas
-                    UIMAUtil.create(type:EntityMention, begin:beginToken.getBegin() , 
-                        end:endToken.getEnd(), polarity:1 , uncertainty :0,
+                    Class typeClass = UIMAUtil.getIdentifiedAnnotationClass(vals['type'])
+                    
+                    UIMAUtil.create(type:typeClass, begin:beginToken.getBegin() , 
+                        end:endToken.getEnd(), polarity:1 , uncertainty:0,
                         ontologyConcepts:[UIMAUtil.create(type:UmlsConcept, code:vals["code"], 
                             codingScheme:vals["codingScheme"],
                             cui:vals["cui"], tui:vals["tui"])]
