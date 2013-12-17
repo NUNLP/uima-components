@@ -22,12 +22,12 @@ import org.junit.Test
 
 @Log4j
 class AnnotatorTest {
-    
+
     @BeforeClass
     public static void setupClass() {
         BasicConfigurator.configure()
     }
-    
+
     @Before
     public void setUp() throws Exception {
         log.setLevel(Level.INFO)
@@ -39,9 +39,13 @@ class AnnotatorTest {
 
     @Test
     public void smokeTest() {
-        // Build type system description
+        // Type system
         TypeSystemDescription tsd = TypeSystemDescriptionFactory.createTypeSystemDescription()
         tsd.resolveImports()
+
+        // Segmenter
+        AnalysisEngineDescription segmenter = AnalysisEngineFactory.createEngineDescription(GroovyAnnotator.class,
+                tsd, GroovyAnnotator.PARAM_SCRIPT_FILE, "groovy/SimpleSegmenter.groovy")
 
         // Sentence detector
         AnalysisEngineDescription sentDetector = AnalysisEngineFactory.createEngineDescription(
@@ -50,12 +54,12 @@ class AnnotatorTest {
 
         // Tokenizer
         AnalysisEngineDescription tokenizer = AnalysisEngineFactory.createEngineDescription(
-                opennlp.uima.tokenize.Tokenizer,
-                "opennlp.uima.SentenceType", Sentence.name,
-                "opennlp.uima.TokenType", BaseToken.name)
-        ExternalResourceFactory.createDependencyAndBind(tokenizer, UimaUtil.MODEL_PARAMETER,
-                opennlp.uima.tokenize.TokenizerModelResourceImpl, "file:models/en-token.bin")
-
+                TokenAnnotator)
+        ExternalResourceFactory.createDependencyAndBind(tokenizer,
+                TokenAnnotator.TOKEN_MODEL_KEY,
+                opennlp.uima.tokenize.TokenizerModelResourceImpl,
+                "file:models/en-token.bin")
+        
         // POS tagger
         AnalysisEngineDescription posTagger = AnalysisEngineFactory.createEngineDescription(
                 opennlp.uima.postag.POSTagger,
@@ -64,10 +68,6 @@ class AnnotatorTest {
                 "opennlp.uima.POSFeature", "partOfSpeech")
         ExternalResourceFactory.createDependencyAndBind(posTagger, UimaUtil.MODEL_PARAMETER,
                 opennlp.uima.postag.POSModelResourceImpl, "file:models/mayo-pos.zip")
-        
-        // Segmenter
-        AnalysisEngineDescription segmenter = AnalysisEngineFactory.createEngineDescription(GroovyAnnotator.class,
-                tsd, GroovyAnnotator.PARAM_SCRIPT_FILE, "groovy/SimpleSegmenter.groovy")
 
         // Build the aggregate
         AggregateBuilder builder = new AggregateBuilder()
@@ -75,7 +75,7 @@ class AnnotatorTest {
         builder.add(sentDetector)
         builder.add(tokenizer)
         builder.add(posTagger)
-        
+
         AnalysisEngineDescription desc = builder.createAggregateDescription()
         ////PrintWriter writer = new PrintWriter(new File("src/test/resources/descriptors/TestAggregateUIMAFit.xml"))
         ////desc.toXML(writer)
