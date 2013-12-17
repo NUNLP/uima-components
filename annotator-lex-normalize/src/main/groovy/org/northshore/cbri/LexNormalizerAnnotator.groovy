@@ -15,7 +15,7 @@ import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ResourceInitializationException
 
 @Log4j
-class WordNormalizerAnnotator extends JCasAnnotator_ImplBase {
+class LexNormalizerAnnotator extends JCasAnnotator_ImplBase {
     public static final String PARAM_LEXICON_NAME = "lexiconName"
     
     @ConfigurationParameter(name = "lexiconName", mandatory = true)
@@ -28,7 +28,7 @@ class WordNormalizerAnnotator extends JCasAnnotator_ImplBase {
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context)
         this.normalizer = new NormApi()
-        URL url = WordNormalizerAnnotator.class.getResource("/" + this.lexiconName)
+        URL url = LexNormalizerAnnotator.class.getResource("/" + this.lexiconName)
         File file = new File(url.toURI())
         if (file.exists()) { log.info(file.getAbsolutePath()) }
         this.gspell = new GSpellLite(file, GSpellLite.READ_ONLY)

@@ -24,7 +24,7 @@ import org.junit.Ignore
 import org.junit.Test
 
 @Log4j
-class WordNormalizerAnnotatorTest {
+class LexNormalizerAnnotatorTest {
 
     @BeforeClass
     public static void setupClass() {
@@ -42,8 +42,8 @@ class WordNormalizerAnnotatorTest {
 
     @Test
     public void testNormalizer() {
-        AnalysisEngine engine = createEngine(WordNormalizerAnnotator,
-            WordNormalizerAnnotator.PARAM_LEXICON_NAME, "2006Lexicon")
+        AnalysisEngine engine = createEngine(LexNormalizerAnnotator,
+            LexNormalizerAnnotator.PARAM_LEXICON_NAME, "2006Lexicon")
         JCas jcas = JCasFactory.createJCas()
         UIMAUtil.jcas = jcas
 
