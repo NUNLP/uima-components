@@ -1,10 +1,13 @@
 package org.northshore.cbri
 
 import static org.junit.Assert.*
+import groovy.util.logging.Log4j
 import opennlp.uima.util.UimaUtil
 
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
 import org.apache.ctakes.typesystem.type.textspan.Sentence
+import org.apache.log4j.BasicConfigurator
+import org.apache.log4j.Level
 import org.apache.uima.analysis_engine.AnalysisEngine
 import org.apache.uima.analysis_engine.AnalysisEngineDescription
 import org.apache.uima.fit.factory.AggregateBuilder
@@ -14,14 +17,28 @@ import org.apache.uima.fit.factory.TypeSystemDescriptionFactory
 import org.apache.uima.resource.metadata.TypeSystemDescription
 import org.junit.After
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 
+@Log4j
 class AnnotatorTest {
     
-    AnalysisEngine engine = null;
-
+    @BeforeClass
+    public static void setupClass() {
+        BasicConfigurator.configure()
+    }
+    
     @Before
     public void setUp() throws Exception {
+        log.setLevel(Level.INFO)
+    }
+
+    @After
+    public void tearDown() throws Exception {
+    }
+
+    @Test
+    public void smokeTest() {
         // Build type system description
         TypeSystemDescription tsd = TypeSystemDescriptionFactory.createTypeSystemDescription()
         tsd.resolveImports()
@@ -60,19 +77,10 @@ class AnnotatorTest {
         builder.add(posTagger)
         
         AnalysisEngineDescription desc = builder.createAggregateDescription()
-        PrintWriter writer = new PrintWriter(new File("src/test/resources/descriptors/TestAggregateUIMAFit.xml"))
-        desc.toXML(writer)
-        writer.close()
+        ////PrintWriter writer = new PrintWriter(new File("src/test/resources/descriptors/TestAggregateUIMAFit.xml"))
+        ////desc.toXML(writer)
+        ////writer.close()
 
-        this.engine = builder.createAggregate()
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void test() {
-        fail("Not yet implemented")
+        AnalysisEngine engine = builder.createAggregate()
     }
 }
