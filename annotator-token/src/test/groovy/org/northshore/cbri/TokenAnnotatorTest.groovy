@@ -1,11 +1,12 @@
 package org.northshore.cbri;
 
 import static org.junit.Assert.*
-import opennlp.uima.util.UimaUtil
+import groovy.util.logging.Log4j
 
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
-import org.apache.ctakes.typesystem.type.textspan.Segment
+import org.apache.ctakes.typesystem.type.syntax.WordToken
 import org.apache.ctakes.typesystem.type.textspan.Sentence
+import org.apache.log4j.BasicConfigurator
 import org.apache.uima.analysis_engine.AnalysisEngine
 import org.apache.uima.analysis_engine.AnalysisEngineDescription
 import org.apache.uima.fit.factory.AnalysisEngineFactory
@@ -13,12 +14,16 @@ import org.apache.uima.fit.factory.ExternalResourceFactory
 import org.apache.uima.jcas.JCas
 import org.junit.After
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 
-import com.google.common.base.Charsets
-import com.google.common.io.Resources
-
+@Log4j
 class TokenAnnotatorTest {
+
+    @BeforeClass
+    public static void setupClass() {
+        BasicConfigurator.configure()
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -29,21 +34,21 @@ class TokenAnnotatorTest {
     }
     
     @Test
-    public void testOpenNLPTokenAnnotator() {
+    public void testTokenAnnotator() {
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
-                opennlp.uima.tokenize.Tokenizer,
-                "opennlp.uima.SentenceType", Sentence.name,
-                "opennlp.uima.TokenType", BaseToken.name)
-        ExternalResourceFactory.createDependencyAndBind(desc, UimaUtil.MODEL_PARAMETER,
-                opennlp.uima.tokenize.TokenizerModelResourceImpl, "file:models/en-token.bin")
+                TokenAnnotator,
+                TokenAnnotator.PARAM_POST_PROCESS_SCRIPT_FILE, 
+                "groovy/TokenPostProcess.groovy")
+        ExternalResourceFactory.createDependencyAndBind(desc, 
+            TokenAnnotator.TOKEN_MODEL_KEY,
+            opennlp.uima.tokenize.TokenizerModelResourceImpl, 
+            "file:models/en-token.bin")
         AnalysisEngine tokenizer = AnalysisEngineFactory.createEngine(desc)
         assert tokenizer != null
         
-        // load in the text to process
-        URL url = Resources.getResource("data/test-note-1.txt")
-        String text = Resources.toString(url, Charsets.UTF_8)
 
-        // create a new CAS and seed with sentences
+        // create a new JCas and seed with sentences
+        String text = "There was a tubular adenoma in the sigmoid colon."
         JCas jcas = tokenizer.newJCas()
         jcas.setDocumentText(text)
         UIMAUtil.jcas = jcas
@@ -51,11 +56,13 @@ class TokenAnnotatorTest {
 
         // apply the tokenizer
         tokenizer.process(jcas)
-        Collection<BaseToken> tokens = UIMAUtil.select(type:BaseToken)
-        assert tokens.size() == 239
         
-        tokens.each {
-            println " '$it.coveredText' "
-        }
+        // verify number of BaseTokens
+        Collection<BaseToken> baseTokens = UIMAUtil.select(type:BaseToken)
+        assert baseTokens.size() == 10
+
+        // verify number of WordTokens
+        Collection<WordToken> wordTokens = UIMAUtil.select(type:WordToken)
+        assert wordTokens.size() == 9        
     }
 }
