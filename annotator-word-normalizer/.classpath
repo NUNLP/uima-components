@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/groovy"/>
+	<classpathentry kind="src" path="src/main/gspell-resources"/>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/lvg-resources"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/test/groovy"/>
 	<classpathentry kind="src" path="src/test/java"/>
