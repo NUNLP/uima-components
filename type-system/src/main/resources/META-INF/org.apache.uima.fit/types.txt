@@ -1,2 +1,0 @@
-classpath*:org/apache/ctakes/typesystem/types/TypeSystem.xml
-
