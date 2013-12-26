@@ -1,0 +1,27 @@
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/main/resources'
+            srcDir 'src/main/lvg-resources'
+            srcDir 'src/main/gspell-resources'
+        }
+    }
+    //    test {
+    //        java {
+    //            srcDir 'C:/WKT/umls/gspell/sources'
+    //            srcDir 'C:/WKT/umls/lvg2013/sources'
+    //        }
+    //    }
+}
+
+jar {
+    from { 
+        zipTree('lib/gspellProject.jar') 
+        zipTree('lib/lvg2013dist.jar')
+    }
+}
+
+dependencies {
+	compile fileTree(dir: 'lib', include: '*.jar')
+}
+
