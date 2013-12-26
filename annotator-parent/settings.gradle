@@ -1,0 +1,12 @@
+
+include 'type-system', 
+	'annotator-groovy-dsl',
+	'annotator-segment',
+	'annotator-negation',
+	'annotator-token',
+	'annotator-sentence',
+	'annotator-pos',
+	'annotator-chunk',
+	'annotator-lex-normalize',
+	'annotator-dictionary'
+

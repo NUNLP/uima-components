@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/groovy"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="src" path="src/test/groovy"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry exported="true" kind="src" path="/annotator-groovy-dsl"/>
+	<classpathentry exported="true" kind="src" path="/annotator-lex-normalize"/>
+	<classpathentry exported="true" kind="src" path="/annotator-negation"/>
+	<classpathentry exported="true" kind="src" path="/annotator-pos"/>
+	<classpathentry exported="true" kind="src" path="/annotator-segment"/>
+	<classpathentry exported="true" kind="src" path="/annotator-sentence"/>
+	<classpathentry exported="true" kind="src" path="/annotator-token"/>
+	<classpathentry exported="true" kind="src" path="/type-system"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
