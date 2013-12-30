@@ -29,9 +29,9 @@ public class BratDocumentTest {
 
 	@Test
 	public void testDocumentParsing() throws IOException {
-		URL url = Resources.getResource("annotated/path-note-1.txt");
-		String text = Resources.toString(url, Charsets.UTF_8);
-
+		URL url = Resources.getResource("annotated/path-note-1.txt")
+		String text = Resources.toString(url, Charsets.UTF_8)
+		
 		InputStream annIn = BratDocumentTest.class.getResourceAsStream(
 				"/annotated/path-note-1.ann")
 
