@@ -4,6 +4,7 @@ import static org.junit.Assert.*
 import static org.northshore.cbri.UIMAUtil.*
 import groovy.util.logging.Log4j
 
+import org.apache.ctakes.typesystem.type.textsem.EntityMention
 import org.apache.ctakes.typesystem.type.textspan.Segment
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Level
@@ -63,5 +64,8 @@ class BratAnnotatorTest {
 		assertEquals("FINAL DIAGNOSIS:", seg.coveredText)
 		seg = segs.find{ it.id == "GROSS" }
 		assertEquals("GROSS:", seg.coveredText)
+		
+		Collection<EntityMention> mentions = select(type:EntityMention)
+		assertEquals(6, mentions.size())
 	}
 }
