@@ -1,0 +1,38 @@
+CASE: XXX-00-00000
+PATIENT: XXXXXXXXX XXXXXXX
+Nature of Specimen:      A. Rectosigmoid Colon Polyp (Multiple); B.
+Splenic Flexure Polyp; C. Hepatic Flexure
+Pre-Op Diagnosis:   Rule out adenomatous polyp
+Post-Op Diagnosis:  None given
+Clinical History:   History of adenomatous polyp
+
+Copies of Report to:     XXXXXXX XXXXXXX XXXXXXXX, MD
+
+
+
+FINAL DIAGNOSIS:
+
+A) Rectosigmoid colon, polyp, multiple:
+- Hyperplastic polyp fragments.
+B) Splenic flexure colon polyp:
+- Hyperplastic polyp.
+C) Hepatic flexure, colon polyp:
+- Adenomatous polyp.
+
+GROSS:
+
+A)  "Rectosigmoid polyp multiple": Three fragment(s); 0.4-0.1 cm;
+totally submitted: Single cassette(s).
+B)  "Splenic flexure polyp": One fragment(s); 0.2 cm; totally
+submitted: Single cassette(s).
+C)  "Hepatic flexure": Four fragment(s); 0.2-0.1 cm; totally
+submitted: Single cassette(s).
+DV 9/09/2222
+
+MICROSCOPIC:
+
+Microscopic examination was performed. See diagnosis.
+
+XXXX XXXXXX M.D.
+Pathologist
+Electronically signed Sep 22, 2222  22:22:22

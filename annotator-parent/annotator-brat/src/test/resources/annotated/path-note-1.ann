@@ -1,0 +1,12 @@
+T1	Final_Diagnosis 341 357	FINAL DIAGNOSIS:
+T2	Sigmoid 362 380	Rectosigmoid colon
+T3	Hyperplastic 401 419	Hyperplastic polyp
+A1	Number T3 MULTIPLE
+T4	Splenic_Flexure 434 449	Splenic flexure
+T5	Hyperplastic 465 483	Hyperplastic polyp
+T6	Hepatic_Flexure 488 503	Hepatic flexure
+T7	Adenoma 520 537	Adenomatous polyp
+T8	Gross 540 546	GROSS:
+R1	Finding Disorder:T3 Site:T2	
+R2	Finding Disorder:T5 Site:T4	
+R3	Finding Disorder:T7 Site:T6	
