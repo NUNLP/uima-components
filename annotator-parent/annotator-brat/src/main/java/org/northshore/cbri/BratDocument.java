@@ -31,24 +31,17 @@ import java.util.Map;
 import opennlp.tools.util.ObjectStream;
 
 public class BratDocument {
-
-	private final String id;
-	private final String text;
 	private final Map<String, BratAnnotation> annotationMap;
 	
 	private Map<String, SpanAnnotation> spanAnnotations;
 	private Map<String, AttributeAnnotation> attrAnnotations;
 	private Map<String, RelationAnnotation> relAnnotations;
 
-	public BratDocument(String id, String text,
-			Collection<BratAnnotation> annotations) {
+	public BratDocument(Collection<BratAnnotation> annotations) {
 		
 		this.spanAnnotations = null;
 		this.attrAnnotations = null;
 		this.relAnnotations = null;
-		
-		this.id = id;
-		this.text = text;
 
 		Map<String, BratAnnotation> annMap = new HashMap<String, BratAnnotation>();
 		for (BratAnnotation annotation : annotations) {
@@ -56,14 +49,6 @@ public class BratDocument {
 		}
 
 		this.annotationMap = Collections.unmodifiableMap(annMap);
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public String getText() {
-		return text;
 	}
 
 	public BratAnnotation getAnnotation(String id) {
@@ -114,31 +99,17 @@ public class BratDocument {
 	}
 
 
-	public static BratDocument parseDocument(String id, InputStream txtIn,
-			InputStream annIn) throws IOException {
-
-		Reader txtReader = new InputStreamReader(txtIn,
-				Charset.forName("UTF-8"));
-
-		StringBuilder text = new StringBuilder();
-
-		char cbuf[] = new char[1024];
-
-		int len;
-		while ((len = txtReader.read(cbuf)) > 0) {
-			text.append(cbuf, 0, len);
-		}
+	public static BratDocument parseDocument(InputStream annIn) throws IOException {
 
 		Collection<BratAnnotation> annotations = new ArrayList<BratAnnotation>();
 
-		ObjectStream<BratAnnotation> annStream = new BratAnnotationStream(id,
-				annIn);
+		ObjectStream<BratAnnotation> annStream = new BratAnnotationStream(annIn);
 
 		BratAnnotation ann;
 		while ((ann = annStream.read()) != null) {
 			annotations.add(ann);
 		}
 
-		return new BratDocument(id, text.toString(), annotations);
+		return new BratDocument(annotations);
 	}
 }

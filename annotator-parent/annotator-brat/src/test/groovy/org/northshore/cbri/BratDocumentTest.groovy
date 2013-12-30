@@ -10,6 +10,9 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
 
+import com.google.common.base.Charsets
+import com.google.common.io.Resources
+
 @Log4j
 public class BratDocumentTest {
 	static Map<String, String> typeToClassMap = new HashMap<String, String>()
@@ -26,17 +29,17 @@ public class BratDocumentTest {
 
 	@Test
 	public void testDocumentParsing() throws IOException {
-		InputStream txtIn = BratDocumentTest.class.getResourceAsStream(
-				"/annotated/path-note-1.txt")
+		URL url = Resources.getResource("annotated/path-note-1.txt");
+		String text = Resources.toString(url, Charsets.UTF_8);
 
 		InputStream annIn = BratDocumentTest.class.getResourceAsStream(
 				"/annotated/path-note-1.ann")
 
-		BratDocument doc = BratDocument.parseDocument("path-note-1", txtIn, annIn)
+		BratDocument doc = BratDocument.parseDocument(annIn)
 
-		assertEquals("path-note-1", doc.getId())
-		assertTrue(doc.getText().startsWith("CASE: XXX-00-00000"))
-		assertTrue(doc.getText().endsWith("Sep 22, 2222  22:22:22\n"))
+		assertTrue(text.startsWith("CASE: XXX-00-00000"))
+		assertTrue(text.endsWith("Sep 22, 2222  22:22:22\n"))
+		assertEquals(995, text.length())
 
 		Collection<BratAnnotation> anns = doc.getAnnotations()
 		assertEquals(12, anns.size())

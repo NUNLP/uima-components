@@ -1,5 +1,6 @@
 
 include 'type-system', 
+	'annotator-brat',
 	'annotator-groovy-dsl',
 	'annotator-segment',
 	'annotator-negation',

@@ -21,7 +21,9 @@ abstract class BratAnnotator extends JCasAnnotator_ImplBase {
 	}
 
 	@Override
-	public void process(JCas aJCas) throws AnalysisEngineProcessException {
+	public void process(JCas jcas) throws AnalysisEngineProcessException {
+		InputStream annIn = BratAnnotator.class.getResourceAsStream(this.annFileName)
+		BratDocument doc = BratDocument.parseDocument("docId", txtIn, annIn)
 	}
 	
 	public abstract Map<String, Annotation> annotationMap();
