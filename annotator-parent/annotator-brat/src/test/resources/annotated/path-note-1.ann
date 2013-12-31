@@ -7,6 +7,6 @@ T5	Hyperplastic 465 483	Hyperplastic polyp
 T6	Hepatic_Flexure 488 503	Hepatic flexure
 T7	Adenoma 520 537	Adenomatous polyp
 T8	Gross 540 546	GROSS:
-R1	Finding Disorder:T3 Site:T2	
-R2	Finding Disorder:T5 Site:T4	
-R3	Finding Disorder:T7 Site:T6	
+R1	Finding Arg1:T3 Arg2:T2	
+R2	Finding Arg1:T5 Arg2:T4	
+R3	Finding Arg1:T7 Arg2:T6

@@ -4,6 +4,7 @@ import static org.junit.Assert.*
 import static org.northshore.cbri.UIMAUtil.*
 import groovy.util.logging.Log4j
 
+import org.apache.ctakes.typesystem.type.relation.UMLSRelation
 import org.apache.ctakes.typesystem.type.textsem.EntityMention
 import org.apache.ctakes.typesystem.type.textspan.Segment
 import org.apache.log4j.BasicConfigurator
@@ -67,5 +68,8 @@ class BratAnnotatorTest {
 		
 		Collection<EntityMention> mentions = select(type:EntityMention)
 		assertEquals(6, mentions.size())
+		
+		Collection<UMLSRelation> rels = select(type:UMLSRelation)
+		assertEquals(3, rels.size())
 	}
 }
