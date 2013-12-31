@@ -36,28 +36,30 @@ class BratAnnotatorTest {
 
 	@Test
 	public void smokeTest() {
+		// test note
+		URL url = Resources.getResource("annotated/path-note-1.txt")
+		String text = Resources.toString(url, Charsets.UTF_8)
+
+		// build a BratAnnotator analysis engine
 		def tsd = TypeSystemDescriptionFactory.createTypeSystemDescription()
 		AnalysisEngineDescription brat = AnalysisEngineFactory.createEngineDescription(
 				BratAnnotatorImpl,
-				BratAnnotatorImpl.PARAM_ANN_FILE, "/annotated/path-note-1.ann")
-		
+				BratAnnotator.PARAM_ANN_FILE, "/annotated/path-note-1.ann",
+				BratAnnotator.PARAM_VIEW_NAME, "gold")
 		AggregateBuilder builder = new AggregateBuilder()
 		builder.add(brat)
-		AnalysisEngine engine = builder.createAggregate()
-		
 		AnalysisEngineDescription desc = builder.createAggregateDescription()
 		PrintWriter writer = new PrintWriter(new File("src/test/resources/descriptors/TestBratUIMAFit.xml"))
 		desc.toXML(writer)
 		writer.close()
+		AnalysisEngine engine = builder.createAggregate()
 		
+		// make the JCas and process
 		JCas jcas = engine.newJCas()
-		UIMAUtil.jcas = jcas
-		
-		URL url = Resources.getResource("annotated/path-note-1.txt")
-		String text = Resources.toString(url, Charsets.UTF_8)
-		jcas.setDocumentText(text)
-		
+		jcas.setDocumentText(text)		
 		engine.process(jcas)
+		
+		// test the result
 		
 		Collection<Segment> segs = select(type:Segment)
 		assertEquals(2, segs.size())

@@ -21,12 +21,25 @@
                             <multiValued>false</multiValued>
                             <mandatory>true</mandatory>
                         </configurationParameter>
+                        <configurationParameter>
+                            <name>viewName</name>
+                            <description>Name of JCas view</description>
+                            <type>String</type>
+                            <multiValued>false</multiValued>
+                            <mandatory>true</mandatory>
+                        </configurationParameter>
                     </configurationParameters>
                     <configurationParameterSettings>
                         <nameValuePair>
                             <name>annFileName</name>
                             <value>
                                 <string>/annotated/path-note-1.ann</string>
+                            </value>
+                        </nameValuePair>
+                        <nameValuePair>
+                            <name>viewName</name>
+                            <value>
+                                <string>gold</string>
                             </value>
                         </nameValuePair>
                     </configurationParameterSettings>
