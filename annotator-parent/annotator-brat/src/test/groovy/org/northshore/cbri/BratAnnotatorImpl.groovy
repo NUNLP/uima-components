@@ -28,7 +28,7 @@ class BratAnnotatorImpl extends BratAnnotator {
 				ann.id = "GROSS"
 				break;
 			case "Rectum":
-				ann mention = create(type:EntityMention,
+				ann = create(type:EntityMention,
 				begin:span.span.start,
 				end:span.span.end,
 				polarity :1 , uncertainty :0 , ontologyConcepts :[

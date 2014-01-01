@@ -24,6 +24,9 @@ import com.google.common.io.Resources
 
 @Log4j
 class BratAnnotatorTest {
+	
+	public static final String GOLD_VIEW = "gold"
+	
 	@BeforeClass
 	public static void setupClass() {
 		BasicConfigurator.configure()
@@ -45,7 +48,7 @@ class BratAnnotatorTest {
 		AnalysisEngineDescription brat = AnalysisEngineFactory.createEngineDescription(
 				BratAnnotatorImpl,
 				BratAnnotator.PARAM_ANN_FILE, "/annotated/path-note-1.ann",
-				BratAnnotator.PARAM_VIEW_NAME, "gold")
+				BratAnnotator.PARAM_VIEW_NAME, GOLD_VIEW)
 		AggregateBuilder builder = new AggregateBuilder()
 		builder.add(brat)
 		AnalysisEngineDescription desc = builder.createAggregateDescription()
@@ -60,7 +63,6 @@ class BratAnnotatorTest {
 		engine.process(jcas)
 		
 		// test the result
-		
 		Collection<Segment> segs = select(type:Segment)
 		assertEquals(2, segs.size())
 		Segment seg = segs.find{ it.id == "FINAL_DIAGNOSIS" }

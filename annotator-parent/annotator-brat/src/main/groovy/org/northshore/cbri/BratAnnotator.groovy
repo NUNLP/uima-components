@@ -1,7 +1,5 @@
 package org.northshore.cbri
 
-import groovy.util.logging.Log4j
-
 import org.apache.ctakes.typesystem.type.relation.UMLSRelation
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
 import org.apache.uima.UimaContext
@@ -11,8 +9,8 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter
 import org.apache.uima.jcas.JCas
 import org.apache.uima.jcas.tcas.Annotation
 import org.apache.uima.resource.ResourceInitializationException
+import org.apache.uima.util.Level
 
-@Log4j
 abstract class BratAnnotator extends JCasAnnotator_ImplBase {
 	public static final String PARAM_ANN_FILE = "annFileName"
 	public static final String PARAM_VIEW_NAME = "viewName"
@@ -29,6 +27,7 @@ abstract class BratAnnotator extends JCasAnnotator_ImplBase {
 	public void initialize(UimaContext context)
 	throws ResourceInitializationException {
 		super.initialize(context);
+		context.getLogger().log(Level.INFO, "loading annotation file $annFileName")
 		InputStream annIn = BratAnnotator.class.getResourceAsStream(this.annFileName)
 		this.bratDoc = BratDocument.parseDocument(annIn)
 	}
@@ -46,7 +45,9 @@ abstract class BratAnnotator extends JCasAnnotator_ImplBase {
 		this.bratDoc.getRelAnnotations().values().each { value ->
 			IdentifiedAnnotation arg1 = annMap.get(value.arg1)
 			IdentifiedAnnotation arg2 = annMap.get(value.arg2)
-			UMLSRelation rel = createUMLSRelation(view, arg1, arg2, value)
+			if (arg1 != null && arg2 != null) {
+				UMLSRelation rel = createUMLSRelation(view, arg1, arg2, value)
+			}
 		}
 	}
 
