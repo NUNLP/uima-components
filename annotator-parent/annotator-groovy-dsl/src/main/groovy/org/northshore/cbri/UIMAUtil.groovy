@@ -21,6 +21,7 @@ import org.apache.uima.jcas.tcas.Annotation
 /**
  * UIMAUtil implements the UIMA DSL
  * @author Will Thompson
+ * TODO: add these methods to JCas interface
  */
 class UIMAUtil extends Script {
     @Override
@@ -74,7 +75,7 @@ class UIMAUtil extends Script {
             m.each {
                 groupCnt += 1
                 if (m.group(3) != null) {
-                    println "Meta-match: (" + m.group(3) + ") from: " + m.start(3) + " to " + m.end(3)
+                    ////println "Meta-match: (" + m.group(3) + ") from: " + m.start(3) + " to " + m.end(3)
                     retval.namedGroupIndex[m.group(3)] = groupCnt
                 }
             }
