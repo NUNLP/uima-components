@@ -25,8 +25,8 @@ import org.apache.uima.jcas.tcas.Annotation
  */
 class UIMAUtil extends Script {
     @Override
-    public Object run() {
-        return super.run()
+    Object run() {
+        super.run()
     }
 
     // ------------------------------------------------------------------------
@@ -70,7 +70,7 @@ class UIMAUtil extends Script {
             
             Pattern metpat = ~/\((\?(<(\w+?)>))/
             Matcher m = delegate.toString() =~ metpat
-            Matcher.metaClass.namedGroupIndex = new HashMap<String, Integer>()
+            Matcher.metaClass.namedGroupIndex = [:]
             int groupCnt = 0
             m.each {
                 groupCnt += 1
@@ -106,47 +106,47 @@ class UIMAUtil extends Script {
     static Class getIdentifiedAnnotationClass(String typeName) {
         Class typeClass = null
         switch (typeName) {
-            case "AnatomicalSiteMention":
-                typeClass = AnatomicalSiteMention;
-                break;
-            case "DiseaseDisorderMention":
-                typeClass = DiseaseDisorderMention;
-                break;
-            case "EventMention":
-                typeClass = EventMention;
-                break;
-            case "FractionAnnotation":
-                typeClass = FractionAnnotation;
-                break;
-            case "LabMention":
-                typeClass = LabMention;
-                break;
-            case "MeasurementAnnotation":
-                typeClass = MeasurementAnnotation;
-                break;
-            case "MedicationMention":
-                typeClass = MedicationMention;
-                break;
-            case "PersonTitleAnnotation":
-                typeClass = PersonTitleAnnotation;
-                break;
-            case "ProcedureMention":
-                typeClass = ProcedureMention;
-                break;
-            case "RangeAnnotation":
-                typeClass = RangeAnnotation;
-                break;
-            case "SignSymptomMention":
-                typeClass = SignSymptomMention;
-                break;
-            case "TimeMention":
-                typeClass = TimeMention;
-                break;
-            case "IdentifiedAnnotation":
-                typeClass = IdentifiedAnnotation;
-                break;
+            case 'AnatomicalSiteMention':
+                typeClass = AnatomicalSiteMention
+                break
+            case 'DiseaseDisorderMention':
+                typeClass = DiseaseDisorderMention
+                break
+            case 'EventMention':
+                typeClass = EventMention
+                break
+            case 'FractionAnnotation':
+                typeClass = FractionAnnotation
+                break
+            case 'LabMention':
+                typeClass = LabMention
+                break
+            case 'MeasurementAnnotation':
+                typeClass = MeasurementAnnotation
+                break
+            case 'MedicationMention':
+                typeClass = MedicationMention
+                break
+            case 'PersonTitleAnnotation':
+                typeClass = PersonTitleAnnotation
+                break
+            case 'ProcedureMention':
+                typeClass = ProcedureMention
+                break
+            case 'RangeAnnotation':
+                typeClass = RangeAnnotation
+                break
+            case 'SignSymptomMention':
+                typeClass = SignSymptomMention
+                break
+            case 'TimeMention':
+                typeClass = TimeMention
+                break
+            case 'IdentifiedAnnotation':
+                typeClass = IdentifiedAnnotation
+                break
             default:
-                throw new IllegalArgumentException("Invalid type in dictionary entry: $typeName");
+                throw new IllegalArgumentException("Invalid type in dictionary entry: $typeName")
         }
         return typeClass
     }
@@ -161,10 +161,10 @@ class UIMAUtil extends Script {
      * @return
      */
     static TOP create(Map attrs) {
-        TOP a = attrs.type.newInstance(jcas);
+        TOP a = attrs.type.newInstance(jcas)
         attrs.each { k, v ->
             if (a.metaClass.hasProperty(a, k)) {
-                if (k != "type") {
+                if (k != 'type') {
                     a."${k}" = v
                 }
             }
@@ -177,7 +177,7 @@ class UIMAUtil extends Script {
      * Apply a set of regex patterns to a collection of annotations. For each match, apply
      * the specified closure
      */
-    def static applyPatterns = { Collection<Annotation> anns, java.util.List<Pattern> patterns, Closure action ->
+    static applyPatterns = { Collection<Annotation> anns, java.util.List<Pattern> patterns, Closure action ->
         anns.each { ann ->
             patterns.each { p ->
                 AnnotationMatcher m = p.matcher(coveringAnn:ann); m.each {
@@ -192,7 +192,7 @@ class UIMAUtil extends Script {
      * @param args
      * @return
      */
-    def static java.util.List<IdentifiedAnnotation> createMentions(Map args) {
+    static java.util.List<IdentifiedAnnotation> createMentions(Map args) {
         Map patterns = args.patterns
         Collection searchSet = args.searchSet
         Class mentionType = args.mentionType
@@ -210,8 +210,8 @@ class UIMAUtil extends Script {
                             end:(matcher.end(vals.group) + ann.begin)
                             )
                     OntologyConcept concept = create(vals)
-                    if (concept.codingScheme == "UCUM") {
-                        concept.code = matcher.group("quant") + matcher.group("unit")
+                    if (concept.codingScheme == 'UCUM') {
+                        concept.code = matcher.group('quant') + matcher.group('unit')
                     }
                     if (concept.oid == null) {
                         concept.oid = "${vals.code}#${vals.codingScheme}"
@@ -225,28 +225,29 @@ class UIMAUtil extends Script {
                 }
             }
         }
-        return mentions
+        
+		mentions
     }
     
     // ------------------------------------------------------------------------
     // Annotation selection functions
     // ------------------------------------------------------------------------
 
-    def static select(Map args) {
+    static select(Map args) {
         Class type = args.type
         Closure filter = args.filter
 
-        def Collection<AnnotationFS> annotations = (type != null ? select(jcas, type) : selectAll(jcas))
+        Collection<AnnotationFS> annotations = (type != null ? select(jcas, type) : selectAll(jcas))
 
         if (filter) {
-            def Collection<AnnotationFS> filtered = []
+            Collection<AnnotationFS> filtered = []
             annotations.each {
                 if (filter.call(it) == true) { filtered << it }
             }
             annotations = filtered
         }
 
-        return annotations
+        annotations
     }
 
 
@@ -255,59 +256,59 @@ class UIMAUtil extends Script {
     // TODO: check UIMAFit and RUTA for more complete set
     // ------------------------------------------------------------------------
 
-        def static not = { Closure pred ->
-        Closure c = { AnnotationFS ann ->
-            return !pred.call(ann)
-        }
-    }
+	static not = { Closure pred ->
+		{ AnnotationFS ann ->
+			!pred.call(ann)
+		}
+	}
 
-    def static and = { Closure... preds ->
-        Closure c = { AnnotationFS ann ->
+    static and = { Closure... preds ->
+        { AnnotationFS ann ->
             for (Closure pred : preds) {
                 if (pred.call(ann) == false) { return false }
             }
-            return true
+            true
         }
     }
 
-    def static or = { Closure... preds ->
-        Closure c = { AnnotationFS ann ->
+    static or = { Closure... preds ->
+        { AnnotationFS ann ->
             for (Closure pred : preds) {
                 if (pred.call(ann) == true) { return true }
             }
-            return false
+            false
         }
     }
 
-    def static contains = { Class<? extends Annotation> type ->
-        Closure c = { AnnotationFS ann ->
-            return contains(jcas, ann, type)
+    static contains = { Class<? extends Annotation> type ->
+        { AnnotationFS ann ->
+            contains(jcas, ann, type)
         }
     }
 
-    def static coveredBy = { AnnotationFS coveringAnn ->
-        Closure c = { AnnotationFS ann ->
-            return ((ann != coveringAnn &&
+    static coveredBy = { AnnotationFS coveringAnn ->
+        { AnnotationFS ann ->
+            (ann != coveringAnn &&
             coveringAnn.begin <= ann.begin &&
-            coveringAnn.end >= ann.end) ? true : false)
+            coveringAnn.end >= ann.end)
         }
     }
 
-    def static between = { Integer begin, Integer end ->
-        Closure c = { AnnotationFS ann ->
-            return ((begin <= end && begin <= ann.begin && end >= ann.end) ? true : false)
+    static between = { Integer begin, Integer end ->
+        { AnnotationFS ann ->
+            (begin <= end && begin <= ann.begin && end >= ann.end)
         }
     }
 
-    def static before = { Integer index ->
-        Closure c = { AnnotationFS ann ->
-            return ((ann.end < index) ? true : false)
+    static before = { Integer index ->
+        { AnnotationFS ann ->
+            ann.end < index
         }
     }
 
-    def static after = { Integer index ->
-        Closure c = { AnnotationFS ann ->
-            return ((ann.begin > index) ? true : false)
+    static after = { Integer index ->
+        { AnnotationFS ann ->
+            ann.begin > index
         }
     }
 }
