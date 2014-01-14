@@ -39,7 +39,7 @@ class LexNormalizerAnnotatorTest {
     @After
     public void tearDown() throws Exception {
     }
-
+    
     @Test
     public void testNormalizer() {
         AnalysisEngine engine = createEngine(LexNormalizerAnnotator,
