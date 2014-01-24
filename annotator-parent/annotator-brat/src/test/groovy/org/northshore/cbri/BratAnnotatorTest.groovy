@@ -64,16 +64,48 @@ class BratAnnotatorTest {
 		
 		// test the result
 		Collection<Segment> segs = select(type:Segment)
-		assertEquals(2, segs.size())
+		assert segs.size() == 1
 		Segment seg = segs.find{ it.id == "FINAL_DIAGNOSIS" }
 		assertEquals("FINAL DIAGNOSIS:", seg.coveredText)
-		seg = segs.find{ it.id == "GROSS" }
-		assertEquals("GROSS:", seg.coveredText)
 		
 		Collection<EntityMention> mentions = select(type:EntityMention)
-		assertEquals(6, mentions.size())
+		assert mentions.size() == 6
 		
 		Collection<UMLSRelation> rels = select(type:UMLSRelation)
-		assertEquals(3, rels.size())
+		assert rels.size() == 3
 	}
+    
+    @Test
+    public void pathNoteWithAttribute() {
+        // build a BratAnnotator analysis engine
+        def tsd = TypeSystemDescriptionFactory.createTypeSystemDescription()
+        AnalysisEngineDescription brat = AnalysisEngineFactory.createEngineDescription(
+                BratAnnotatorImpl,
+                BratAnnotator.PARAM_ANN_FILE, "/annotated/path-note-2.ann",
+                BratAnnotator.PARAM_VIEW_NAME, GOLD_VIEW)
+        AggregateBuilder builder = new AggregateBuilder()
+        builder.add(brat)
+        AnalysisEngineDescription desc = builder.createAggregateDescription()
+        PrintWriter writer = new PrintWriter(new File("src/test/resources/descriptors/TestBratUIMAFit.xml"))
+        desc.toXML(writer)
+        writer.close()
+        AnalysisEngine engine = builder.createAggregate()
+        
+        // make the JCas and process
+        JCas jcas = engine.newJCas()
+        String text = 'foo' * 500
+        jcas.setDocumentText(text)
+        engine.process(jcas)
+        
+        // test the result
+        Collection<Segment> segs = select(type:Segment)
+        assert segs.size() == 1
+        Segment seg = segs.find{ it.id == "FINAL_DIAGNOSIS" }
+        
+        Collection<EntityMention> mentions = select(type:EntityMention)
+        assert mentions.size() == 2
+        
+        Collection<UMLSRelation> rels = select(type:UMLSRelation)
+        assert rels.size() == 1
+    }
 }

@@ -29,17 +29,10 @@ public class BratDocumentTest {
 
 	@Test
 	public void testDocumentParsing() throws IOException {
-		URL url = Resources.getResource("annotated/path-note-1.txt")
-		String text = Resources.toString(url, Charsets.UTF_8)
-		
 		InputStream annIn = BratDocumentTest.class.getResourceAsStream(
 				"/annotated/path-note-1.ann")
 
 		BratDocument doc = BratDocument.parseDocument(annIn)
-
-		assertTrue(text.startsWith("CASE: XXX-00-00000"))
-		assertTrue(text.endsWith("Sep 22, 2222  22:22:22\n"))
-		assertEquals(995, text.length())
 
 		Collection<BratAnnotation> anns = doc.getAnnotations()
 		assertEquals(12, anns.size())

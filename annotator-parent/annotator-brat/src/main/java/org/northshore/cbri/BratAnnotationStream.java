@@ -122,7 +122,8 @@ public class BratAnnotationStream implements ObjectStream<BratAnnotation> {
 			return new AttributeAnnotation(
 					values[BratAnnotationParser.ID_OFFSET],
 					values[BratAnnotationParser.TYPE_OFFSET],
-					values[ENTITY_ID_OFFSET], values[VALUE_OFFSET]);
+					values[ENTITY_ID_OFFSET], 
+					(String) (values.length == 4 ? values[VALUE_OFFSET] : "true"));
 		}
 	}
 

@@ -1,0 +1,6 @@
+T1	Final_Diagnosis 332 348	FINAL DIAGNOSIS:
+T2	Ileum 353 368	Ileocecal valve
+T3	Villous 380 395	Villous adenoma
+A1	Dysplasia T3
+T4	Dysplasia 407 427	high grade dysplasia
+R1	Finding Arg1:T3 Arg2:T2	
