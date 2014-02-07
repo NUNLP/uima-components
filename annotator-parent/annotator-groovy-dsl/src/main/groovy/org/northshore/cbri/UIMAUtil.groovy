@@ -257,13 +257,13 @@ class UIMAUtil extends Script {
     // ------------------------------------------------------------------------
 
 	static not = { Closure pred ->
-		{ AnnotationFS ann ->
+		{ TOP ann ->
 			!pred.call(ann)
 		}
 	}
 
     static and = { Closure... preds ->
-        { AnnotationFS ann ->
+        { TOP ann ->
             for (Closure pred : preds) {
                 if (pred.call(ann) == false) { return false }
             }
@@ -272,7 +272,7 @@ class UIMAUtil extends Script {
     }
 
     static or = { Closure... preds ->
-        { AnnotationFS ann ->
+        { TOP ann ->
             for (Closure pred : preds) {
                 if (pred.call(ann) == true) { return true }
             }
@@ -281,13 +281,13 @@ class UIMAUtil extends Script {
     }
 
     static contains = { Class<? extends Annotation> type ->
-        { AnnotationFS ann ->
+        { TOP ann ->
             contains(jcas, ann, type)
         }
     }
 
-    static coveredBy = { AnnotationFS coveringAnn ->
-        { AnnotationFS ann ->
+    static coveredBy = { TOP coveringAnn ->
+        { TOP ann ->
             (ann != coveringAnn &&
             coveringAnn.begin <= ann.begin &&
             coveringAnn.end >= ann.end)
@@ -295,19 +295,19 @@ class UIMAUtil extends Script {
     }
 
     static between = { Integer begin, Integer end ->
-        { AnnotationFS ann ->
+        { TOP ann ->
             (begin <= end && begin <= ann.begin && end >= ann.end)
         }
     }
 
     static before = { Integer index ->
-        { AnnotationFS ann ->
+        { TOP ann ->
             ann.end < index
         }
     }
 
     static after = { Integer index ->
-        { AnnotationFS ann ->
+        { TOP ann ->
             ann.begin > index
         }
     }

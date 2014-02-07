@@ -30,7 +30,7 @@ scope_terminator_ytex = ~/(?i)\b((but)|(however)|(nevertheless)|(yet)|(though)|(
 // ----------------------------------------------------------------------------
 // scope of algorithm is a sentence containing an EntityMention
 // ----------------------------------------------------------------------------
-Collection<Sentence> sents = select(type:Sentence, filter:contains(EntityMention))
+Collection<Sentence> sents = select type:Sentence, filter:contains(EntityMention)
 
 // ----------------------------------------------------------------------------
 // mark prenegation triggers

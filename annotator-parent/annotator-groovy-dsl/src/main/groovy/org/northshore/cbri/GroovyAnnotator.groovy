@@ -1,16 +1,19 @@
 package org.northshore.cbri
 
+import groovy.util.logging.Log4j
+
 import org.apache.uima.UimaContext
-import org.apache.uima.analysis_engine.AnalysisEngineProcessException
 import org.apache.uima.fit.descriptor.ConfigurationParameter
 import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ResourceInitializationException
 import org.codehaus.groovy.control.CompilerConfiguration
+import org.codehaus.groovy.control.customizers.ImportCustomizer
 
 import com.google.common.base.Charsets
 import com.google.common.io.Files
 import com.google.common.io.Resources
 
+@Log4j
 public class GroovyAnnotator extends org.apache.uima.fit.component.JCasAnnotator_ImplBase {
 
     public static final String PARAM_SCRIPT_FILE = "scriptFileName"
@@ -28,7 +31,14 @@ public class GroovyAnnotator extends org.apache.uima.fit.component.JCasAnnotator
     public void initialize(UimaContext context) throws ResourceInitializationException {
         super.initialize(context)
         CompilerConfiguration config = new CompilerConfiguration()
+        
+        // TODO: add all type imports here
+        def icz = new ImportCustomizer()
+        icz.addImports('org.apache.ctakes.typesystem.type.textspan.Sentence')
+        config.addCompilationCustomizers(icz)
+        
         config.setScriptBaseClass("org.northshore.cbri.UIMAUtil")
+        
         GroovyShell shell = new GroovyShell(config)
         try {
             String scriptContents = ""
@@ -36,7 +46,7 @@ public class GroovyAnnotator extends org.apache.uima.fit.component.JCasAnnotator
                 String path = System.getenv(this.scriptDirEnvVar)
                 if (path != null) {
                     File scriptFile = new File(path + "/" + this.scriptFileName)
-                    println "Loading script file: " + scriptFile.toString()
+                    log.info "Loading script file: " + scriptFile.toString()
                     scriptContents = Files.toString(scriptFile, Charsets.UTF_8)
                 }
             }
@@ -52,7 +62,7 @@ public class GroovyAnnotator extends org.apache.uima.fit.component.JCasAnnotator
     }
 
     @Override
-    public void process(JCas jcas) throws AnalysisEngineProcessException {
+    void process(JCas jcas) {
         UIMAUtil.setJCas(jcas)
         this.script.run()
     }

@@ -46,7 +46,7 @@ abstract class BratAnnotator extends JCasAnnotator_ImplBase {
 			IdentifiedAnnotation arg1 = annMap.get(value.arg1)
 			IdentifiedAnnotation arg2 = annMap.get(value.arg2)
 			if (arg1 != null && arg2 != null) {
-				UMLSRelation rel = createUMLSRelation(view, arg1, arg2, value)
+				createUMLSRelation(view, arg1, arg2, value)
 			}
 		}
 	}
