@@ -44,7 +44,7 @@ class AnnotatorTest {
         tsd.resolveImports()
 
         // Segmenter
-        AnalysisEngineDescription segmenter = AnalysisEngineFactory.createEngineDescription(GroovyAnnotator.class,
+        AnalysisEngineDescription segmenter = AnalysisEngineFactory.createEngineDescription(GroovyAnnotator,
                 tsd, GroovyAnnotator.PARAM_SCRIPT_FILE, "groovy/SimpleSegmenter.groovy")
 
         // Sentence detector
