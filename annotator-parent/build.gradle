@@ -1,90 +1,90 @@
 allprojects {
-	apply plugin: 'groovy'
-	apply plugin: 'eclipse'
-	apply plugin: 'maven-publish'
-	
-	version = '1.0'
-	group = 'org.northshore.cbri'
+    apply plugin: 'groovy'
+    apply plugin: 'eclipse'
+    apply plugin: 'maven-publish'
 
-	jar { manifest.attributes provider: 'NorthShore University HealthSystem' }
+    version = '1.0'
+    group = 'org.northshore.cbri'
 
-	publishing {
-		publications {
-			mavenJava(MavenPublication) { from components.java }
-		}
-	}
-	
-	repositories { mavenCentral() }
+    jar { manifest.attributes provider: 'NorthShore University HealthSystem' }
 
-	dependencies {
-		compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.1.6'
+    publishing {
+        publications {
+            mavenJava(MavenPublication) { from components.java }
+        }
+    }
 
-		compile group: 'org.apache.uima', name: 'uimaj-core', version: '2.5.0'
-		compile group: 'org.apache.uima', name: 'uimafit-core', version: '2.0.0'
-		compile group: 'org.apache.uima', name: 'uimaj-document-annotation', version: '2.5.0'
+    repositories { mavenCentral() }
 
-		compile group: 'org.apache.opennlp', name: 'opennlp-tools', version: '1.5.3'
-		compile group: 'org.apache.opennlp', name: 'opennlp-uima', version: '1.5.3'
-		compile group: 'org.apache.opennlp', name: 'opennlp-maxent', version: '3.0.3'
+    dependencies {
+        compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.1.6'
 
-		compile group: 'com.google.guava', name: 'guava', version: '15.0'
-		compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
-		compile group: 'log4j', name: 'log4j', version: '1.2.17'
+        compile group: 'org.apache.uima', name: 'uimaj-core', version: '2.5.0'
+        compile group: 'org.apache.uima', name: 'uimafit-core', version: '2.0.0'
+        compile group: 'org.apache.uima', name: 'uimaj-document-annotation', version: '2.5.0'
 
-		testCompile group: 'junit', name: 'junit', version: '4.+'
-		testCompile group: 'org.apache.uima', name: 'uimaj-tools', version: '2.5.0'
-	}
+        compile group: 'org.apache.opennlp', name: 'opennlp-tools', version: '1.5.3'
+        compile group: 'org.apache.opennlp', name: 'opennlp-uima', version: '1.5.3'
+        compile group: 'org.apache.opennlp', name: 'opennlp-maxent', version: '3.0.3'
+
+        compile group: 'com.google.guava', name: 'guava', version: '15.0'
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+        compile group: 'log4j', name: 'log4j', version: '1.2.9'
+
+        testCompile group: 'junit', name: 'junit', version: '4.+'
+        testCompile group: 'org.apache.uima', name: 'uimaj-tools', version: '2.5.0'
+    }
 }
 
 project(':') {
-	dependencies {
-		compile project(':type-system') 
-		compile project(':annotator-groovy-dsl')
-		compile project(':annotator-segment')
-		compile project(':annotator-token')
-		compile project(':annotator-sentence')
-		compile project(':annotator-negation')
-		compile project(':annotator-pos')
-		compile project(':annotator-lex-normalize')
-	}
+    dependencies {
+        compile project(':type-system')
+        compile project(':annotator-groovy-dsl')
+        compile project(':annotator-segment')
+        compile project(':annotator-token')
+        compile project(':annotator-sentence')
+        compile project(':annotator-negation')
+        compile project(':annotator-pos')
+        compile project(':annotator-lex-normalize')
+    }
 }
 
 project(':annotator-groovy-dsl') {
-	dependencies { compile project(':type-system') }
+    dependencies { compile project(':type-system') }
 }
 
 project(':annotator-brat') {
-	dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { compile project(':annotator-groovy-dsl') }
 }
 
 project(':annotator-segment') {
-	dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { compile project(':annotator-groovy-dsl') }
 }
 
 project(':annotator-negation') {
-	dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { compile project(':annotator-groovy-dsl') }
 }
 
 project(':annotator-token') {
-	dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { compile project(':annotator-groovy-dsl') }
 }
 
 project(':annotator-sentence') {
-	dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { compile project(':annotator-groovy-dsl') }
 }
 
 project(':annotator-pos') {
-	dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { compile project(':annotator-groovy-dsl') }
 }
 
 project(':annotator-chunk') {
-	dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { compile project(':annotator-groovy-dsl') }
 }
 
 project(':annotator-lex-normalize') {
-	dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { compile project(':annotator-groovy-dsl') }
 }
 
 project(':annotator-dictionary') {
-	dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { compile project(':annotator-groovy-dsl') }
 }
