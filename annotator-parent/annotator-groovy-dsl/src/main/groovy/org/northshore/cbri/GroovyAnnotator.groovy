@@ -46,12 +46,12 @@ public class GroovyAnnotator extends org.apache.uima.fit.component.JCasAnnotator
                 String path = System.getenv(this.scriptDirEnvVar)
                 if (path != null) {
                     File scriptFile = new File(path + "/" + this.scriptFileName)
-                    log.info "Loading script file: " + scriptFile.toString()
+                    log.info "Loading groovy script file: ${scriptFile.toString()}"
                     scriptContents = Files.toString(scriptFile, Charsets.UTF_8)
                 }
             }
             else {
-                println "GroovyAnnotator loading script file: " + this.scriptFileName
+                log.info "Loading groovy script file: ${this.scriptFileName}"
                 URL url = Resources.getResource(this.scriptFileName)
                 scriptContents = Resources.toString(url, Charsets.UTF_8)
             }
