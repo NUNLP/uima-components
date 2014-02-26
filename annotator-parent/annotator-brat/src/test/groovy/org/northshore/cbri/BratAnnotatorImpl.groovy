@@ -28,23 +28,19 @@ class BratAnnotatorImpl extends BratAnnotator {
     static final String ADENOCARCINOMA = 'C0001418'
 
     @Override
-    protected Annotation mapSpanAnnotation(JCas jcas, SpanAnnotation span) {
-        Annotation ann = null
+    protected List<Annotation> mapSpanAnnotation(JCas jcas, SpanAnnotation span) {
+        List<Annotation> anns = []
 
         switch (span.type) {
-            case 'Final_Diagnosis':
-                ann = create(type:Segment, begin:span.span.start, end:span.span.end)
-                ann.id = 'FINAL_DIAGNOSIS'
-                break
             case 'Left':
             case 'Rectum':
             case 'Sigmoid':
             case 'Descending':
             case 'Splenic_Flexure':
-                ann = create(type:EntityMention,
+                anns.add(create(type:EntityMention,
                 begin:span.span.start,
                 end:span.span.end,
-                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept, codingScheme:SNOMED, cui:LEFT_COLON, tui:BODY_STRUCTURE)])
+                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept, codingScheme:SNOMED, cui:LEFT_COLON, tui:BODY_STRUCTURE)]))
                 break
             case 'Right':
             case 'Hepatic_Flexure':
@@ -52,57 +48,57 @@ class BratAnnotatorImpl extends BratAnnotator {
             case 'Ascending':
             case 'Ileum':
             case 'Cecum':
-                ann = create(type:EntityMention,
+                anns.add(create(type:EntityMention,
                 begin:span.span.start,
                 end:span.span.end,
-                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:RIGHT_COLON, tui:BODY_STRUCTURE)])
+                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:RIGHT_COLON, tui:BODY_STRUCTURE)]))
                 break
             case 'Colon':
-                ann = create(type:EntityMention,
+                anns.add(create(type:EntityMention,
                 begin:span.span.start,
                 end:span.span.end,
-                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:COLON, tui:BODY_STRUCTURE)])
+                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:COLON, tui:BODY_STRUCTURE)]))
                 break;
             case 'Adenoma':
-                ann = create(type:EntityMention,
+                anns.add(create(type:EntityMention,
                 begin:span.span.start,
                 end:span.span.end,
-                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:ADENOMA, tui:NEOPLASTIC_PROCESS)])
+                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:ADENOMA, tui:NEOPLASTIC_PROCESS)]))
                 break
             case 'Tubular':
-                ann = create(type:EntityMention,
+                anns.add(create(type:EntityMention,
                 begin:span.span.start,
                 end:span.span.end,
-                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:TUBULAR_ADENOMA, tui:NEOPLASTIC_PROCESS)])
+                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:TUBULAR_ADENOMA, tui:NEOPLASTIC_PROCESS)]))
                 break
             case 'Tubulovillous':
             case 'Villous':
-                ann = create(type:EntityMention,
+                anns.add(create(type:EntityMention,
                 begin:span.span.start,
                 end:span.span.end,
-                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:VILLOUS_ADENOMA, tui:NEOPLASTIC_PROCESS)])
+                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:VILLOUS_ADENOMA, tui:NEOPLASTIC_PROCESS)]))
                 break
             case 'Serrated':
-                ann = create(type:EntityMention,
+                anns.add(create(type:EntityMention,
                 begin:span.span.start,
                 end:span.span.end,
-                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:SERRATED_ADENOMA, tui:NEOPLASTIC_PROCESS)])
+                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:SERRATED_ADENOMA, tui:NEOPLASTIC_PROCESS)]))
                 break
             case 'Hyperplastic':
-                ann = create(type:EntityMention,
+                anns.add(create(type:EntityMention,
                 begin:span.span.start,
                 end:span.span.end,
-                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:HYPERPLASTIC_POLYP, tui:NEOPLASTIC_PROCESS)])
+                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:HYPERPLASTIC_POLYP, tui:NEOPLASTIC_PROCESS)]))
                 break
             case 'Adenocarcinoma':
-                ann = create(type:EntityMention,
+                anns.add(create(type:EntityMention,
                 begin:span.span.start,
                 end:span.span.end,
-                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:ADENOCARCINOMA, tui:NEOPLASTIC_PROCESS)])
+                polarity:1 , uncertainty:0 , ontologyConcepts:[create(type:UmlsConcept , codingScheme:SNOMED , cui:ADENOCARCINOMA, tui:NEOPLASTIC_PROCESS)]))
                 break
         }
 
-        ann
+        return anns
     }
 
     @Override

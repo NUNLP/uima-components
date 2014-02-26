@@ -39,8 +39,9 @@ abstract class BratAnnotator extends JCasAnnotator_ImplBase {
 		view.setDocumentText(jcas.getDocumentText())
 		Map<String, Annotation> annMap = new HashMap<>()
 		this.bratDoc.getSpanAnnotations().each { key, value ->
-			Annotation ann = mapSpanAnnotation(view, value)
-			annMap.put(key, ann)
+			mapSpanAnnotation(view, value).each { ann ->
+                annMap.put(key, ann)
+            }
 		}
 		this.bratDoc.getRelAnnotations().values().each { value ->
 			IdentifiedAnnotation arg1 = annMap.get(value.arg1)
@@ -51,7 +52,7 @@ abstract class BratAnnotator extends JCasAnnotator_ImplBase {
 		}
 	}
 
-	abstract protected Annotation mapSpanAnnotation(JCas jcas, SpanAnnotation span);
+	abstract protected List<Annotation> mapSpanAnnotation(JCas jcas, SpanAnnotation span);
 
 	abstract protected UMLSRelation createUMLSRelation(JCas jcas, 
 		IdentifiedAnnotation arg1,	IdentifiedAnnotation arg2,

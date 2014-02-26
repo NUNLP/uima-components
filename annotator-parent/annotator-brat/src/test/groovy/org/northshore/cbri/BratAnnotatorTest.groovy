@@ -63,11 +63,6 @@ class BratAnnotatorTest {
 		engine.process(jcas)
 		
 		// test the result
-		Collection<Segment> segs = select(type:Segment)
-		assert segs.size() == 1
-		Segment seg = segs.find{ it.id == "FINAL_DIAGNOSIS" }
-		assertEquals("FINAL DIAGNOSIS:", seg.coveredText)
-		
 		Collection<EntityMention> mentions = select(type:EntityMention)
 		assert mentions.size() == 6
 		
@@ -98,10 +93,6 @@ class BratAnnotatorTest {
         engine.process(jcas)
         
         // test the result
-        Collection<Segment> segs = select(type:Segment)
-        assert segs.size() == 1
-        Segment seg = segs.find{ it.id == "FINAL_DIAGNOSIS" }
-        
         Collection<EntityMention> mentions = select(type:EntityMention)
         assert mentions.size() == 2
         
