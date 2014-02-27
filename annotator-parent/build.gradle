@@ -70,7 +70,10 @@ project(':annotator-token') {
 }
 
 project(':annotator-sentence') {
-    dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { 
+        compile project(':annotator-groovy-dsl') 
+        testCompile project(':annotator-segment') 
+    }
 }
 
 project(':annotator-pos') {

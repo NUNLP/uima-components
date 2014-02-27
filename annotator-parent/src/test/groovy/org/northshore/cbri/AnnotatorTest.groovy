@@ -49,8 +49,8 @@ class AnnotatorTest {
 
         // Sentence detector
         AnalysisEngineDescription sentDetector = AnalysisEngineFactory.createEngineDescription(
-                SentenceDetector,
-                SentenceDetector.SD_MODEL_FILE_PARAM, "models/sd-med-model.zip")
+                SentenceDetector_cTAKES,
+                SentenceDetector_cTAKES.SD_MODEL_FILE_PARAM, "models/sd-med-model.zip")
 
         // Tokenizer
         AnalysisEngineDescription tokenizer = AnalysisEngineFactory.createEngineDescription(
