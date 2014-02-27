@@ -125,6 +125,9 @@ class SentenceDetector extends JCasAnnotator_ImplBase {
 
     private Tuple trimOffsets(String text) {
         int beginTrimOffset, endTrimOffset = 0
+        if (text.isAllWhitespace()) {
+            return [0, text.length()]
+        }
         for (c in text) {
             if (c.isAllWhitespace()) {
                 beginTrimOffset += 1
