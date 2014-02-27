@@ -27,7 +27,7 @@ import com.google.common.base.Charsets
 import com.google.common.io.Resources
 
 @Log4j
-class SentenceDetectorExperimental extends JCasAnnotator_ImplBase {
+class SentenceDetector extends JCasAnnotator_ImplBase {
 
     public static final String SD_MODEL_FILE_PARAM = 'sentenceModelFile'
     public static final String SD_SPLIT_PATTERN = 'splitPatternStr'

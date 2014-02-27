@@ -62,8 +62,8 @@ class SentenceAnnotatorTest {
         
         // create a sentence detector engine
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
-                SentenceDetectorExperimental,
-                SentenceDetectorExperimental.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
+                SentenceDetector,
+                SentenceDetector.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(desc)
         
         // load in the text to process
@@ -95,8 +95,8 @@ class SentenceAnnotatorTest {
         
         // sentence detector
         AnalysisEngineDescription sentDetectorDesc = AnalysisEngineFactory.createEngineDescription(
-                SentenceDetectorExperimental,
-                SentenceDetectorExperimental.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
+                SentenceDetector,
+                SentenceDetector.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
         
         // build the aggregate analysis engine
         AggregateBuilder builder = new AggregateBuilder()
@@ -134,9 +134,9 @@ class SentenceAnnotatorTest {
         
         // sentence detector
         AnalysisEngineDescription sentDetectorDesc = AnalysisEngineFactory.createEngineDescription(
-                SentenceDetectorExperimental,
-                SentenceDetectorExperimental.SD_SEGMENTS_TO_PARSE, 'groovy/TestSegmentsToParse.groovy',
-                SentenceDetectorExperimental.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
+                SentenceDetector,
+                SentenceDetector.SD_SEGMENTS_TO_PARSE, 'groovy/TestSegmentsToParse.groovy',
+                SentenceDetector.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
         
         // build the aggregate analysis engine
         AggregateBuilder builder = new AggregateBuilder()
@@ -174,9 +174,9 @@ class SentenceAnnotatorTest {
         
         // sentence detector
         AnalysisEngineDescription sentDetectorDesc = AnalysisEngineFactory.createEngineDescription(
-                SentenceDetectorExperimental,
-                SentenceDetectorExperimental.SD_SPLIT_PATTERN, ':',
-                SentenceDetectorExperimental.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
+                SentenceDetector,
+                SentenceDetector.SD_SPLIT_PATTERN, ':',
+                SentenceDetector.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
         
         // build the aggregate analysis engine
         AggregateBuilder builder = new AggregateBuilder()
@@ -214,9 +214,9 @@ class SentenceAnnotatorTest {
         
         // sentence detector
         AnalysisEngineDescription sentDetectorDesc = AnalysisEngineFactory.createEngineDescription(
-                SentenceDetectorExperimental,
-                SentenceDetectorExperimental.SD_SPLIT_PATTERN, '[\\n\\r:]+',
-                SentenceDetectorExperimental.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
+                SentenceDetector,
+                SentenceDetector.SD_SPLIT_PATTERN, '[\\n\\r:]+',
+                SentenceDetector.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
         
         // build the aggregate analysis engine
         AggregateBuilder builder = new AggregateBuilder()
@@ -253,9 +253,9 @@ class SentenceAnnotatorTest {
 
         // sentence detector
         AnalysisEngineDescription sentDetectorDesc = AnalysisEngineFactory.createEngineDescription(
-                SentenceDetectorExperimental,
-                SentenceDetectorExperimental.SD_SPLIT_PATTERN, '[\\r\\n:]+',
-                SentenceDetectorExperimental.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
+                SentenceDetector,
+                SentenceDetector.SD_SPLIT_PATTERN, '[\\r\\n:]+',
+                SentenceDetector.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
 
         // segmenter
         AnalysisEngineDescription segmenter = AnalysisEngineFactory.createEngineDescription(GroovyAnnotator,
@@ -268,7 +268,7 @@ class SentenceAnnotatorTest {
             add(sentDetectorDesc)
         }
         AnalysisEngineDescription desc = builder.createAggregateDescription()
-        PrintWriter writer = new PrintWriter(new File('src/test/resources/descriptors/SentenceDetectorExperimental.xml'))
+        PrintWriter writer = new PrintWriter(new File('src/test/resources/descriptors/SentenceDetector.xml'))
         desc.toXML(writer)
         writer.close()
     }
