@@ -53,7 +53,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 
-public class SentenceDetector extends JCasAnnotator_ImplBase {
+public class SentenceDetector_cTAKES extends JCasAnnotator_ImplBase {
     
     private static class SentenceSpan {
 
