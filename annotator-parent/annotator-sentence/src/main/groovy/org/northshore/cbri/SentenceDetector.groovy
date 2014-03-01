@@ -108,7 +108,7 @@ class SentenceDetector extends JCasAnnotator_ImplBase {
             int newOffset = cover.begin + span.start + matcher.end(0)
             Tuple trimOffsets = this.trimOffsets(coveredText.substring(offset-cover.begin, newOffset-cover.begin))
             addSpan(spans, new Span(offset+trimOffsets[0], newOffset-trimOffsets[1]))
-            ///log.info "Creating Span[${offset+trimOffsets[0]}, ${newOffset-trimOffsets[1]}]"
+            ////log.info "Creating Span[${offset+trimOffsets[0]}, ${newOffset-trimOffsets[1]}]"
             offset = newOffset
         }
         Tuple trimOffsets = this.trimOffsets(coveredText.substring(offset-cover.begin, span.end))
