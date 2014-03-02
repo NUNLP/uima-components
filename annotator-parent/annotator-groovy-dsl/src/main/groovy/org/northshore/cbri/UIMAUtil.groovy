@@ -112,6 +112,9 @@ class UIMAUtil extends Script {
             case 'DiseaseDisorderMention':
                 typeClass = DiseaseDisorderMention
                 break
+            case 'Modifier':
+                typeClass = Modifier
+                break
             case 'EventMention':
                 typeClass = EventMention
                 break
