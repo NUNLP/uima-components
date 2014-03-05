@@ -28,7 +28,6 @@ import com.google.common.io.Resources
 @Log4j
 public final class TokenAnnotator extends JCasAnnotator_ImplBase {
     public static final String PARAM_POST_PROCESS_SCRIPT_FILE = "postProcessScriptFileName"
-
     @ConfigurationParameter(name = "postProcessScriptFileName", mandatory = false)
     private String postProcessScriptFileName
     
