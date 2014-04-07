@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Fri Jan 03 13:41:43 CST 2014 */
+/* First created by JCasGen Fri Mar 21 11:22:50 CDT 2014 */
 package org.northshore.cbri.type;
 
 import org.apache.uima.jcas.JCas;
@@ -14,10 +14,12 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Fri Jan 03 13:41:43 CST 2014
+ * Updated by JCasGen Fri Mar 21 11:23:07 CDT 2014
  * @generated */
 public class SegmentHeading_Type extends Annotation_Type {
-  /** @generated */
+  /** @generated 
+   * @return the generator for this type
+   */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
   /** @generated */
@@ -48,13 +50,19 @@ public class SegmentHeading_Type extends Annotation_Type {
   final Feature casFeat_id;
   /** @generated */
   final int     casFeatCode_id;
-  /** @generated */ 
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
   public String getId(int addr) {
         if (featOkTst && casFeat_id == null)
       jcas.throwFeatMissing("id", "org.northshore.cbri.type.SegmentHeading");
     return ll_cas.ll_getStringValue(addr, casFeatCode_id);
   }
-  /** @generated */    
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
   public void setId(int addr, String v) {
         if (featOkTst && casFeat_id == null)
       jcas.throwFeatMissing("id", "org.northshore.cbri.type.SegmentHeading");
@@ -66,13 +74,19 @@ public class SegmentHeading_Type extends Annotation_Type {
   final Feature casFeat_preferredText;
   /** @generated */
   final int     casFeatCode_preferredText;
-  /** @generated */ 
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
   public String getPreferredText(int addr) {
         if (featOkTst && casFeat_preferredText == null)
       jcas.throwFeatMissing("preferredText", "org.northshore.cbri.type.SegmentHeading");
     return ll_cas.ll_getStringValue(addr, casFeatCode_preferredText);
   }
-  /** @generated */    
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
   public void setPreferredText(int addr, String v) {
         if (featOkTst && casFeat_preferredText == null)
       jcas.throwFeatMissing("preferredText", "org.northshore.cbri.type.SegmentHeading");
@@ -83,7 +97,10 @@ public class SegmentHeading_Type extends Annotation_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+	 * @generated
+	 * @param jcas JCas
+	 * @param casType Type 
+	 */
   public SegmentHeading_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

@@ -3,7 +3,6 @@ import static org.northshore.cbri.UIMAUtil.*
 import org.apache.ctakes.typesystem.type.textsem.EntityMention
 import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.uima.jcas.tcas.Annotation
-
 import org.northshore.cbri.AnnotationMatcher
 import org.northshore.cbri.type.NegationScope
 import org.northshore.cbri.type.NegationScopeTerminator

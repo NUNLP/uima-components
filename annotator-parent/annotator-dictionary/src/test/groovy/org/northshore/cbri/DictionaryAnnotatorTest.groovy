@@ -4,8 +4,6 @@ import static org.apache.uima.fit.util.JCasUtil.selectSingle
 import static org.junit.Assert.*
 import groovy.util.logging.Log4j
 
-import java.lang.reflect.Type
-
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
 import org.apache.ctakes.typesystem.type.textspan.Sentence
@@ -17,12 +15,8 @@ import org.apache.uima.jcas.JCas
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
+import org.junit.Ignore
 import org.junit.Test
-
-import com.google.common.io.Resources
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 
 @Log4j
 class DictionaryAnnotatorTest {
@@ -31,7 +25,7 @@ class DictionaryAnnotatorTest {
     public static void setupClass() {
         BasicConfigurator.configure()
     }
-    
+
     @Before
     public void setUp() throws Exception {
     }
@@ -40,14 +34,26 @@ class DictionaryAnnotatorTest {
     public void tearDown() throws Exception {
     }
 
+    @Ignore
     @Test
     public void smokeTest() throws Exception {
+        String text = """
+FINAL DIAGNOSIS:
+
+A) Ileocecal valve, colon, polyp:
+- Colonic mucosa with a small well-circumscribed lymphoid aggregate.
+B) Transverse colon polyp:
+- Adenomatous polyp.
+C) Sigmoid colon:
+- Hyperplastic polyp.
+- Tubular adenoma .
+"""
         AnalysisEngine ae = createEngine(DictionaryAnnotator,
-                DictionaryAnnotator.PARAM_MODEL_LOCATION, "src/test/resources/dict/test-dict.txt")
+                DictionaryAnnotator.PARAM_MODEL_LOCATION, "src/test/resources/dict/test.dict")
 
         JCas jcas = JCasFactory.createJCas()
         TokenBuilder<BaseToken, Sentence> tb = new TokenBuilder<BaseToken, Sentence>(BaseToken, Sentence)
-        tb.buildTokens(jcas, "There is a tubular adenoma in the sigmoid colon .")
+        tb.buildTokens(jcas, text)
 
         ae.process(jcas)
         UIMAUtil.jcas = jcas
@@ -58,25 +64,6 @@ class DictionaryAnnotatorTest {
     }
 
     @Test
-    public void testParseDictionary() {
-        GsonBuilder builder = new GsonBuilder()
-        Gson gson = builder.create()
-
-        // load in the dictionary file
-        URL url = Resources.getResource("dict/test-dict.txt")
-        Type collectionType = new TypeToken<HashMap<String, String>>(){}.getType();
-        
-        new File(url.toURI()).withReader { reader ->
-            // each line is a dictionary entry
-            String line = null
-            while ((line = reader.readLine()) != null) { 
-                Map<String, String> map = gson.fromJson(line, collectionType);
-                log.info map.get("phrase")
-            }
-        }        
-    }
-    
-    @Test
     public void testAhoCorasickDictionary() {
         String text1 = "sigmoid colon"; String sem1 = "SC"
         String text2 = "tubular adenoma"; String sem2 = "TA"
@@ -86,5 +73,10 @@ class DictionaryAnnotatorTest {
         assertEquals ("sigmoid::2::SC||| colon:: ", aho.find(text1))
         assertEquals ("tubular::2::TA||| adenoma:: ", aho.find(text2))
         assertEquals ("foo:: ", aho.find("foo"))
+    }
+
+    @Test
+    public void testHSQLDB() {
+
     }
 }

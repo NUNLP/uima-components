@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Fri Jan 03 13:41:43 CST 2014 */
+/* First created by JCasGen Fri Mar 21 11:22:50 CDT 2014 */
 package org.northshore.cbri.type;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Fri Jan 03 13:41:43 CST 2014
+ * Updated by JCasGen Fri Mar 21 11:23:07 CDT 2014
  * XML source: C:/WKT/git/schorndorfer/uima-components/annotator-parent/annotator-negation/src/main/resources/descriptors/NegExTypeSystem.xml
  * @generated */
 public class SegmentHeading extends Annotation {
@@ -25,7 +25,9 @@ public class SegmentHeading extends Annotation {
    */
   @SuppressWarnings ("hiding")
   public final static int type = typeIndexID;
-  /** @generated  */
+  /** @generated
+   * @return index of the type  
+   */
   @Override
   public              int getTypeIndexID() {return typeIndexID;}
  
@@ -34,19 +36,28 @@ public class SegmentHeading extends Annotation {
   protected SegmentHeading() {/* intentionally empty block */}
     
   /** Internal - constructor used by generator 
-   * @generated */
+   * @generated
+   * @param addr low level Feature Structure reference
+   * @param type the type of this Feature Structure 
+   */
   public SegmentHeading(int addr, TOP_Type type) {
     super(addr, type);
     readObject();
   }
   
-  /** @generated */
+  /** @generated
+   * @param jcas JCas to which this Feature Structure belongs 
+   */
   public SegmentHeading(JCas jcas) {
     super(jcas);
     readObject();   
   } 
 
-  /** @generated */  
+  /** @generated
+   * @param jcas JCas to which this Feature Structure belongs
+   * @param begin offset to the begin spot in the SofA
+   * @param end offset to the end spot in the SofA 
+  */  
   public SegmentHeading(JCas jcas, int begin, int end) {
     super(jcas);
     setBegin(begin);
@@ -54,10 +65,13 @@ public class SegmentHeading extends Annotation {
     readObject();
   }   
 
-  /** <!-- begin-user-doc -->
-    * Write your own initialization here
-    * <!-- end-user-doc -->
-  @generated modifiable */
+  /** 
+   * <!-- begin-user-doc -->
+   * Write your own initialization here
+   * <!-- end-user-doc -->
+   *
+   * @generated modifiable 
+   */
   private void readObject() {/*default - does nothing empty block */}
      
  
@@ -66,14 +80,18 @@ public class SegmentHeading extends Annotation {
   //* Feature: id
 
   /** getter for id - gets 
-   * @generated */
+   * @generated
+   * @return value of the feature 
+   */
   public String getId() {
     if (SegmentHeading_Type.featOkTst && ((SegmentHeading_Type)jcasType).casFeat_id == null)
       jcasType.jcas.throwFeatMissing("id", "org.northshore.cbri.type.SegmentHeading");
     return jcasType.ll_cas.ll_getStringValue(addr, ((SegmentHeading_Type)jcasType).casFeatCode_id);}
     
   /** setter for id - sets  
-   * @generated */
+   * @generated
+   * @param v value to set into the feature 
+   */
   public void setId(String v) {
     if (SegmentHeading_Type.featOkTst && ((SegmentHeading_Type)jcasType).casFeat_id == null)
       jcasType.jcas.throwFeatMissing("id", "org.northshore.cbri.type.SegmentHeading");
@@ -84,14 +102,18 @@ public class SegmentHeading extends Annotation {
   //* Feature: preferredText
 
   /** getter for preferredText - gets preferredText is the normalized/resolved section name.  Normally, this is populated by the Sectionizer and would contain the HL7/CCDA section name.
-   * @generated */
+   * @generated
+   * @return value of the feature 
+   */
   public String getPreferredText() {
     if (SegmentHeading_Type.featOkTst && ((SegmentHeading_Type)jcasType).casFeat_preferredText == null)
       jcasType.jcas.throwFeatMissing("preferredText", "org.northshore.cbri.type.SegmentHeading");
     return jcasType.ll_cas.ll_getStringValue(addr, ((SegmentHeading_Type)jcasType).casFeatCode_preferredText);}
     
   /** setter for preferredText - sets preferredText is the normalized/resolved section name.  Normally, this is populated by the Sectionizer and would contain the HL7/CCDA section name. 
-   * @generated */
+   * @generated
+   * @param v value to set into the feature 
+   */
   public void setPreferredText(String v) {
     if (SegmentHeading_Type.featOkTst && ((SegmentHeading_Type)jcasType).casFeat_preferredText == null)
       jcasType.jcas.throwFeatMissing("preferredText", "org.northshore.cbri.type.SegmentHeading");

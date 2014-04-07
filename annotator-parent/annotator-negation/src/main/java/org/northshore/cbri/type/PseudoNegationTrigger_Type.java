@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Fri Jan 03 13:41:43 CST 2014 */
+/* First created by JCasGen Fri Mar 21 11:22:50 CDT 2014 */
 package org.northshore.cbri.type;
 
 import org.apache.uima.jcas.JCas;
@@ -11,10 +11,12 @@ import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
 
 /** Type defined in org.northshore.cbri.type
- * Updated by JCasGen Fri Jan 03 13:41:43 CST 2014
+ * Updated by JCasGen Fri Mar 21 11:23:07 CDT 2014
  * @generated */
 public class PseudoNegationTrigger_Type extends NegationTrigger_Type {
-  /** @generated */
+  /** @generated 
+   * @return the generator for this type
+   */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
   /** @generated */
@@ -44,7 +46,10 @@ public class PseudoNegationTrigger_Type extends NegationTrigger_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+	 * @generated
+	 * @param jcas JCas
+	 * @param casType Type 
+	 */
   public PseudoNegationTrigger_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

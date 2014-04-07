@@ -2,6 +2,7 @@ package org.northshore.cbri
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.*
 import static org.junit.Assert.*
+import gov.nih.nlm.nls.lvg.Api.NormApi;
 import groovy.util.logging.Log4j
 
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
@@ -41,7 +42,15 @@ class LexNormalizerAnnotatorTest {
     }
     
     @Test
-    public void testNormalizer() {
+    public void testNormApi() {
+        NormApi normalizer = new NormApi()
+        Vector<String> normsters = normalizer.Mutate("HYPERPLASTIC POLYP, with adenomatous features.")
+        assert normsters.size() == 1
+        normsters.each { println it }
+    }
+    
+    @Test
+    public void testLexNormalizerAnnotator() {
         AnalysisEngine engine = createEngine(LexNormalizerAnnotator,
             LexNormalizerAnnotator.PARAM_LEXICON_NAME, "2006Lexicon")
         JCas jcas = JCasFactory.createJCas()
@@ -67,31 +76,6 @@ class LexNormalizerAnnotatorTest {
         tokens.each { WordToken token ->
             log.info("Word: $token.coveredText; Spell: $token.suggestion; Norm: $token.normalizedForm")
             assertEquals(normMap[token.coveredText], token.normalizedForm)
-        }
-    }
-
-
-    @Ignore
-    @Test
-    public void smokeTest() throws UIMAException, IOException {
-
-        AnalysisEngine ae = AnalysisEngineFactory.createPrimitive(spellCorrector)
-        assertNotNull(ae)
-
-        JCas jCas = JCasFactory.createJCas()
-        String text = "pnemonia"
-        jCas.setDocumentText(text)
-        WordToken word = new WordToken(jCas)
-        word.setBegin(0)
-        word.setEnd(text.length()-1)
-        word.addToIndexes()
-
-        SimplePipeline.runPipeline(jCas, ae)
-
-        Collection<WordToken> wordTokens = JCasUtil.select(jCas, WordToken.class)
-        assertTrue(wordTokens.size() == 1)
-        for (WordToken wt : wordTokens) {
-            assertEquals("pneumonia", wt.getSuggestion())
         }
     }
 

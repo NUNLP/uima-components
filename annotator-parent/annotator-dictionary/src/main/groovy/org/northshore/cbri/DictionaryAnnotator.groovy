@@ -3,16 +3,12 @@ package org.northshore.cbri
 import static org.apache.uima.fit.util.CasUtil.getType
 import static org.apache.uima.fit.util.JCasUtil.select
 import static org.apache.uima.fit.util.JCasUtil.selectCovered
+import groovy.util.logging.Log4j
 
 import java.lang.reflect.Type
 
 import org.apache.ctakes.typesystem.type.refsem.UmlsConcept
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
-import org.apache.ctakes.typesystem.type.textsem.AnatomicalSiteMention
-import org.apache.ctakes.typesystem.type.textsem.DiseaseDisorderMention
-import org.apache.ctakes.typesystem.type.textsem.EventMention
-import org.apache.ctakes.typesystem.type.textsem.FractionAnnotation
-import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
 import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.uima.UimaContext
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException
@@ -28,104 +24,92 @@ import com.google.gson.reflect.TypeToken
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils
 
-/**
- * Takes a plain text file with phrases as input and annotates the phrases in the CAS file.
- *
- * The component requires that {@link Token}s and {@link Sentence}es are annotated in the CAS.
- *
- * The format of the phrase file is one phrase per line, tokens are separated by space:
- *
- * <pre>
- * this is a phrase
- * another phrase
- * </pre>
- */
+@Log4j
 public class DictionaryAnnotator
-	extends JCasAnnotator_ImplBase
-{
-	/**
-	 * The file must contain one phrase per line - phrases will be split at " "
-	 */
-	public static final String PARAM_MODEL_LOCATION = ComponentParameters.PARAM_MODEL_LOCATION
-	@ConfigurationParameter(name = ComponentParameters.PARAM_MODEL_LOCATION, mandatory = true)
-	private String phraseFile
+extends JCasAnnotator_ImplBase {
+    /**
+     * The file must contain one phrase per line - phrases will be split at " "
+     */
+    public static final String PARAM_MODEL_LOCATION = ComponentParameters.PARAM_MODEL_LOCATION
+    @ConfigurationParameter(name = ComponentParameters.PARAM_MODEL_LOCATION, mandatory = true)
+    private String phraseFile
 
-	/**
-	 * The character encoding used by the model.
-	 */
-	public static final String PARAM_MODEL_ENCODING = ComponentParameters.PARAM_MODEL_ENCODING
-	@ConfigurationParameter(name = ComponentParameters.PARAM_MODEL_ENCODING, mandatory = true, defaultValue="UTF-8")
-	private String modelEncoding
+    /**
+     * The character encoding used by the model.
+     */
+    public static final String PARAM_MODEL_ENCODING = ComponentParameters.PARAM_MODEL_ENCODING
+    @ConfigurationParameter(name = ComponentParameters.PARAM_MODEL_ENCODING, mandatory = true, defaultValue="UTF-8")
+    private String modelEncoding
 
-    
-	private PhraseTree phrases
+
+    private PhraseTree phrases
     private Map<List<String>, Map<String, String>> phraseSems
     private Type collectionType
-    
 
-	@Override
-	public void initialize(UimaContext aContext)
-		throws ResourceInitializationException
-	{
-		super.initialize(aContext)
 
-		this.phrases = new PhraseTree()
+    @Override
+    public void initialize(UimaContext aContext)
+    throws ResourceInitializationException {
+        super.initialize(aContext)
+
+        this.phrases = new PhraseTree()
         this.phraseSems = new HashMap<>()
         this.collectionType = new TypeToken<HashMap<String, String>>(){}.getType()
-
-            GsonBuilder builder = new GsonBuilder()
-            Gson gson = builder.create()
-            URL dictUrl = ResourceUtils.resolveLocation(phraseFile, aContext)
-            new File(dictUrl.toURI()).withReader(this.modelEncoding) { reader ->
-                // each line is a dictionary entry in json format
-                String line = null
-                while ((line = reader.readLine()) != null) {
-                    Map<String, String> dictEntryMap = gson.fromJson(line, collectionType)
-                    String[] phraseSplit = dictEntryMap['phrase'].split(/ /)
-                    phrases.addPhrase(phraseSplit)
-                    
-                    // add phrase semantics
-                    dictEntryMap.remove("phrase")
-                    this.phraseSems.put(Arrays.asList(phraseSplit), dictEntryMap)
-                }
-            }
-	}
-
-	@Override
-	public void process(JCas jcas)
-		throws AnalysisEngineProcessException
-	{
-        UIMAUtil.jcas = jcas
         
-		for (Sentence currSentence : select(jcas, Sentence.class)) {
-			ArrayList<BaseToken> tokens = new ArrayList<BaseToken>(selectCovered(BaseToken.class, currSentence))
+        GsonBuilder builder = new GsonBuilder()
+        Gson gson = builder.create()
+        URL dictUrl = ResourceUtils.resolveLocation(phraseFile, aContext)
+        new File(dictUrl.toURI()).withReader(this.modelEncoding) { reader ->
+            // each line is a dictionary entry in json format
+            String line = null
+            while ((line = reader.readLine()) != null) {
+                Map<String, String> dictEntryMap = gson.fromJson(line, collectionType)
+                String[] phraseSplit = dictEntryMap['phrase'].toLowerCase().split(/ /)
+                phrases.addPhrase(phraseSplit)
+                // add phrase semantics
+                logger.info "phrase: ${dictEntryMap['phrase']}"
+                dictEntryMap.remove("phrase")
+                this.phraseSems.put(Arrays.asList(phraseSplit), dictEntryMap)
+            }
+        }
+    }
 
-			for (int i = 0; i < tokens.size(); i++) {
-				List<BaseToken> tokensToSentenceEnd = tokens.subList(i, tokens.size() - 1)
-				String[] sentenceToEnd = new String[tokens.size()]
+    @Override
+    public void process(JCas jcas)
+            throws AnalysisEngineProcessException
+    {
+        UIMAUtil.jcas = jcas
 
-				for (int j = 0; j < tokensToSentenceEnd.size(); j++) {
-					sentenceToEnd[j] = tokensToSentenceEnd.get(j).getCoveredText()
-				}
+        for (Sentence currSentence : select(jcas, Sentence)) {
+            ArrayList<BaseToken> tokens = new ArrayList<BaseToken>(selectCovered(BaseToken, currSentence))
 
-				String[] longestMatch = phrases.getLongestMatch(sentenceToEnd)
+            for (int i = 0; i < tokens.size(); i++) {
+                List<BaseToken> tokensToSentenceEnd = tokens.subList(i, tokens.size() - 1)
+                String[] sentenceToEnd = new String[tokens.size()]
 
-				if (longestMatch != null) {
-					BaseToken beginToken = tokens.get(i)
-					BaseToken endToken = tokens.get(i + longestMatch.length - 1)
+                for (int j = 0; j < tokensToSentenceEnd.size(); j++) {
+                    sentenceToEnd[j] = tokensToSentenceEnd.get(j).getCoveredText()
+                }
+
+                String[] longestMatch = phrases.getLongestMatch(sentenceToEnd)
+
+                if (longestMatch != null) {
+                    BaseToken beginToken = tokens.get(i)
+                    BaseToken endToken = tokens.get(i + longestMatch.length - 1)
 
                     Map vals = this.phraseSems.get(Arrays.asList(longestMatch))
-                    
+
                     Class typeClass = UIMAUtil.getIdentifiedAnnotationClass(vals['type'])
-                    
-                    UIMAUtil.create(type:typeClass, begin:beginToken.getBegin() , 
-                        end:endToken.getEnd(), polarity:1 , uncertainty:0,
-                        ontologyConcepts:[UIMAUtil.create(type:UmlsConcept, code:vals["code"], 
-                            codingScheme:vals["codingScheme"],
-                            cui:vals["cui"], tui:vals["tui"])]
-                        )
-				}
-			}
-		}
-	}
+
+                    UIMAUtil.create(type:typeClass, begin:beginToken.getBegin() ,
+                    end:endToken.getEnd(), polarity:1 , uncertainty:0,
+                    ontologyConcepts:[
+                        UIMAUtil.create(type:UmlsConcept, code:vals["code"],
+                        codingScheme:vals["codingScheme"],
+                        cui:vals["cui"], tui:vals["tui"])]
+                    )
+                }
+            }
+        }
+    }
 }
