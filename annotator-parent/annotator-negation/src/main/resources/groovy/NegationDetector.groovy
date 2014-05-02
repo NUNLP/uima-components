@@ -1,6 +1,6 @@
 import static org.northshore.cbri.UIMAUtil.*
 
-import org.apache.ctakes.typesystem.type.textsem.EntityMention
+import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
 import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.uima.jcas.tcas.Annotation
 import org.northshore.cbri.AnnotationMatcher
@@ -27,9 +27,9 @@ scope_terminator_section_breaks = ~/(?i)\b((\d+\.\D)|(\:))\b/
 scope_terminator_ytex = ~/(?i)\b((but)|(however)|(nevertheless)|(yet)|(though)|(although)|(still)|(aside\s+from)|(except)|(apart\s+from)|(secondary\s+to)|(as\s+the\s+cause\s+of)|(as\s+the\s+source\s+of)|(as\s+the\s+reason\s+of)|(as\s+the\s+etiology\s+of)|(as\s+the\s+origin\s+of)|(as\s+the\s+cause\s+for)|(as\s+the\s+source\s+for)|(as\s+the\s+reason\s+for)|(as\s+the\s+etiology\s+for)|(as\s+the\s+origin\s+for)|(as\s+the\s+secondary\s+cause\s+of)|(as\s+the\s+secondary\s+source\s+of)|(as\s+the\s+secondary\s+reason\s+of)|(as\s+the\s+secondary\s+etiology\s+of)|(as\s+the\s+secondary\s+origin\s+of)|(as\s+the\s+secondary\s+cause\s+for)|(as\s+the\s+secondary\s+source\s+for)|(as\s+the\s+secondary\s+reason\s+for)|(as\s+the\s+secondary\s+etiology\s+for)|(as\s+the\s+secondary\s+origin\s+for)|(as\s+a\s+cause\s+of)|(as\s+a\s+source\s+of)|(as\s+a\s+reason\s+of)|(as\s+a\s+etiology\s+of)|(as\s+a\s+cause\s+for)|(as\s+a\s+source\s+for)|(as\s+a\s+reason\s+for)|(as\s+a\s+etiology\s+for)|(as\s+a\s+secondary\s+cause\s+of)|(as\s+a\s+secondary\s+source\s+of)|(as\s+a\s+secondary\s+reason\s+of)|(as\s+a\s+secondary\s+etiology\s+of)|(as\s+a\s+secondary\s+origin\s+of)|(as\s+a\s+secondary\s+cause\s+for)|(as\s+a\s+secondary\s+source\s+for)|(as\s+a\s+secondary\s+reason\s+for)|(as\s+a\s+secondary\s+etiology\s+for)|(as\s+a\s+secondary\s+origin\s+for)|(as\s+an\s+cause\s+of)|(as\s+an\s+source\s+of)|(as\s+an\s+reason\s+of)|(as\s+an\s+etiology\s+of)|(as\s+an\s+origin\s+of)|(as\s+an\s+cause\s+for)|(as\s+an\s+source\s+for)|(as\s+an\s+reason\s+for)|(as\s+an\s+etiology\s+for)|(as\s+an\s+origin\s+for)|(as\s+an\s+secondary\s+cause\s+of)|(as\s+an\s+secondary\s+source\s+of)|(as\s+an\s+secondary\s+reason\s+of)|(as\s+an\s+secondary\s+etiology\s+of)|(as\s+an\s+secondary\s+origin\s+of)|(as\s+an\s+secondary\s+cause\s+for)|(as\s+an\s+secondary\s+source\s+for)|(as\s+an\s+secondary\s+reason\s+for)|(as\s+an\s+secondary\s+etiology\s+for)|(as\s+an\s+secondary\s+origin\s+for)|(cause\s+of)|(cause\s+for)|(causes\s+of)|(causes\s+for)|(source\s+of)|(source\s+for)|(sources\s+of)|(sources\s+for)|(reason\s+of)|(reason\s+for)|(reasons\s+of)|(reasons\s+for)|(etiology\s+of)|(etiology\s+for)|(trigger\s+event\s+for)|(origin\s+of)|(origin\s+for)|(origins\s+of)|(origins\s+for)|(other\s+possibilities\s+of))\b/
 
 // ----------------------------------------------------------------------------
-// scope of algorithm is a sentence containing an EntityMention
+// scope of algorithm is a sentence containing an IdentifiedAnnotation
 // ----------------------------------------------------------------------------
-Collection<Sentence> sents = select type:Sentence, filter:contains(EntityMention)
+Collection<Sentence> sents = select type:Sentence, filter:contains(IdentifiedAnnotation)
 
 // ----------------------------------------------------------------------------
 // mark prenegation triggers
@@ -92,16 +92,16 @@ sents.each { Sentence sent ->
 // ----------------------------------------------------------------------------
 // mark selected entities as negated
 // ----------------------------------------------------------------------------
-select(type:NegationScope, filter:contains(EntityMention)).each { NegationScope scope ->
+select(type:NegationScope, filter:contains(IdentifiedAnnotation)).each { NegationScope scope ->
     select(type:PreNegationTrigger, filter:coveredBy(scope)).each { PreNegationTrigger trigger ->
-        select(type:EntityMention,
-        filter:and(coveredBy(scope), after(trigger.end))).each { EntityMention mention ->
+        select(type:IdentifiedAnnotation,
+        filter:and(coveredBy(scope), after(trigger.end))).each { IdentifiedAnnotation mention ->
             mention.polarity = -1
         }
     }
     select(type:PostNegationTrigger, filter:coveredBy(scope)).each { PostNegationTrigger trigger ->
-        select(type:EntityMention,
-        filter:and(coveredBy(scope), before(trigger.begin))).each { EntityMention mention ->
+        select(type:IdentifiedAnnotation,
+        filter:and(coveredBy(scope), before(trigger.begin))).each { IdentifiedAnnotation mention ->
             mention.polarity = -1
         }
     }
