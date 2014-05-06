@@ -9,5 +9,6 @@ include 'type-system',
 	'annotator-pos',
 	'annotator-chunk',
 	'annotator-lex-normalize',
-	'annotator-dictionary'
+	'annotator-dictionary',
+    'annotator-time'
 

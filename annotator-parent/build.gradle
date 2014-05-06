@@ -48,6 +48,7 @@ project(':') {
         compile project(':annotator-negation')
         compile project(':annotator-pos')
         compile project(':annotator-lex-normalize')
+        compile project(':annotator-time')
     }
 }
 
@@ -92,4 +93,12 @@ project(':annotator-lex-normalize') {
 
 project(':annotator-dictionary') {
     dependencies { compile project(':annotator-groovy-dsl') }
+}
+
+project(':annotator-time') {
+    dependencies { 
+        compile project(':type-system') 
+        compile name: 'stanford-corenlp' , group: 'edu.stanford.nlp', version: '3.3.1'
+        compile name: 'stanford-corenlp' , group: 'edu.stanford.nlp', version: '3.3.1', classifier: 'models' 
+    }
 }
