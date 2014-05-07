@@ -54,7 +54,7 @@ class TimeExRecognizerTest {
         assert engine != null
         
         // load in the text to process
-        String text = 'The patient had an onset of diabetes on May 6, 2000. That was 14 years ago.'
+        String text = 'The patient had an onset of diabetes on May 6, 2000 at 3pm. That was 14 years ago.'
 
         // create a new CAS and seed with a Segment
         JCas jcas = engine.newJCas()

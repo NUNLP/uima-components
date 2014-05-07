@@ -56,10 +56,11 @@ class TimeExRecognizer extends JCasAnnotator_ImplBase {
             TimeMention tm = new TimeMention(jcas)
             tm.begin = tokens.get(0).get(CoreAnnotations.CharacterOffsetBeginAnnotation)
             tm.end = tokens.get(tokens.size() - 1).get(CoreAnnotations.CharacterOffsetEndAnnotation)
-//            println cm.toString() + ' [from char offset ' +
-//                    tokens.get(0).get(CoreAnnotations.CharacterOffsetBeginAnnotation) +
-//                    ' to ' + tokens.get(tokens.size() - 1).get(CoreAnnotations.CharacterOffsetEndAnnotation) + ']' +
-//                    ' --> ' + cm.get(TimeExpression.Annotation).getTemporal()
+            tm.addToIndexes()
+            println cm.toString() + ' [from char offset ' +
+                    tokens.get(0).get(CoreAnnotations.CharacterOffsetBeginAnnotation) +
+                    ' to ' + tokens.get(tokens.size() - 1).get(CoreAnnotations.CharacterOffsetEndAnnotation) + ']' +
+                    ' --> ' + cm.get(TimeExpression.Annotation).getTemporal()
         }
     }
 }
