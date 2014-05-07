@@ -6,6 +6,7 @@
 	<classpathentry kind="src" path="src/test/groovy"/>
 	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
+	<classpathentry kind="src" path="/type-system" exported="true"/>
 	<classpathentry sourcepath="C:/Users/wthompso/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.1.6/d3b861ec887a4abd351052edca7fbacdc8b9ddbd/groovy-all-2.1.6-sources.jar" kind="lib" path="C:/Users/wthompso/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.1.6/165b8246372a829c1915611646f6d964010656cf/groovy-all-2.1.6.jar" exported="true"/>
 	<classpathentry sourcepath="C:/Users/wthompso/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-core/2.5.0/2c4026c7f86efa66b44a787a33bf86b386b78d39/uimaj-core-2.5.0-sources.jar" kind="lib" path="C:/Users/wthompso/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-core/2.5.0/939988ebdf6ca0b607bd59de6fc456bcadebb410/uimaj-core-2.5.0.jar" exported="true"/>
 	<classpathentry sourcepath="C:/Users/wthompso/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimafit-core/2.0.0/c20743caeeeaad3903b41784366370991f0ab7ca/uimafit-core-2.0.0-sources.jar" kind="lib" path="C:/Users/wthompso/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimafit-core/2.0.0/d582b10f01a4ec8d486b3c083f73be1355427561/uimafit-core-2.0.0.jar" exported="true"/>
