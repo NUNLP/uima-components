@@ -65,6 +65,9 @@ class TimeExRecognizerTest {
         engine.process(jcas)
         Collection<TimeMention> timeMentions = UIMAUtil.select(type:TimeMention)
         assert timeMentions.size() == 2
-        timeMentions.each { println "TimeMention: $it.coveredText" }
+        timeMentions.each { 
+            println "TimeMention: $it.coveredText" 
+            println "=>(normalized): ${it.getTime().getNormalizedForm()}"
+        }
     }
 }
