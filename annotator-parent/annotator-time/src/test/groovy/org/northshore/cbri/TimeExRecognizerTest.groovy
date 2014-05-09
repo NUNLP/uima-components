@@ -3,6 +3,8 @@ package org.northshore.cbri;
 import static org.junit.Assert.*
 import groovy.util.logging.Log4j
 
+import org.apache.ctakes.typesystem.type.structured.Metadata
+import org.apache.ctakes.typesystem.type.structured.SourceData
 import org.apache.ctakes.typesystem.type.textsem.TimeMention
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Level
@@ -60,6 +62,13 @@ class TimeExRecognizerTest {
         JCas jcas = engine.newJCas()
         jcas.setDocumentText(text)
         UIMAUtil.jcas = jcas
+        
+        Metadata metadata = new Metadata(jcas)
+        SourceData sourceData = new SourceData(jcas)
+        sourceData.setSourceOriginalDate('2014-05-09')
+        metadata.sourceData = sourceData
+        sourceData.addToIndexes()
+        metadata.addToIndexes()
 
         // apply the sentence detector
         engine.process(jcas)
