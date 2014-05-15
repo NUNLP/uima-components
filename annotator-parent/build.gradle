@@ -19,10 +19,10 @@ allprojects {
     dependencies {
         compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.1.6'
 
-        compile group: 'org.apache.uima', name: 'uimaj-core', version: '2.5.0'
+        compile group: 'org.apache.uima', name: 'uimaj-core', version: '2.6.0'
+        compile group: 'org.apache.uima', name: 'uimaj-document-annotation', version: '2.6.0'
         compile group: 'org.apache.uima', name: 'uimafit-core', version: '2.0.0'
-        compile group: 'org.apache.uima', name: 'uimaj-document-annotation', version: '2.5.0'
-
+        
         compile group: 'org.apache.opennlp', name: 'opennlp-tools', version: '1.5.3'
         compile group: 'org.apache.opennlp', name: 'opennlp-uima', version: '1.5.3'
         compile group: 'org.apache.opennlp', name: 'opennlp-maxent', version: '3.0.3'
