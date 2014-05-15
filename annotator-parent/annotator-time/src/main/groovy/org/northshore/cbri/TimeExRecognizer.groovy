@@ -27,10 +27,10 @@ import groovy.util.logging.Log4j
 
 @Log4j
 class TimeExRecognizer extends JCasAnnotator_ImplBase {
-    public static final String TIMEREC_ANCHOR_DATE = 'anchorDate'
+    public static final String REFERENCE_DATE = 'refDate'
 
-    @ConfigurationParameter(name = 'anchorDate', mandatory = false, description = 'Anchor date')
-    private String anchorDate
+    @ConfigurationParameter(name = 'refDate', mandatory = false, description = 'Reference date')
+    private String refDate
 
     private AnnotationPipeline pipeline;
 
@@ -56,8 +56,8 @@ class TimeExRecognizer extends JCasAnnotator_ImplBase {
         if (meta) {
             annotation.set(CoreAnnotations.DocDateAnnotation, meta[0].sourceData.sourceOriginalDate)
         }
-        else if (anchorDate) {
-            annotation.set(CoreAnnotations.DocDateAnnotation, anchorDate)
+        else if (this.refDate) {
+            annotation.set(CoreAnnotations.DocDateAnnotation, this.refDate)
         }
 
         this.pipeline.annotate(annotation)

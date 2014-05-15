@@ -50,7 +50,7 @@ class TimeExRecognizerTest {
         // create a sentence detector engine
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
                 TimeExRecognizer,
-                TimeExRecognizer.TIMEREC_ANCHOR_DATE, '2014-05-12')
+                TimeExRecognizer.REFERENCE_DATE, '2014-05-12')
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(desc)
         
         assert engine != null
