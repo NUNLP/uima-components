@@ -17,7 +17,7 @@ allprojects {
     repositories { mavenCentral() }
 
     dependencies {
-        compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.1.6'
+        compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.3.1'
 
         compile group: 'org.apache.uima', name: 'uimaj-core', version: '2.6.0'
         compile group: 'org.apache.uima', name: 'uimaj-document-annotation', version: '2.6.0'
@@ -26,12 +26,10 @@ allprojects {
         compile group: 'org.apache.opennlp', name: 'opennlp-tools', version: '1.5.3'
         compile group: 'org.apache.opennlp', name: 'opennlp-uima', version: '1.5.3'
         compile group: 'org.apache.opennlp', name: 'opennlp-maxent', version: '3.0.3'
-
-        compile group: 'com.google.guava', name: 'guava', version: '15.0'
-        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+        
+        ////compile group: 'com.google.guava', name: 'guava', version: '15.0'
+        ////compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
         compile group: 'log4j', name: 'log4j', version: '1.2.9'
-        compile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.2'
-        compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.29'
 
         testCompile group: 'junit', name: 'junit', version: '4.+'
         testCompile group: 'org.apache.uima', name: 'uimaj-tools', version: '2.5.0'
@@ -92,13 +90,9 @@ project(':annotator-lex-normalize') {
 }
 
 project(':annotator-dictionary') {
-    dependencies { compile project(':annotator-groovy-dsl') }
+    dependencies { compile project(':annotator-token') }
 }
 
 project(':annotator-time') {
-    dependencies { 
-        compile project(':annotator-groovy-dsl')
-        compile name: 'stanford-corenlp' , group: 'edu.stanford.nlp', version: '3.3.1'
-        compile name: 'stanford-corenlp' , group: 'edu.stanford.nlp', version: '3.3.1', classifier: 'models' 
-    }
+    dependencies { compile project(':type-system') }
 }
