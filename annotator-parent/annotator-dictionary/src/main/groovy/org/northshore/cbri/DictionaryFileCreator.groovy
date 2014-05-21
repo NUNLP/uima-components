@@ -32,7 +32,7 @@ class DictionaryFileCreator {
     }
 
     static public void main(args) {
-        File dictFile = new File('src/test/resources/dict/test.dict')
+        File dictFile = new File('src/test/resources/dict/test-umls-dict.txt')
         generateDictFile(dictFile, ['C0334292', 'C0227391'].toSet())
     }
 }

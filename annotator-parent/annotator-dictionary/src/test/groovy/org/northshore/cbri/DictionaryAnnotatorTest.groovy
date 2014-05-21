@@ -33,10 +33,9 @@ class DictionaryAnnotatorTest {
     @After
     public void tearDown() throws Exception {
     }
-
-    @Ignore
+    
     @Test
-    public void smokeTest() throws Exception {
+    public void testLongestMatch() throws Exception {
         String text = """
 FINAL DIAGNOSIS:
 
@@ -49,7 +48,7 @@ C) Sigmoid colon:
 - Tubular adenoma .
 """
         AnalysisEngine ae = createEngine(DictionaryAnnotator,
-                DictionaryAnnotator.PARAM_MODEL_LOCATION, "src/test/resources/dict/test.dict")
+                DictionaryAnnotator.PARAM_MODEL_LOCATION, "/dict/test-dict.txt")
 
         JCas jcas = JCasFactory.createJCas()
         TokenBuilder<BaseToken, Sentence> tb = new TokenBuilder<BaseToken, Sentence>(BaseToken, Sentence)
@@ -58,25 +57,12 @@ C) Sigmoid colon:
         ae.process(jcas)
         UIMAUtil.jcas = jcas
         Collection<IdentifiedAnnotation> idAnns = UIMAUtil.select(type:IdentifiedAnnotation)
-        assertEquals 2, idAnns.size()
-        assertEquals 'tubular adenoma', idAnns[0].coveredText
-        assertEquals 'sigmoid colon', idAnns[1].coveredText
-    }
-
-    @Test
-    public void testAhoCorasickDictionary() {
-        String text1 = "sigmoid colon"; String sem1 = "SC"
-        String text2 = "tubular adenoma"; String sem2 = "TA"
-        AhoCorasickDict aho = new AhoCorasickDict()
-        aho.put(text1, sem1)
-        aho.put(text2, sem2)
-        assertEquals ("sigmoid::2::SC||| colon:: ", aho.find(text1))
-        assertEquals ("tubular::2::TA||| adenoma:: ", aho.find(text2))
-        assertEquals ("foo:: ", aho.find("foo"))
-    }
-
-    @Test
-    public void testHSQLDB() {
-
+        idAnns.each {
+            println "Identified Annotation: [${it.coveredText}]"
+        }
+        assertEquals 3, idAnns.size()
+        assertEquals 'Sigmoid colon', idAnns[0].coveredText
+        assertEquals 'Tubular adenoma', idAnns[1].coveredText
+        assertEquals 'adenoma', idAnns[2].coveredText
     }
 }
