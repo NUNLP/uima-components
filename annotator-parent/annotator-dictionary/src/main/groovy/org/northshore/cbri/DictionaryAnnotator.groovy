@@ -7,46 +7,50 @@ import groovy.util.logging.Log4j
 
 import java.lang.reflect.Type
 
+import opennlp.tools.tokenize.TokenizerME
+import opennlp.tools.tokenize.TokenizerModel
+import opennlp.tools.util.Span
+import opennlp.uima.tokenize.TokenizerModelResource
+
+import org.apache.commons.lang.StringUtils
 import org.apache.ctakes.typesystem.type.refsem.UmlsConcept
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
+import org.apache.ctakes.typesystem.type.syntax.WordToken
 import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.uima.UimaContext
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase
 import org.apache.uima.fit.descriptor.ConfigurationParameter
+import org.apache.uima.fit.descriptor.ExternalResource
 import org.apache.uima.jcas.JCas
+import org.apache.uima.resource.ResourceAccessException
 import org.apache.uima.resource.ResourceInitializationException
 
-import com.google.common.base.Charsets
-import com.google.common.io.Resources
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters
-import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils
 import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree
 
 @Log4j
 public class DictionaryAnnotator
 extends JCasAnnotator_ImplBase {
     
+    @ExternalResource(key = "token_model")
+    TokenizerModelResource modelResource
+
     public static final String PARAM_MODEL_LOCATION = ComponentParameters.PARAM_MODEL_LOCATION
     @ConfigurationParameter(name = ComponentParameters.PARAM_MODEL_LOCATION, mandatory = true)
     private String phraseFile
-
-    /**
-     * The character encoding used by the model.
-     */
+    
     public static final String PARAM_MODEL_ENCODING = ComponentParameters.PARAM_MODEL_ENCODING
     @ConfigurationParameter(name = ComponentParameters.PARAM_MODEL_ENCODING, mandatory = true, defaultValue="UTF-8")
     private String modelEncoding
-
-
+    
     private PhraseTree phrases
     private Map<List<String>, Map<String, String>> phraseSems
     private Type collectionType
-
 
     @Override
     public void initialize(UimaContext aContext)
@@ -57,19 +61,33 @@ extends JCasAnnotator_ImplBase {
         this.phraseSems = new HashMap<>()
         this.collectionType = new TypeToken<HashMap<String, String>>(){}.getType()
         
+        TokenizerModel model
+        try {
+            model = modelResource.getModel()
+        } catch (ResourceAccessException e) {
+            throw new ResourceInitializationException(e)
+        }
+        TokenizerME tokenizer = new TokenizerME(model)
+        
         GsonBuilder builder = new GsonBuilder()
         Gson gson = builder.create()
         String dictContents = this.getClass().getResource(phraseFile).text
         dictContents.eachLine { String line ->
+            
             // add phrase
             Map<String, String> dictEntryMap = gson.fromJson(line, collectionType)
-            String[] phraseSplit = dictEntryMap['phrase'].toLowerCase().split(/ /)
-            phrases.addPhrase(phraseSplit)
+            String phrase = dictEntryMap['phrase'].toLowerCase()
+            List<String> phraseSplit = []
+            Span[] tokenSpans = tokenizer.tokenizePos(phrase)
+            tokenSpans.each { Span span ->
+                phraseSplit << phrase.substring(span.getStart(), span.getEnd())
+            }
+            phrases.addPhrase(phraseSplit as String[])
             
             // add phrase semantics
             logger.info "phrase: ${dictEntryMap['phrase']}"
             dictEntryMap.remove("phrase")
-            this.phraseSems.put(Arrays.asList(phraseSplit), dictEntryMap)
+            this.phraseSems.put(phraseSplit, dictEntryMap)
         }
     }
 
@@ -80,7 +98,12 @@ extends JCasAnnotator_ImplBase {
         UIMAUtil.jcas = jcas
 
         for (Sentence currSentence : select(jcas, Sentence)) {
-            ArrayList<BaseToken> tokens = new ArrayList<BaseToken>(selectCovered(BaseToken, currSentence))
+            println "Sentence: ${currSentence.coveredText}"
+            List<BaseToken> tokens = new ArrayList<BaseToken>(selectCovered(BaseToken, currSentence))
+            
+            tokens.each { 
+                println "    ${it.coveredText}"
+            }
 
             for (int i = 0; i < tokens.size(); i++) {
                 List<BaseToken> tokensToSentenceEnd = tokens.subList(i, tokens.size() - 1)
