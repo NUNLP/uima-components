@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':annotator-groovy-dsl')
+    compile name: 'stanford-corenlp' , group: 'edu.stanford.nlp', version: '3.3.1'
+    compile name: 'stanford-corenlp' , group: 'edu.stanford.nlp', version: '3.3.1', classifier: 'models'
+}
