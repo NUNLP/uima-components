@@ -7,7 +7,7 @@ import opennlp.tools.tokenize.TokenizerModel
 import opennlp.tools.util.Span
 import opennlp.uima.tokenize.TokenizerModelResource
 
-import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang.StringUtils
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
 import org.apache.ctakes.typesystem.type.syntax.WordToken
 import org.apache.ctakes.typesystem.type.textspan.Sentence
@@ -20,9 +20,6 @@ import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ResourceAccessException
 import org.apache.uima.resource.ResourceInitializationException
 import org.codehaus.groovy.control.CompilerConfiguration
-
-import com.google.common.base.Charsets
-import com.google.common.io.Resources
 
 
 @Log4j
@@ -56,8 +53,7 @@ public final class TokenAnnotator extends JCasAnnotator_ImplBase {
             GroovyShell shell = new GroovyShell(config)
             try {
                 String scriptContents = ""
-                URL url = Resources.getResource(this.postProcessScriptFileName)
-                scriptContents = Resources.toString(url, Charsets.UTF_8)
+                scriptContents = this.getClass().getResource(this.postProcessScriptFileName).text
                 this.postProcessScript = shell.parse(scriptContents)
             } catch (IOException e) {
                 throw new ResourceInitializationException()

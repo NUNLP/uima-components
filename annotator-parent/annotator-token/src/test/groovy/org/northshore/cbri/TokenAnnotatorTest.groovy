@@ -38,7 +38,7 @@ class TokenAnnotatorTest {
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
                 TokenAnnotator,
                 TokenAnnotator.PARAM_POST_PROCESS_SCRIPT_FILE, 
-                "groovy/TokenPostProcess.groovy")
+                "/groovy/TokenPostProcess.groovy")
         ExternalResourceFactory.createDependencyAndBind(desc, 
             TokenAnnotator.TOKEN_MODEL_KEY,
             opennlp.uima.tokenize.TokenizerModelResourceImpl, 
