@@ -70,7 +70,7 @@ public final class TokenAnnotator extends JCasAnnotator_ImplBase {
     public void process(JCas aJCas) throws AnalysisEngineProcessException {
         UIMAUtil.jcas = aJCas
         select(type:Sentence).each { Sentence sentence ->
-            Span[] tokenSpans = tokenizer.tokenizePos(sentence.getCoveredText())
+            Span[] tokenSpans = tokenizer.tokenizePos(sentence.coveredText)
             int sentenceOffset = sentence.getBegin()
             tokenSpans.each { Span span ->
                 
