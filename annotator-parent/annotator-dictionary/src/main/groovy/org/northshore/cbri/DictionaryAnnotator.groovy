@@ -76,11 +76,11 @@ extends JCasAnnotator_ImplBase {
             
             // add phrase
             Map<String, String> dictEntryMap = gson.fromJson(line, collectionType)
-            String phrase = dictEntryMap['phrase'].toLowerCase()
+            String phrase = dictEntryMap['phrase']
             List<String> phraseSplit = []
             Span[] tokenSpans = tokenizer.tokenizePos(phrase)
             tokenSpans.each { Span span ->
-                phraseSplit << phrase.substring(span.getStart(), span.getEnd())
+                phraseSplit << phrase.substring(span.getStart(), span.getEnd()).toLowerCase()
             }
             phrases.addPhrase(phraseSplit as String[])
             

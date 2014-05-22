@@ -39,32 +39,40 @@ class DictionaryAnnotatorTest {
     @Test
     public void testLongestMatch() throws Exception {
         String text = """
-FINAL DIAGNOSIS:
-
-A) Ileocecal valve, colon, polyp:
-- Colonic mucosa with a small well-circumscribed lymphoid aggregate.
-B) Transverse colon polyp:
-- Adenomatous polyp.
-C) Sigmoid colon:
-- Hyperplastic polyp.
-- Tubular adenoma .
+FINAL DIAGNOSIS: A) Ileocecal valve, colon, polyp: - Colonic mucosa with a small well-circumscribed lymphoid aggregate. B) Transverse colon polyp: - Adenomatous polyp. C) Sigmoid colon: - Hyperplastic polyp. - Tubular adenoma .
 """
-        AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
-                DictionaryAnnotator,
-                DictionaryAnnotator.PARAM_MODEL_LOCATION, "/dict/test-dict.txt")
-        ExternalResourceFactory.createDependencyAndBind(desc,
+        AnalysisEngineDescription tokenDesc = AnalysisEngineFactory.createEngineDescription(
+                TokenAnnotator,
+                TokenAnnotator.PARAM_POST_PROCESS_SCRIPT_FILE,
+                "/groovy/TokenPostProcess.groovy")
+        ExternalResourceFactory.createDependencyAndBind(tokenDesc,
                 TokenAnnotator.TOKEN_MODEL_KEY,
                 opennlp.uima.tokenize.TokenizerModelResourceImpl,
                 "file:models/en-token.bin")
-        AnalysisEngine dictionary = AnalysisEngineFactory.createEngine(desc)
-        assert dictionary != null
-        
-        JCas jcas = JCasFactory.createJCas()
-        TokenBuilder<BaseToken, Sentence> tb = new TokenBuilder<BaseToken, Sentence>(BaseToken, Sentence)
-        tb.buildTokens(jcas, text)
+        AnalysisEngine tokenizer = AnalysisEngineFactory.createEngine(tokenDesc)
+        assert tokenizer != null
 
-        dictionary.process(jcas)
+        AnalysisEngineDescription dictDesc = AnalysisEngineFactory.createEngineDescription(
+                DictionaryAnnotator,
+                DictionaryAnnotator.PARAM_MODEL_LOCATION, "/dict/test-dict.txt")
+        ExternalResourceFactory.createDependencyAndBind(dictDesc,
+                TokenAnnotator.TOKEN_MODEL_KEY,
+                opennlp.uima.tokenize.TokenizerModelResourceImpl,
+                "file:models/en-token.bin")
+        AnalysisEngine dictionary = AnalysisEngineFactory.createEngine(dictDesc)
+        assert dictionary != null
+
+        // set up tokens for dictionary lookup
+        JCas jcas = JCasFactory.createJCas()
+        jcas.setDocumentText(text)
         UIMAUtil.jcas = jcas
+        UIMAUtil.create(type:Sentence, begin:0, end:text.length()-1)
+        tokenizer.process(jcas)
+        
+        // process with dictionary
+        dictionary.process(jcas)
+        
+        // test results
         Collection<IdentifiedAnnotation> idAnns = UIMAUtil.select(type:IdentifiedAnnotation)
         idAnns.each { println "Identified Annotation: [${it.coveredText}]" }
         assertEquals 3, idAnns.size()
