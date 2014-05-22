@@ -34,19 +34,18 @@ import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters
 import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree
 
 @Log4j
-public class DictionaryAnnotator
-extends JCasAnnotator_ImplBase {
+public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
     
     @ExternalResource(key = "token_model")
     TokenizerModelResource modelResource
 
-    public static final String PARAM_MODEL_LOCATION = ComponentParameters.PARAM_MODEL_LOCATION
-    @ConfigurationParameter(name = ComponentParameters.PARAM_MODEL_LOCATION, mandatory = true)
-    private String phraseFile
+    public static final String PARAM_DICTIONARY_FILE = 'dictFile'
+    @ConfigurationParameter(name = 'dictFile', mandatory = true)
+    private String dictFile
     
-    public static final String PARAM_MODEL_ENCODING = ComponentParameters.PARAM_MODEL_ENCODING
-    @ConfigurationParameter(name = ComponentParameters.PARAM_MODEL_ENCODING, mandatory = true, defaultValue="UTF-8")
-    private String modelEncoding
+    public static final String PARAM_DICTIONARY_FILE_ENCODING = 'dictFileEncoding'
+    @ConfigurationParameter(name = 'dictFileEncoding', mandatory = true, defaultValue="UTF-8")
+    private String dictFileEncoding
     
     private PhraseTree phrases
     private Map<List<String>, Map<String, String>> phraseSems
@@ -71,9 +70,8 @@ extends JCasAnnotator_ImplBase {
         
         GsonBuilder builder = new GsonBuilder()
         Gson gson = builder.create()
-        String dictContents = this.getClass().getResource(phraseFile).text
+        String dictContents = this.getClass().getResource(this.dictFile).getText(this.dictFileEncoding)
         dictContents.eachLine { String line ->
-            
             // add phrase
             Map<String, String> dictEntryMap = gson.fromJson(line, collectionType)
             String phrase = dictEntryMap['phrase']
