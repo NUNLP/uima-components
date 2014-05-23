@@ -11,3 +11,12 @@ inner join
 where 
 	mrs.CUI in ('C0206677')
 ;
+
+select
+	mr.*
+from 
+	mrconso as mr
+where
+	mr.str like '%adenoma%'
+limit 100
+;
