@@ -1,5 +1,0 @@
-tubular adenoma|type:UmlsConcept|codingScheme:SNOMED|code:444408007|cui:C1112503|tui:T191
-sigmoid colon|type:UmlsConcept|codingScheme:SNOMED|code:60184004|cui:C0227391|tui:T023
-
-
-

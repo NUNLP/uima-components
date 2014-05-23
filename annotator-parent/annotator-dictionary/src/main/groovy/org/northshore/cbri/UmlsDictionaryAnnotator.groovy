@@ -34,7 +34,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters
 import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree
 
 @Log4j
-public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
+public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
     
     @ExternalResource(key = "token_model")
     TokenizerModelResource modelResource

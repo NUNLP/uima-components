@@ -53,8 +53,8 @@ FINAL DIAGNOSIS: A) Ileocecal valve, colon, polyp: - Colonic mucosa with a small
         assert tokenizer != null
 
         AnalysisEngineDescription dictDesc = AnalysisEngineFactory.createEngineDescription(
-                DictionaryAnnotator,
-                DictionaryAnnotator.PARAM_DICTIONARY_FILE, "/dict/test-dict.txt")
+                UmlsDictionaryAnnotator,
+                UmlsDictionaryAnnotator.PARAM_DICTIONARY_FILE, "/dict/test-dict.txt")
         ExternalResourceFactory.createDependencyAndBind(dictDesc,
                 TokenAnnotator.TOKEN_MODEL_KEY,
                 opennlp.uima.tokenize.TokenizerModelResourceImpl,

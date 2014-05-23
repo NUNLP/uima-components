@@ -2,7 +2,7 @@ package org.northshore.cbri
 
 import groovy.sql.Sql
 
-class DictionaryFileCreator {
+class UmlsDictionaryFileCreator {
     static Sql sql = Sql.newInstance( 'jdbc:mysql://localhost/umls', 'root', '34-Olga', 'com.mysql.jdbc.Driver' )
 
     static void generateDictFile(File dictFile, Set<String> cuis) {
