@@ -1,0 +1,3 @@
+{ "phrase":"adenoma", "type":"DiseaseDisorderMention", "codingScheme":"SNOMED", "code":"82375006", "cui":"C0206677", "tui":"T191"}
+{ "phrase":"tubular adenoma", "type":"DiseaseDisorderMention", "codingScheme":"SNOMED", "code":"444408007", "cui":"C1112503", "tui":"T191"}
+{ "phrase":"sigmoid colon", "type":"AnatomicalSiteMention", "codingScheme":"SNOMED", "code":"60184004", "cui":"C0227391", "tui":"T023"}

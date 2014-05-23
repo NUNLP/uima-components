@@ -3,6 +3,7 @@ package org.northshore.cbri
 import static org.apache.uima.fit.util.CasUtil.getType
 import static org.apache.uima.fit.util.JCasUtil.select
 import static org.apache.uima.fit.util.JCasUtil.selectCovered
+import groovy.json.JsonSlurper
 import groovy.util.logging.Log4j
 
 import java.lang.reflect.Type
@@ -12,10 +13,8 @@ import opennlp.tools.tokenize.TokenizerModel
 import opennlp.tools.util.Span
 import opennlp.uima.tokenize.TokenizerModelResource
 
-import org.apache.commons.lang.StringUtils
 import org.apache.ctakes.typesystem.type.refsem.UmlsConcept
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
-import org.apache.ctakes.typesystem.type.syntax.WordToken
 import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.uima.UimaContext
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException
@@ -26,11 +25,6 @@ import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ResourceAccessException
 import org.apache.uima.resource.ResourceInitializationException
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
-
-import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters
 import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree
 
 @Log4j
@@ -49,7 +43,6 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
     
     private PhraseTree phrases
     private Map<List<String>, Map<String, String>> phraseSems
-    private Type collectionType
 
     @Override
     public void initialize(UimaContext aContext)
@@ -58,7 +51,6 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
 
         this.phrases = new PhraseTree()
         this.phraseSems = new HashMap<>()
-        this.collectionType = new TypeToken<HashMap<String, String>>(){}.getType()
         
         TokenizerModel model
         try {
@@ -68,12 +60,12 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
         }
         TokenizerME tokenizer = new TokenizerME(model)
         
-        GsonBuilder builder = new GsonBuilder()
-        Gson gson = builder.create()
+        JsonSlurper slurper = new JsonSlurper()
         String dictContents = this.getClass().getResource(this.dictFile).getText(this.dictFileEncoding)
         dictContents.eachLine { String line ->
             // add phrase
-            Map<String, String> dictEntryMap = gson.fromJson(line, collectionType)
+            Map<String, String> dictEntryMap = slurper.parseText(line)
+            
             String phrase = dictEntryMap['phrase']
             List<String> phraseSplit = []
             Span[] tokenSpans = tokenizer.tokenizePos(phrase)

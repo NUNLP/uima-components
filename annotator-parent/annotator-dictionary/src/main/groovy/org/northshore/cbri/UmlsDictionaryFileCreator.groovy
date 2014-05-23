@@ -25,6 +25,7 @@ class UmlsDictionaryFileCreator {
             def root = builder {
                 cui "${row.cui}"
                 tui "${row.tui}"
+                codingScheme 'SNOMED'
                 code "${row.code}"
                 phrase "${row.str}"
                 type mentionType
@@ -37,7 +38,7 @@ class UmlsDictionaryFileCreator {
     }
 
     static public void main(args) {
-        File dictFile = new File('src/test/resources/dict/test-umls-dict.txt')
+        File dictFile = new File('src/test/resources/dict/test-umls-dict-auto.txt')
         generateDictFile(dictFile, ['C0334292', 'C0227391'].toSet())
     }
 }
