@@ -7,7 +7,12 @@ class UmlsDictionaryFileCreator {
 
     static void generateDictFile(File dictFile, Set<String> cuis) {
         BufferedWriter writer = dictFile.newWriter()
-        String sql_str = 'select mrc.CUI, mrs.TUI, mrc.CODE, mrc.STR from mrconso as mrc inner join umls.MRSTY as mrs on mrs.CUI = mrc.CUI where mrs.CUI in ('
+        String sql_str = """
+            select mrc.CUI, mrs.TUI, mrc.CODE, mrc.STR 
+            from mrconso as mrc 
+            inner join umls.MRSTY as mrs on mrs.CUI = mrc.CUI 
+            where mrs.CUI in (
+        """
         cuis.each { sql_str += "'$it', " }
         sql_str += "'')"
         sql.eachRow(sql_str) { row ->
