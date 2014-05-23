@@ -9,6 +9,12 @@
 {"cui":"C0001430","tui":"T191","codingScheme":"SNOMED","code":"32048006","phrase":"Adenoma","type":"DiseaseDisorderMention"}
 {"cui":"C0001430","tui":"T191","codingScheme":"SNOMED","code":"32048006","phrase":"Adenoma, no subtype (morphologic abnormality)","type":"DiseaseDisorderMention"}
 {"cui":"C0001430","tui":"T191","codingScheme":"SNOMED","code":"32048006","phrase":"Adenoma, NOS","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","codingScheme":"SNOMED","code":"189597007","phrase":"[M]Adenomatous polyp NOS","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","codingScheme":"SNOMED","code":"189597007","phrase":"[M]Adenomatous polyp NOS (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","codingScheme":"SNOMED","code":"82375006","phrase":"Adenomatous polyp","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","codingScheme":"SNOMED","code":"82375006","phrase":"Polypoid adenoma","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","codingScheme":"SNOMED","code":"82375006","phrase":"Adenomatous polyp (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","codingScheme":"SNOMED","code":"82375006","phrase":"Adenomatous polyp, NOS","type":"DiseaseDisorderMention"}
 {"cui":"C0227391","tui":"T023","codingScheme":"SNOMED","code":"60184004","phrase":"Sigmoid colon","type":"AnatomicalSiteMention"}
 {"cui":"C0227391","tui":"T023","codingScheme":"SNOMED","code":"60184004","phrase":"Sigmoid colon structure (body structure)","type":"AnatomicalSiteMention"}
 {"cui":"C0227391","tui":"T023","codingScheme":"SNOMED","code":"60184004","phrase":"Sigmoid colon structure","type":"AnatomicalSiteMention"}
