@@ -30,7 +30,7 @@ import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree
 @Log4j
 public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
     
-    @ExternalResource(key = "token_model")
+    @ExternalResource(key = 'token_model')
     TokenizerModelResource modelResource
 
     public static final String PARAM_DICTIONARY_FILE = 'dictFile'
@@ -38,7 +38,7 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
     private String dictFile
     
     public static final String PARAM_DICTIONARY_FILE_ENCODING = 'dictFileEncoding'
-    @ConfigurationParameter(name = 'dictFileEncoding', mandatory = true, defaultValue="UTF-8")
+    @ConfigurationParameter(name = 'dictFileEncoding', mandatory = true, defaultValue='UTF-8')
     private String dictFileEncoding
     
     private PhraseTree phrases
@@ -75,8 +75,8 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
             phrases.addPhrase(phraseSplit as String[])
             
             // add phrase semantics
-            logger.info "phrase: ${dictEntryMap['phrase']}"
-            dictEntryMap.remove("phrase")
+            logger.info "phrase: ${phrase}"
+            dictEntryMap.remove('phrase')
             this.phraseSems.put(phraseSplit, dictEntryMap)
         }
     }
@@ -88,37 +88,29 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
         UIMAUtil.jcas = jcas
 
         for (Sentence currSentence : select(jcas, Sentence)) {
-            println "Sentence: ${currSentence.coveredText}"
             List<BaseToken> tokens = new ArrayList<BaseToken>(selectCovered(BaseToken, currSentence))
-            
-            tokens.each { 
-                println "    ${it.coveredText}"
-            }
-
             for (int i = 0; i < tokens.size(); i++) {
                 List<BaseToken> tokensToSentenceEnd = tokens.subList(i, tokens.size() - 1)
                 String[] sentenceToEnd = new String[tokens.size()]
 
                 for (int j = 0; j < tokensToSentenceEnd.size(); j++) {
-                    sentenceToEnd[j] = tokensToSentenceEnd.get(j).getCoveredText().toLowerCase()
+                    sentenceToEnd[j] = tokensToSentenceEnd.get(j).coveredText.toLowerCase()
                 }
 
                 String[] longestMatch = phrases.getLongestMatch(sentenceToEnd)
-
                 if (longestMatch != null) {
                     BaseToken beginToken = tokens.get(i)
                     BaseToken endToken = tokens.get(i + longestMatch.length - 1)
 
-                    Map vals = this.phraseSems.get(Arrays.asList(longestMatch))
-
-                    Class typeClass = UIMAUtil.getIdentifiedAnnotationClass(vals['type'])
-
+                    Map phraseSem = this.phraseSems.get(Arrays.asList(longestMatch))
+                    
+                    Class typeClass = UIMAUtil.getIdentifiedAnnotationClass(phraseSem['type'])
                     UIMAUtil.create(type:typeClass, begin:beginToken.getBegin() ,
                     end:endToken.getEnd(), polarity:1 , uncertainty:0,
                     ontologyConcepts:[
-                        UIMAUtil.create(type:UmlsConcept, code:vals["code"],
-                        codingScheme:vals["codingScheme"],
-                        cui:vals["cui"], tui:vals["tui"])]
+                        UIMAUtil.create(type:UmlsConcept, code:phraseSem['code'],
+                        codingScheme:phraseSem['codingScheme'],
+                        cui:phraseSem['cui'], tui:phraseSem['tui'])]
                     )
                 }
             }

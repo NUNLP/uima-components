@@ -5,7 +5,7 @@ import groovy.sql.Sql
 class UmlsDictionaryFileCreator {
     static Sql sql = Sql.newInstance( 'jdbc:mysql://localhost/umls', 'root', '34-Olga', 'com.mysql.jdbc.Driver' )
 
-    static void generateDictFile(File dictFile, Set<String> cuis) {
+    static void createDictFile(File dictFile, Set<String> cuis) {
         BufferedWriter writer = dictFile.newWriter()
         String sql_str = """
             select mrc.CUI, mrs.TUI, mrc.CODE, mrc.STR 
@@ -39,6 +39,6 @@ class UmlsDictionaryFileCreator {
 
     static public void main(args) {
         File dictFile = new File('src/test/resources/dict/test-umls-dict-auto.txt')
-        generateDictFile(dictFile, ['C0334292', 'C0227391'].toSet())
+        createDictFile(dictFile, ['C0334292', 'C0227391'].toSet())
     }
 }
