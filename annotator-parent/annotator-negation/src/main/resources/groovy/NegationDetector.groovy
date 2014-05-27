@@ -1,9 +1,9 @@
-import static org.northshore.cbri.UIMAUtil.*
+import static org.northshore.cbri.dsl.UIMAUtil.*
 
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
 import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.uima.jcas.tcas.Annotation
-import org.northshore.cbri.AnnotationMatcher
+import org.northshore.cbri.dsl.AnnotationMatcher
 import org.northshore.cbri.type.NegationScope
 import org.northshore.cbri.type.NegationScopeTerminator
 import org.northshore.cbri.type.NegationTrigger
