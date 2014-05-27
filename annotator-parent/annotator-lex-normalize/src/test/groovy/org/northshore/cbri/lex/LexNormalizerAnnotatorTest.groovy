@@ -1,8 +1,8 @@
-package org.northshore.cbri
+package org.northshore.cbri.lex
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.*
 import static org.junit.Assert.*
-import gov.nih.nlm.nls.lvg.Api.NormApi;
+import gov.nih.nlm.nls.lvg.Api.NormApi
 import groovy.util.logging.Log4j
 
 import org.apache.ctakes.typesystem.type.syntax.BaseToken
@@ -10,19 +10,16 @@ import org.apache.ctakes.typesystem.type.syntax.WordToken
 import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Level
-import org.apache.uima.UIMAException
 import org.apache.uima.analysis_engine.AnalysisEngine
-import org.apache.uima.fit.factory.AnalysisEngineFactory
 import org.apache.uima.fit.factory.JCasFactory
-import org.apache.uima.fit.pipeline.SimplePipeline
 import org.apache.uima.fit.testing.factory.TokenBuilder
-import org.apache.uima.fit.util.JCasUtil
 import org.apache.uima.jcas.JCas
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Ignore
 import org.junit.Test
+import org.northshore.cbri.dsl.UIMAUtil
 
 @Log4j
 class LexNormalizerAnnotatorTest {

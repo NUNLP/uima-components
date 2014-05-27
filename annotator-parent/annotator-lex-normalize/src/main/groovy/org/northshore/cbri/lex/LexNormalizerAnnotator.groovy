@@ -1,6 +1,6 @@
-package org.northshore.cbri
+package org.northshore.cbri.lex
 
-import static org.northshore.cbri.UIMAUtil.*
+import static org.northshore.cbri.dsl.UIMAUtil.*
 import gov.nih.nlm.nls.gspell.Candidate
 import gov.nih.nlm.nls.gspell.GSpellLite
 import gov.nih.nlm.nls.lvg.Api.NormApi
@@ -13,6 +13,8 @@ import org.apache.uima.fit.component.JCasAnnotator_ImplBase
 import org.apache.uima.fit.descriptor.ConfigurationParameter
 import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ResourceInitializationException
+import org.northshore.cbri.dsl.UIMAUtil;
+import org.northshore.cbri.lex.LexNormalizerAnnotator;
 
 @Log4j
 class LexNormalizerAnnotator extends JCasAnnotator_ImplBase {
