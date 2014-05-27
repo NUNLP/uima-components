@@ -1,4 +1,4 @@
-package org.northshore.cbri
+package org.northshore.cbri.dsl
 
 import groovy.util.logging.Log4j
 
@@ -37,7 +37,7 @@ public class GroovyAnnotator extends org.apache.uima.fit.component.JCasAnnotator
         icz.addImports('org.apache.ctakes.typesystem.type.textspan.Sentence')
         config.addCompilationCustomizers(icz)
         
-        config.setScriptBaseClass("org.northshore.cbri.UIMAUtil")
+        config.setScriptBaseClass("org.northshore.cbri.dsl.UIMAUtil")
         
         GroovyShell shell = new GroovyShell(config)
         try {

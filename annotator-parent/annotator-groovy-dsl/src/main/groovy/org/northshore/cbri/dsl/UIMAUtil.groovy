@@ -1,4 +1,4 @@
-package org.northshore.cbri
+package org.northshore.cbri.dsl
 
 import static org.apache.uima.fit.util.JCasUtil.*
 

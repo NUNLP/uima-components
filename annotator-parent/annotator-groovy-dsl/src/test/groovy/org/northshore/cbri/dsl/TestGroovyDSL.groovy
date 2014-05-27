@@ -1,6 +1,6 @@
-package org.northshore.cbri;
+package org.northshore.cbri.dsl;
 
-import static org.northshore.cbri.UIMAUtil.*
+import static org.northshore.cbri.dsl.UIMAUtil.*
 import static org.junit.Assert.*
 
 import org.apache.ctakes.typesystem.type.refsem.UmlsConcept
@@ -20,9 +20,8 @@ import org.apache.uima.fit.factory.AggregateBuilder
 import org.apache.uima.fit.factory.AnalysisEngineFactory
 import org.apache.uima.fit.factory.TypeSystemDescriptionFactory
 import org.apache.uima.fit.pipeline.SimplePipeline
-
-import org.northshore.cbri.AnnotationMatcher
-import org.northshore.cbri.GroovyAnnotator
+import org.northshore.cbri.dsl.AnnotationMatcher;
+import org.northshore.cbri.dsl.GroovyAnnotator;
 
 class TestGroovyDSL {
     static AnalysisEngine engine;

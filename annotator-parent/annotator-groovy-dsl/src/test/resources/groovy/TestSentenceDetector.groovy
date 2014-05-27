@@ -1,4 +1,4 @@
-import static org.northshore.cbri.UIMAUtil.*
+import static org.northshore.cbri.dsl.UIMAUtil.*
 
 import java.util.regex.Matcher
 
