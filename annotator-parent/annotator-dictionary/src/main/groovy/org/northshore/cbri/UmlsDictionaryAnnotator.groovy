@@ -61,7 +61,7 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
         TokenizerME tokenizer = new TokenizerME(model)
         
         JsonSlurper slurper = new JsonSlurper()
-        String dictContents = this.getClass().getResource(this.dictFile).getText(this.dictFileEncoding)
+        File dictContents = new File(this.getClass().getResource(this.dictFile).getFile())
         dictContents.eachLine { String line ->
             // add phrase
             Map<String, String> dictEntryMap = slurper.parseText(line)

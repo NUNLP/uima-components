@@ -40,8 +40,8 @@ C) Sigmoid colon:
     public static void setupClass() {
         BasicConfigurator.configure()
         
-        File dictFile = new File('src/test/resources/dict/test-umls-dict-auto.txt')
-        UmlsDictionaryFileCreator.createDictFile(dictFile, ['C0334292', 'C0227391', 'C0001430', 'C0333983', 'C0206677'].toSet())
+//        File dictFile = new File('src/test/resources/dict/test-umls-dict-auto.txt')
+//        UmlsDictionaryFileCreator.createDictFile(dictFile, ['C0334292', 'C0227391', 'C0001430', 'C0333983', 'C0206677'].toSet())
     }
 
     @Before
