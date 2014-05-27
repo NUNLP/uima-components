@@ -1,12 +1,11 @@
-package org.northshore.cbri;
+package org.northshore.cbri.brat;
 
 import static org.junit.Assert.*
-import static org.northshore.cbri.UIMAUtil.*
+import static org.northshore.cbri.dsl.UIMAUtil.*
 import groovy.util.logging.Log4j
 
 import org.apache.ctakes.typesystem.type.relation.UMLSRelation
 import org.apache.ctakes.typesystem.type.textsem.EntityMention
-import org.apache.ctakes.typesystem.type.textspan.Segment
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Level
 import org.apache.uima.analysis_engine.AnalysisEngine

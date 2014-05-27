@@ -1,16 +1,15 @@
-package org.northshore.cbri
+package org.northshore.cbri.brat
 
-import static org.northshore.cbri.UIMAUtil.*
+import static org.northshore.cbri.dsl.UIMAUtil.*
 
 import org.apache.ctakes.typesystem.type.refsem.UmlsConcept
 import org.apache.ctakes.typesystem.type.relation.RelationArgument
 import org.apache.ctakes.typesystem.type.relation.UMLSRelation
 import org.apache.ctakes.typesystem.type.textsem.EntityMention
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
-import org.apache.ctakes.typesystem.type.textspan.Segment
 import org.apache.uima.jcas.JCas
 import org.apache.uima.jcas.tcas.Annotation
-import org.northshore.cbri.UIMAUtil.*
+import org.northshore.cbri.dsl.UIMAUtil
 
 class BratAnnotatorImpl extends BratAnnotator {
 

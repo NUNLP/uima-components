@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.northshore.cbri;
+package org.northshore.cbri.brat;
 
 public class RelationAnnotation extends BratAnnotation {
 

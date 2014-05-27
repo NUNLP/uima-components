@@ -1,4 +1,4 @@
-package org.northshore.cbri
+package org.northshore.cbri.brat
 
 import org.apache.ctakes.typesystem.type.relation.UMLSRelation
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
@@ -10,6 +10,7 @@ import org.apache.uima.jcas.JCas
 import org.apache.uima.jcas.tcas.Annotation
 import org.apache.uima.resource.ResourceInitializationException
 import org.apache.uima.util.Level
+import org.northshore.cbri.dsl.UIMAUtil
 
 abstract class BratAnnotator extends JCasAnnotator_ImplBase {
 	public static final String PARAM_ANN_FILE = "annFileName"

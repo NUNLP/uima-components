@@ -15,29 +15,28 @@
  * limitations under the License.
  */
 
-package org.northshore.cbri;
+package org.northshore.cbri.brat;
 
-public class AttributeAnnotation extends BratAnnotation {
+public abstract class BratAnnotation {
 
-  private final String entityId;
-  private final String value;
+  private final String id;
+  private final String type;
   
-  protected AttributeAnnotation(String id, String type, String entityId, String value) {
-    super(id, type);
-    this.entityId = entityId;
-    this.value = value;
+  protected BratAnnotation(String id, String type) {
+    this.id = id;
+    this.type =type;
   }
   
-  public String getEntityId() {
-    return this.entityId;
+  public String getId() {
+    return id;
   }
   
-  public String getValue() {
-    return this.value;
+  public String getType() {
+    return type;
   }
   
   @Override
   public String toString() {
-    return super.toString() + " entityId:" + this.getEntityId() + " value:" + this.getValue();
+    return id + " " + type;
   }
 }

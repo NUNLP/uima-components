@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.northshore.cbri;
+package org.northshore.cbri.brat;
 
 import java.io.BufferedReader;
 import java.io.IOException;

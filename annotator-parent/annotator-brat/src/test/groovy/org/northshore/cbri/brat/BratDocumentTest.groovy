@@ -1,4 +1,4 @@
-package org.northshore.cbri;
+package org.northshore.cbri.brat;
 
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertTrue
@@ -9,9 +9,6 @@ import org.apache.log4j.Level
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-
-import com.google.common.base.Charsets
-import com.google.common.io.Resources
 
 @Log4j
 public class BratDocumentTest {
