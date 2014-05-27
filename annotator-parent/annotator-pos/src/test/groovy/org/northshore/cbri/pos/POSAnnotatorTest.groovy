@@ -1,4 +1,4 @@
-package org.northshore.cbri
+package org.northshore.cbri.pos
 
 import static org.junit.Assert.*
 
@@ -18,6 +18,7 @@ import org.apache.uima.jcas.JCas
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.northshore.cbri.dsl.UIMAUtil;
 
 import com.google.common.base.Charsets
 import com.google.common.io.Resources
