@@ -1,4 +1,4 @@
-package org.northshore.cbri
+package org.northshore.cbri.dict
 
 import groovy.sql.Sql
 

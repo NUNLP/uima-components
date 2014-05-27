@@ -1,4 +1,4 @@
-package org.northshore.cbri
+package org.northshore.cbri.dict
 
 import static org.apache.uima.fit.util.CasUtil.getType
 import static org.apache.uima.fit.util.JCasUtil.select
@@ -24,6 +24,7 @@ import org.apache.uima.fit.descriptor.ExternalResource
 import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ResourceAccessException
 import org.apache.uima.resource.ResourceInitializationException
+import org.northshore.cbri.dsl.UIMAUtil;
 
 import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree
 

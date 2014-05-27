@@ -1,4 +1,4 @@
-package org.northshore.cbri
+package org.northshore.cbri.dict
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine
 import static org.apache.uima.fit.util.JCasUtil.selectSingle
 import static org.junit.Assert.*
@@ -20,6 +20,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
+import org.northshore.cbri.dict.UmlsDictionaryAnnotator;
+import org.northshore.cbri.dsl.UIMAUtil;
+import org.northshore.cbri.token.TokenAnnotator;
 
 @Log4j
 class UmlsDictionaryAnnotatorTest {
