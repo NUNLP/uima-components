@@ -1,4 +1,4 @@
-package org.northshore.cbri
+package org.northshore.cbri.time
 
 import org.apache.ctakes.typesystem.type.refsem.Time
 import org.apache.ctakes.typesystem.type.structured.Metadata
@@ -11,6 +11,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter
 import org.apache.uima.fit.util.JCasUtil
 import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ResourceInitializationException
+import org.northshore.cbri.dsl.UIMAUtil;
 
 import edu.stanford.nlp.ling.CoreAnnotations
 import edu.stanford.nlp.pipeline.Annotation

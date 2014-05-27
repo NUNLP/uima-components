@@ -1,4 +1,4 @@
-package org.northshore.cbri;
+package org.northshore.cbri.time;
 
 import static org.junit.Assert.*
 import groovy.util.logging.Log4j
@@ -19,6 +19,7 @@ import org.junit.AfterClass
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
+import org.northshore.cbri.dsl.UIMAUtil
 
 @Log4j
 class TimeExRecognizerTest {
