@@ -1,6 +1,6 @@
-package org.northshore.cbri
+package org.northshore.cbri.token
 
-import static org.northshore.cbri.UIMAUtil.*
+import static org.northshore.cbri.dsl.UIMAUtil.*
 import groovy.util.logging.Log4j
 import opennlp.tools.tokenize.TokenizerME
 import opennlp.tools.tokenize.TokenizerModel
@@ -20,6 +20,8 @@ import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ResourceAccessException
 import org.apache.uima.resource.ResourceInitializationException
 import org.codehaus.groovy.control.CompilerConfiguration
+import org.northshore.cbri.dsl.UIMAUtil
+
 
 
 @Log4j
@@ -49,7 +51,7 @@ public final class TokenAnnotator extends JCasAnnotator_ImplBase {
         // initialize post-processing script
         if (this.postProcessScriptFileName != null) {
             CompilerConfiguration config = new CompilerConfiguration()
-            config.setScriptBaseClass("org.northshore.cbri.UIMAUtil")
+            config.setScriptBaseClass("org.northshore.cbri.dsl.UIMAUtil")
             GroovyShell shell = new GroovyShell(config)
             try {
                 String scriptContents = ""

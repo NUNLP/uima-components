@@ -1,4 +1,4 @@
-package org.northshore.cbri;
+package org.northshore.cbri.token;
 
 import static org.junit.Assert.*
 import groovy.util.logging.Log4j
@@ -16,6 +16,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
+import org.northshore.cbri.dsl.UIMAUtil
 
 @Log4j
 class TokenAnnotatorTest {
