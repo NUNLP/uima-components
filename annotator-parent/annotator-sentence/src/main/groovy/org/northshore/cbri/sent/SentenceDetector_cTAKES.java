@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.northshore.cbri;
+package org.northshore.cbri.sent;
 
 import groovy.lang.GroovyShell;
 
@@ -219,7 +219,7 @@ public class SentenceDetector_cTAKES extends JCasAnnotator_ImplBase {
         try {
             if (segmentsToParse != null) {
                 CompilerConfiguration config = new CompilerConfiguration();
-                config.setScriptBaseClass("org.northshore.cbri.UIMAUtil");
+                config.setScriptBaseClass("org.northshore.cbri.dsl.UIMAUtil");
                 ////Binding binding = new Binding();
                 GroovyShell shell = new GroovyShell(config);
                 

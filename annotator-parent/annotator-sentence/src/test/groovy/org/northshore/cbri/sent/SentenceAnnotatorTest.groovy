@@ -1,4 +1,4 @@
-package org.northshore.cbri
+package org.northshore.cbri.sent
 
 import static org.junit.Assert.*
 import groovy.util.logging.Log4j
@@ -14,13 +14,14 @@ import org.apache.uima.fit.factory.AggregateBuilder
 import org.apache.uima.fit.factory.AnalysisEngineFactory
 import org.apache.uima.fit.factory.ExternalResourceFactory
 import org.apache.uima.fit.factory.TypeSystemDescriptionFactory
-import org.apache.uima.fit.pipeline.SimplePipeline
 import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.metadata.TypeSystemDescription
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
+import org.northshore.cbri.dsl.GroovyAnnotator
+import org.northshore.cbri.dsl.UIMAUtil
 
 import com.google.common.base.Charsets
 import com.google.common.io.Resources

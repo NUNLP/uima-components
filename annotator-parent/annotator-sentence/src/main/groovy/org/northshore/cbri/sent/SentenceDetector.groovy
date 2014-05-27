@@ -1,6 +1,6 @@
-package org.northshore.cbri
+package org.northshore.cbri.sent
 
-import static org.northshore.cbri.UIMAUtil.*
+import static org.northshore.cbri.dsl.UIMAUtil.*
 import groovy.util.logging.Log4j
 
 import java.util.regex.Matcher
@@ -22,6 +22,7 @@ import org.apache.uima.jcas.tcas.Annotation
 import org.apache.uima.resource.ResourceInitializationException
 import org.codehaus.groovy.control.CompilationFailedException
 import org.codehaus.groovy.control.CompilerConfiguration
+import org.northshore.cbri.dsl.UIMAUtil
 
 import com.google.common.base.Charsets
 import com.google.common.io.Resources
@@ -71,7 +72,7 @@ class SentenceDetector extends JCasAnnotator_ImplBase {
         try {
             if (segmentsToParse != null) {
                 CompilerConfiguration config = new CompilerConfiguration()
-                config.setScriptBaseClass("org.northshore.cbri.UIMAUtil")
+                config.setScriptBaseClass("org.northshore.cbri.dsl.UIMAUtil")
                 GroovyShell shell = new GroovyShell(config)
                 URL url = Resources.getResource(this.segmentsToParse)
                 String scriptContents = Resources.toString(url, Charsets.UTF_8)
