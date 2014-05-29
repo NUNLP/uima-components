@@ -22,11 +22,11 @@ allprojects {
         compile group: 'org.apache.uima', name: 'uimaj-core', version: '2.6.0'
         compile group: 'org.apache.uima', name: 'uimaj-document-annotation', version: '2.6.0'
         compile group: 'org.apache.uima', name: 'uimafit-core', version: '2.0.0'
-        
+
         compile group: 'org.apache.opennlp', name: 'opennlp-tools', version: '1.5.3'
         compile group: 'org.apache.opennlp', name: 'opennlp-uima', version: '1.5.3'
         compile group: 'org.apache.opennlp', name: 'opennlp-maxent', version: '3.0.3'
-        
+
         compile group: 'log4j', name: 'log4j', version: '1.2.9'
 
         testCompile group: 'junit', name: 'junit', version: '4.+'
@@ -45,6 +45,8 @@ project(':') {
         compile project(':annotator-pos')
         compile project(':annotator-lex-normalize')
         compile project(':annotator-time')
+        compile project(':annotator-dictionary')        
+        compile project(':annotator-dictionary-lingpipe')
     }
 }
 
@@ -69,9 +71,9 @@ project(':annotator-token') {
 }
 
 project(':annotator-sentence') {
-    dependencies { 
-        compile project(':annotator-groovy-dsl') 
-        testCompile project(':annotator-segment') 
+    dependencies {
+        compile project(':annotator-groovy-dsl')
+        testCompile project(':annotator-segment')
     }
 }
 
