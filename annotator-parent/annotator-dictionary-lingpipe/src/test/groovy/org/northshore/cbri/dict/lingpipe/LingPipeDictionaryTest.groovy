@@ -55,20 +55,21 @@ C) Sigmoid colon:
         ExactDictionaryChunker dictionaryChunkerTT = new ExactDictionaryChunker(dictionary,
                                      IndoEuropeanTokenizerFactory.INSTANCE,
                                      true,  // all matches (overlapping)
-                                     true)  // case sensitive
+                                     false)  // case sensitive
         
         Chunking chunking = dictionaryChunkerTT.chunk(testText)
+        assert chunking.chunkSet().size() == 3
         for (Chunk chunk : chunking.chunkSet()) {
             int start = chunk.start()
             int end = chunk.end()
             String type = chunk.type()
             double score = chunk.score()
-//            String phrase = text.substring(start,end)
-//            System.out.println("     phrase=|" + phrase + "|"
-//                               + " start=" + start
-//                               + " end=" + end
-//                               + " type=" + type
-//                               + " score=" + score);
+            String phrase = testText.substring(start,end)
+            System.out.println("     phrase=|" + phrase + "|"
+                               + " start=" + start
+                               + " end=" + end
+                               + " type=" + type
+                               + " score=" + score);
         }
     }
 }
