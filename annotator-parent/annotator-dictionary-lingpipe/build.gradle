@@ -1,4 +1,10 @@
+jar {
+    from {
+        zipTree('lib/lingpipe-4.1.0.jar')
+    }
+}
+
 dependencies {
-    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.29'
+    compile fileTree(dir: 'lib', include: '*.jar')
 }
 
