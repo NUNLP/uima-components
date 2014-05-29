@@ -59,17 +59,14 @@ C) Sigmoid colon:
         
         Chunking chunking = dictionaryChunkerTT.chunk(testText)
         assert chunking.chunkSet().size() == 3
-        for (Chunk chunk : chunking.chunkSet()) {
+        
+        chunking.chunkSet().each { Chunk chunk ->
             int start = chunk.start()
             int end = chunk.end()
             String type = chunk.type()
             double score = chunk.score()
             String phrase = testText.substring(start,end)
-            System.out.println("     phrase=|" + phrase + "|"
-                               + " start=" + start
-                               + " end=" + end
-                               + " type=" + type
-                               + " score=" + score);
+            println "    phrase=|${phrase}| start=${start} end=${end} type=${type} score=${score}"
         }
     }
 }
