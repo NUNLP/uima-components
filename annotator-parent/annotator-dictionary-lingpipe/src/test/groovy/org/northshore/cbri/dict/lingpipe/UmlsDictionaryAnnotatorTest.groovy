@@ -65,5 +65,8 @@ C) Sigmoid colon:
     public void tearDown() throws Exception {
     }
     
-    
+    @Test
+    public void smokeTest() {
+        
+    }
 }
