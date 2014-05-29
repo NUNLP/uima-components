@@ -5,9 +5,6 @@ import static org.apache.uima.fit.util.JCasUtil.select
 import static org.apache.uima.fit.util.JCasUtil.selectCovered
 import groovy.json.JsonSlurper
 import groovy.util.logging.Log4j
-
-import java.lang.reflect.Type
-
 import opennlp.tools.tokenize.TokenizerME
 import opennlp.tools.tokenize.TokenizerModel
 import opennlp.tools.util.Span
@@ -24,7 +21,7 @@ import org.apache.uima.fit.descriptor.ExternalResource
 import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ResourceAccessException
 import org.apache.uima.resource.ResourceInitializationException
-import org.northshore.cbri.dsl.UIMAUtil;
+import org.northshore.cbri.dsl.UIMAUtil
 
 import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree
 

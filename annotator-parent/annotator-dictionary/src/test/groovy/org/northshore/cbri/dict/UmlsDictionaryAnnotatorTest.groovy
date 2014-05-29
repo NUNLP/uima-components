@@ -4,9 +4,8 @@ import static org.apache.uima.fit.util.JCasUtil.selectSingle
 import static org.junit.Assert.*
 import groovy.util.logging.Log4j
 
-import org.apache.ctakes.typesystem.type.syntax.BaseToken
-import org.apache.ctakes.typesystem.type.textsem.AnatomicalSiteMention;
-import org.apache.ctakes.typesystem.type.textsem.DiseaseDisorderMention;
+import org.apache.ctakes.typesystem.type.textsem.AnatomicalSiteMention
+import org.apache.ctakes.typesystem.type.textsem.DiseaseDisorderMention
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
 import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.log4j.BasicConfigurator
@@ -20,9 +19,8 @@ import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-import org.northshore.cbri.dict.UmlsDictionaryAnnotator;
-import org.northshore.cbri.dsl.UIMAUtil;
-import org.northshore.cbri.token.TokenAnnotator;
+import org.northshore.cbri.dsl.UIMAUtil
+import org.northshore.cbri.token.TokenAnnotator
 
 @Log4j
 class UmlsDictionaryAnnotatorTest {
@@ -50,9 +48,7 @@ C) Sigmoid colon:
     @Before
     public void setUp() throws Exception {
         AnalysisEngineDescription tokenDesc = AnalysisEngineFactory.createEngineDescription(
-                TokenAnnotator,
-                TokenAnnotator.PARAM_POST_PROCESS_SCRIPT_FILE,
-                "/groovy/TokenPostProcess.groovy")
+                TokenAnnotator)
         ExternalResourceFactory.createDependencyAndBind(tokenDesc,
                 TokenAnnotator.TOKEN_MODEL_KEY,
                 opennlp.uima.tokenize.TokenizerModelResourceImpl,
