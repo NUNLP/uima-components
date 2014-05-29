@@ -45,9 +45,7 @@ C) Sigmoid colon:
     @Before
     public void setUp() throws Exception {
         AnalysisEngineDescription tokenDesc = AnalysisEngineFactory.createEngineDescription(
-                TokenAnnotator,
-                TokenAnnotator.PARAM_POST_PROCESS_SCRIPT_FILE,
-                "/groovy/TokenPostProcess.groovy")
+                TokenAnnotator)
         ExternalResourceFactory.createDependencyAndBind(tokenDesc,
                 TokenAnnotator.TOKEN_MODEL_KEY,
                 opennlp.uima.tokenize.TokenizerModelResourceImpl,
