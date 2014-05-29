@@ -10,5 +10,6 @@ include 'type-system',
 	'annotator-chunk',
 	'annotator-lex-normalize',
 	'annotator-dictionary',
-    'annotator-time'
+    'annotator-time',
+    'annotator-dictionary-lingpipe'
 

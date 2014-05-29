@@ -4,7 +4,7 @@ allprojects {
     apply plugin: 'maven-publish'
 
     version = '1.0'
-    group = 'org.northshore.cbri'
+    group = 'org.northshore.cbri.dsl.dsl.lex.lex.pos.pos.sent.sent.time.time.token.token'
 
     jar { manifest.attributes provider: 'NorthShore University HealthSystem' }
 
@@ -89,6 +89,10 @@ project(':annotator-lex-normalize') {
 
 project(':annotator-dictionary') {
     dependencies { compile project(':annotator-token') }
+}
+
+project(':annotator-dictionary-lingpipe') {
+    dependencies { compile project(':annotator-dictionary') }
 }
 
 project(':annotator-time') {

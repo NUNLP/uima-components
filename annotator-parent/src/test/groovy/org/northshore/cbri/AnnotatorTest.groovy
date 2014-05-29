@@ -19,6 +19,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
+import org.northshore.cbri.dsl.GroovyAnnotator;
+import org.northshore.cbri.sent.SentenceDetector_cTAKES;
+import org.northshore.cbri.token.TokenAnnotator;
 
 @Log4j
 class AnnotatorTest {
