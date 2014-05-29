@@ -34,7 +34,7 @@ class POSAnnotatorTest {
     }
 
     @Test
-    public void testOpenNLPSentenceAnnotator() {
+    public void testOpenNLPPOSAnnotator() {
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
                 opennlp.uima.postag.POSTagger,
                 "opennlp.uima.SentenceType", Sentence.name,
