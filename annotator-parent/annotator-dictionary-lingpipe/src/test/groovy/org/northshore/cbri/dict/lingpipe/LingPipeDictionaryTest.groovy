@@ -61,7 +61,7 @@ D) Sigmod colon:
         dictionary.addEntry(new DictionaryEntry<String>('hyperplastic polyp', 'C0333983', CHUNK_SCORE))
         
         ExactDictionaryChunker dictionaryChunkerTT = new ExactDictionaryChunker(dictionary,
-                IndoEuropeanTokenizerFactory.INSTANCE,
+                OpenNLPTokenizerFactory.INSTANCE,
                 true,  // all matches (overlapping)
                 false)  // case sensitive
 
@@ -92,7 +92,11 @@ D) Sigmod colon:
 
         double maxDistance = 2.0
 
-        ApproxDictionaryChunker chunker = new ApproxDictionaryChunker(dict, IndoEuropeanTokenizerFactory.INSTANCE, editDistance, maxDistance)
+        ApproxDictionaryChunker chunker = new ApproxDictionaryChunker(dict, 
+            OpenNLPTokenizerFactory.INSTANCE,
+            ////IndoEuropeanTokenizerFactory.INSTANCE,
+            editDistance, 
+            maxDistance)
         Chunking chunking = chunker.chunk(testText)
         CharSequence cs = chunking.charSequence()
         Set<Chunk> chunkSet = chunking.chunkSet()
