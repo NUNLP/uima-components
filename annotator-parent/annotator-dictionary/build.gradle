@@ -3,5 +3,6 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.29'
     
     compile group: 'de.tudarmstadt.ukp.dkpro.core', name: 'de.tudarmstadt.ukp.dkpro.core.dictionaryannotator-asl', version: '1.6.0'
+    compile group: 'org.ahocorasick', name: 'ahocorasick', version: '0.2.2'
 }
 
