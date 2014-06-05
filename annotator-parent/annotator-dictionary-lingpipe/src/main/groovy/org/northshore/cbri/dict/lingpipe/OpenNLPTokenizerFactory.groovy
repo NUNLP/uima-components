@@ -16,9 +16,7 @@ class OpenNLPTokenizerFactory implements TokenizerFactory {
         char[] ch;
         int currTokenPos = 0;
         
-        public OpenNLPTokenizer(char[] ch, int start, int length) {
-            InputStream modelIn = this.class.getResourceAsStream('/models/en-token.bin')
-            TokenizerModel model = new TokenizerModel(modelIn)
+        public OpenNLPTokenizer(TokenizerModel model, char[] ch, int start, int length) {
             tokenizer = new TokenizerME(model)
             this.text = String.valueOf(ch, start, length)
             this.tokenSpans = tokenizer.tokenizePos(this.text)
@@ -44,10 +42,14 @@ class OpenNLPTokenizerFactory implements TokenizerFactory {
         }
     }
     
-    static public INSTANCE = new OpenNLPTokenizerFactory()
+    TokenizerModel tokenModel;
+    
+    public OpenNLPTokenizerFactory(TokenizerModel model) {
+        this.tokenModel = model;
+    }
 
     @Override
     public Tokenizer tokenizer(char[] ch, int start, int length) {
-        return new OpenNLPTokenizer(ch, start, length);
+        return new OpenNLPTokenizer(this.tokenModel, ch, start, length);
     }
 }

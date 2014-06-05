@@ -1,6 +1,7 @@
 package org.northshore.cbri.dict.lingpipe
 
 import static org.junit.Assert.*
+import opennlp.tools.tokenize.TokenizerModel
 
 import org.junit.After
 import org.junit.AfterClass
@@ -18,6 +19,7 @@ import com.aliasi.tokenizer.Tokenizer
 
 class LingPipeDictionaryTest {
     static final double CHUNK_SCORE = 1.0
+    static TokenizerModel TOKEN_MODEL;
 
     static String testText = """
 FINAL DIAGNOSIS: 
@@ -35,6 +37,8 @@ D) Sigmod colon:
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
+        InputStream modelIn = this.class.getResourceAsStream('/models/en-token.bin')
+        TOKEN_MODEL = new TokenizerModel(modelIn)
     }
 
     @AfterClass
@@ -48,24 +52,25 @@ D) Sigmod colon:
     @After
     public void tearDown() throws Exception {
     }
-    
+
     @Test
     public void tokenizerTest() {
+        
         char[] ch = 'This is a test.'
-        Tokenizer tokenizer = OpenNLPTokenizerFactory.INSTANCE.tokenizer(ch, 0, ch.length)
+        Tokenizer tokenizer = new OpenNLPTokenizerFactory(TOKEN_MODEL).tokenizer(ch, 0, ch.length)
         assert tokenizer != null
         assert tokenizer instanceof OpenNLPTokenizer
-        
+
         String token = tokenizer.nextToken()
         assert token == 'This'
         assert tokenizer.lastTokenStartPosition() == 0
         assert tokenizer.lastTokenEndPosition() == 4
-        
+
         token = tokenizer.nextToken()
         assert token == 'is'
         assert tokenizer.lastTokenStartPosition() == 5
         assert tokenizer.lastTokenEndPosition() == 7
-        
+
         token = tokenizer.nextToken()
         assert token == 'a'
         assert tokenizer.lastTokenStartPosition() == 8
@@ -91,7 +96,7 @@ D) Sigmod colon:
         dictionary.addEntry(new DictionaryEntry<String>('hyperplastic polyp', 'C0333983', CHUNK_SCORE))
         
         ExactDictionaryChunker dictionaryChunkerTT = new ExactDictionaryChunker(dictionary,
-                OpenNLPTokenizerFactory.INSTANCE,
+                new OpenNLPTokenizerFactory(TOKEN_MODEL),
                 true,  // all matches (overlapping)
                 false)  // case sensitive
 
@@ -115,22 +120,22 @@ D) Sigmod colon:
         dict.addEntry(new DictionaryEntry<String>('tubular adenoma',    'C1112503'))
         dict.addEntry(new DictionaryEntry<String>('sigmoid colon',      'C0227391'))
         dict.addEntry(new DictionaryEntry<String>('hyperplastic polyp', 'C0333983'))
-        
+
         println "Dictionary: ${dict.toString()}\n"
 
         WeightedEditDistance editDistance = new FixedWeightEditDistance(0,-1,-1,-1,Double.NaN)
 
         double maxDistance = 2.0
 
-        ApproxDictionaryChunker chunker = new ApproxDictionaryChunker(dict, 
-            OpenNLPTokenizerFactory.INSTANCE,
-            editDistance, 
-            maxDistance)
+        ApproxDictionaryChunker chunker = new ApproxDictionaryChunker(dict,
+                new OpenNLPTokenizerFactory(TOKEN_MODEL),
+                editDistance,
+                maxDistance)
         Chunking chunking = chunker.chunk(testText)
         CharSequence cs = chunking.charSequence()
         Set<Chunk> chunkSet = chunking.chunkSet()
         assert chunkSet.size() == 12
-        
+
         printf("%15s  %15s   %8s\n",
                 "Matched Phrase",
                 "Dict Entry",
