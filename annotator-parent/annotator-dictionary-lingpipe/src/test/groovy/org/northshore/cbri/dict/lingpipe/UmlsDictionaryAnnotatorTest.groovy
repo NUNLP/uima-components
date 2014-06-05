@@ -50,7 +50,7 @@ C) Sigmoid colon:
                 TokenAnnotator.TOKEN_MODEL_KEY,
                 opennlp.uima.tokenize.TokenizerModelResourceImpl,
                 "file:models/en-token.bin")
-        
+
         this.tokenizer = AnalysisEngineFactory.createEngine(tokenDesc)
         this.jcas = JCasFactory.createJCas()
         this.jcas.setDocumentText(this.testText)
@@ -62,9 +62,30 @@ C) Sigmoid colon:
     @After
     public void tearDown() throws Exception {
     }
-    
+
     @Test
     public void smokeTest() {
-        
+        AnalysisEngineDescription dictDesc = AnalysisEngineFactory.createEngineDescription(
+                UmlsDictionaryAnnotator,
+                UmlsDictionaryAnnotator.PARAM_DICTIONARY_FILE, "/dict/test-umls-dict-manual.txt",
+                UmlsDictionaryAnnotator.PARAM_MAX_DISTANCE, 2)
+        ExternalResourceFactory.createDependencyAndBind(dictDesc,
+                TokenAnnotator.TOKEN_MODEL_KEY,
+                opennlp.uima.tokenize.TokenizerModelResourceImpl,
+                "file:models/en-token.bin")
+        AnalysisEngine dictionary = AnalysisEngineFactory.createEngine(dictDesc)
+        dictionary.process(jcas)
+
+        // test results
+        Collection<IdentifiedAnnotation> idAnns = UIMAUtil.select(type:IdentifiedAnnotation)
+        idAnns.each { println "Identified Annotation: [${it.coveredText}]" }
+        assertEquals 7, idAnns.size()
+        assertEquals 'Sigmoid colon:',      idAnns[0].coveredText
+        assertEquals 'Sigmoid colon',       idAnns[1].coveredText
+        assertEquals 'Hyperplastic polyp.', idAnns[2].coveredText
+        assertEquals 'Hyperplastic polyp',  idAnns[3].coveredText
+        assertEquals 'Tubular adenoma',     idAnns[4].coveredText
+        assertEquals 'adenoma .',           idAnns[5].coveredText
+        assertEquals 'adenoma',             idAnns[6].coveredText
     }
 }
