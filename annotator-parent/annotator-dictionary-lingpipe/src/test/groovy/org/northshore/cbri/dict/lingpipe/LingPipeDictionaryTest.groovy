@@ -7,18 +7,14 @@ import org.junit.AfterClass
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-import org.northshore.cbri.dict.lingpipe.OpenNLPTokenizerFactory.OpenNLPTokenizer;
+import org.northshore.cbri.dict.lingpipe.OpenNLPTokenizerFactory.OpenNLPTokenizer
 
 import com.aliasi.chunk.Chunk
 import com.aliasi.chunk.Chunking
-import com.aliasi.dict.ApproxDictionaryChunker
-import com.aliasi.dict.DictionaryEntry
-import com.aliasi.dict.ExactDictionaryChunker
-import com.aliasi.dict.MapDictionary
-import com.aliasi.dict.TrieDictionary
 import com.aliasi.spell.FixedWeightEditDistance
 import com.aliasi.spell.WeightedEditDistance
 import com.aliasi.tokenizer.Tokenizer
+
 
 class LingPipeDictionaryTest {
     static final double CHUNK_SCORE = 1.0
