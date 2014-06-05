@@ -124,7 +124,6 @@ D) Sigmod colon:
 
         ApproxDictionaryChunker chunker = new ApproxDictionaryChunker(dict, 
             OpenNLPTokenizerFactory.INSTANCE,
-            ////IndoEuropeanTokenizerFactory.INSTANCE,
             editDistance, 
             maxDistance)
         Chunking chunking = chunker.chunk(testText)
