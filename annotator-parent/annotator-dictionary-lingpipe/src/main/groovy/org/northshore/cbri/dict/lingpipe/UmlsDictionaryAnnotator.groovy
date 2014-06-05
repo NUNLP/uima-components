@@ -8,6 +8,7 @@ import groovy.util.logging.Log4j
 import opennlp.tools.tokenize.TokenizerModel
 import opennlp.uima.tokenize.TokenizerModelResource
 
+import org.apache.ctakes.typesystem.type.refsem.UmlsConcept
 import org.apache.ctakes.typesystem.type.textsem.IdentifiedAnnotation
 import org.apache.uima.UimaContext
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException
@@ -90,17 +91,15 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
         UIMAUtil.jcas = jcas
         
         Chunking chunking = chunker.chunk(jcas.documentText)
-        CharSequence cs = chunking.charSequence()
+        ////CharSequence cs = chunking.charSequence()
         Set<Chunk> chunkSet = chunking.chunkSet()
-        
         chunkSet.each { Chunk chunk ->
             int start = chunk.start()
             int end = chunk.end()
-            CharSequence str = cs.subSequence(start,end)
+            ////CharSequence str = cs.subSequence(start,end)
             double distance = chunk.score()
-            String match = chunk.type()
-            printf("%15s  %15s   %8.1f\n", str, match, distance)
-            UIMAUtil.create(type:IdentifiedAnnotation, begin:start, end:end)
+            UIMAUtil.create(type:IdentifiedAnnotation, begin:start, end:end,
+                ontologyConcepts:[UIMAUtil.create(type:UmlsConcept, cui:chunk.type())])
         }
     }
 }

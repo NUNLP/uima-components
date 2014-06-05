@@ -80,12 +80,26 @@ C) Sigmoid colon:
         Collection<IdentifiedAnnotation> idAnns = UIMAUtil.select(type:IdentifiedAnnotation)
         idAnns.each { println "Identified Annotation: [${it.coveredText}]" }
         assertEquals 7, idAnns.size()
+        
         assertEquals 'Sigmoid colon:',      idAnns[0].coveredText
+        assertEquals 'C0227391',            idAnns[0].ontologyConcepts[0].cui
+        
         assertEquals 'Sigmoid colon',       idAnns[1].coveredText
+        assertEquals 'C0227391',            idAnns[1].ontologyConcepts[0].cui
+        
         assertEquals 'Hyperplastic polyp.', idAnns[2].coveredText
+        assertEquals 'C0333983',            idAnns[2].ontologyConcepts[0].cui
+        
         assertEquals 'Hyperplastic polyp',  idAnns[3].coveredText
+        assertEquals 'C0333983',            idAnns[3].ontologyConcepts[0].cui
+        
         assertEquals 'Tubular adenoma',     idAnns[4].coveredText
+        assertEquals 'C1112503',            idAnns[4].ontologyConcepts[0].cui
+        
         assertEquals 'adenoma .',           idAnns[5].coveredText
+        assertEquals 'C0206677',            idAnns[5].ontologyConcepts[0].cui
+        
         assertEquals 'adenoma',             idAnns[6].coveredText
+        assertEquals 'C0206677',            idAnns[6].ontologyConcepts[0].cui
     }
 }
