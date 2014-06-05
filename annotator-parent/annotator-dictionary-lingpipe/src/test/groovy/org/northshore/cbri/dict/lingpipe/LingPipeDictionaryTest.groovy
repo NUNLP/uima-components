@@ -7,6 +7,7 @@ import org.junit.AfterClass
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
+import org.northshore.cbri.dict.lingpipe.OpenNLPTokenizerFactory.OpenNLPTokenizer;
 
 import com.aliasi.chunk.Chunk
 import com.aliasi.chunk.Chunking
@@ -17,7 +18,7 @@ import com.aliasi.dict.MapDictionary
 import com.aliasi.dict.TrieDictionary
 import com.aliasi.spell.FixedWeightEditDistance
 import com.aliasi.spell.WeightedEditDistance
-import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory
+import com.aliasi.tokenizer.Tokenizer
 
 class LingPipeDictionaryTest {
     static final double CHUNK_SCORE = 1.0
@@ -50,6 +51,39 @@ D) Sigmod colon:
 
     @After
     public void tearDown() throws Exception {
+    }
+    
+    @Test
+    public void tokenizerTest() {
+        char[] ch = 'This is a test.'
+        Tokenizer tokenizer = OpenNLPTokenizerFactory.INSTANCE.tokenizer(ch, 0, ch.length)
+        assert tokenizer != null
+        assert tokenizer instanceof OpenNLPTokenizer
+        
+        String token = tokenizer.nextToken()
+        assert token == 'This'
+        assert tokenizer.lastTokenStartPosition() == 0
+        assert tokenizer.lastTokenEndPosition() == 4
+        
+        token = tokenizer.nextToken()
+        assert token == 'is'
+        assert tokenizer.lastTokenStartPosition() == 5
+        assert tokenizer.lastTokenEndPosition() == 7
+        
+        token = tokenizer.nextToken()
+        assert token == 'a'
+        assert tokenizer.lastTokenStartPosition() == 8
+        assert tokenizer.lastTokenEndPosition() == 9
+
+        token = tokenizer.nextToken()
+        assert token == 'test'
+        assert tokenizer.lastTokenStartPosition() == 10
+        assert tokenizer.lastTokenEndPosition() == 14
+
+        token = tokenizer.nextToken()
+        assert token == '.'
+        assert tokenizer.lastTokenStartPosition() == 14
+        assert tokenizer.lastTokenEndPosition() == 15
     }
 
     @Test

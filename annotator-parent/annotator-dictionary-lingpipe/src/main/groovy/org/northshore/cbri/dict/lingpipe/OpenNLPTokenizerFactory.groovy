@@ -14,7 +14,7 @@ class OpenNLPTokenizerFactory implements TokenizerFactory {
         String text;
         Span[] tokenSpans;
         char[] ch;
-        int currTokenSpan = 0;
+        int currTokenPos = 0;
         
         public OpenNLPTokenizer(char[] ch, int start, int length) {
             InputStream modelIn = this.class.getResourceAsStream('/models/en-token.bin')
@@ -26,14 +26,20 @@ class OpenNLPTokenizerFactory implements TokenizerFactory {
         
         @Override
         public int lastTokenStartPosition() {
-            // TODO Auto-generated method stub
-            return super.lastTokenStartPosition();
+            if (currTokenPos == 0) return null
+            return this.tokenSpans[currTokenPos-1].start
+        }
+        
+        @Override
+        public int lastTokenEndPosition() {
+            if (currTokenPos == 0) return null
+            return this.tokenSpans[currTokenPos-1].end
         }
 
         @Override
         public String nextToken() {
-            if (currTokenSpan >= this.tokenSpans.length) { return null; }
-            Span span = this.tokenSpans[currTokenSpan++]
+            if (currTokenPos >= this.tokenSpans.length) { return null; }
+            Span span = this.tokenSpans[currTokenPos++]
             return this.text.substring(span.getStart(), span.getEnd())
         }
     }
