@@ -60,12 +60,10 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
         dictContents.eachLine { String line ->
             Map<String, String> dictEntryMap = slurper.parseText(line)
             String phrase = dictEntryMap['phrase']
+            String cui = dictEntryMap['cui']
+            println "Phrase: ${phrase}, CUI: ${cui}"
+            dict.addEntry(new DictionaryEntry<String>(phrase, cui))
         }
-        
-        dict.addEntry(new DictionaryEntry<String>('adenoma',            'C0206677'))
-        dict.addEntry(new DictionaryEntry<String>('tubular adenoma',    'C1112503'))
-        dict.addEntry(new DictionaryEntry<String>('sigmoid colon',      'C0227391'))
-        dict.addEntry(new DictionaryEntry<String>('hyperplastic polyp', 'C0333983'))
         
         // extract the tokenizer model resource
         TokenizerModel model

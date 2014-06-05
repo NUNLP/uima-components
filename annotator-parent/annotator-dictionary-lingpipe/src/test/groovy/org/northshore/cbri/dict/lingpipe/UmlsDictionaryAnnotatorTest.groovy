@@ -67,7 +67,7 @@ C) Sigmoid colon:
     public void smokeTest() {
         AnalysisEngineDescription dictDesc = AnalysisEngineFactory.createEngineDescription(
                 UmlsDictionaryAnnotator,
-                UmlsDictionaryAnnotator.PARAM_DICTIONARY_FILE, "/dict/test-umls-dict-manual.txt",
+                UmlsDictionaryAnnotator.PARAM_DICTIONARY_FILE, "/dict/test-umls-dict-auto.txt",
                 UmlsDictionaryAnnotator.PARAM_MAX_DISTANCE, 2)
         ExternalResourceFactory.createDependencyAndBind(dictDesc,
                 TokenAnnotator.TOKEN_MODEL_KEY,
@@ -79,27 +79,35 @@ C) Sigmoid colon:
         // test results
         Collection<IdentifiedAnnotation> idAnns = UIMAUtil.select(type:IdentifiedAnnotation)
         idAnns.each { println "Identified Annotation: [${it.coveredText}]" }
-        assertEquals 7, idAnns.size()
+        assertEquals 13, idAnns.size()
         
-        assertEquals 'Sigmoid colon:',      idAnns[0].coveredText
-        assertEquals 'C0227391',            idAnns[0].ontologyConcepts[0].cui
+        assertEquals '- Adenomatous polyp',     idAnns[0].coveredText
+        assertEquals 'C0206677',                idAnns[0].ontologyConcepts[0].cui
+        assertEquals DiseaseDisorderMention,    idAnns[0].class
         
-        assertEquals 'Sigmoid colon',       idAnns[1].coveredText
-        assertEquals 'C0227391',            idAnns[1].ontologyConcepts[0].cui
-        
-        assertEquals 'Hyperplastic polyp.', idAnns[2].coveredText
-        assertEquals 'C0333983',            idAnns[2].ontologyConcepts[0].cui
-        
-        assertEquals 'Hyperplastic polyp',  idAnns[3].coveredText
-        assertEquals 'C0333983',            idAnns[3].ontologyConcepts[0].cui
-        
-        assertEquals 'Tubular adenoma',     idAnns[4].coveredText
-        assertEquals 'C1112503',            idAnns[4].ontologyConcepts[0].cui
-        
-        assertEquals 'adenoma .',           idAnns[5].coveredText
-        assertEquals 'C0206677',            idAnns[5].ontologyConcepts[0].cui
-        
-        assertEquals 'adenoma',             idAnns[6].coveredText
-        assertEquals 'C0206677',            idAnns[6].ontologyConcepts[0].cui
+//        assertEquals 'Sigmoid colon:',      idAnns[0].coveredText
+//        assertEquals 'C0227391',            idAnns[0].ontologyConcepts[0].cui
+//        assertEquals IdentifiedAnnotation,  idAnns[0].class
+//        //// TODO: generate proper sub-type: assertEquals DiseaseDisorderMention,idAnns[0].class
+//        
+//        assertEquals 'Sigmoid colon',       idAnns[1].coveredText
+//        assertEquals 'C0227391',            idAnns[1].ontologyConcepts[0].cui
+//        assertEquals IdentifiedAnnotation,  idAnns[0].class
+//        
+//        assertEquals 'Hyperplastic polyp.', idAnns[2].coveredText
+//        assertEquals 'C0333983',            idAnns[2].ontologyConcepts[0].cui
+//        assertEquals IdentifiedAnnotation,  idAnns[2].class
+//        
+//        assertEquals 'Hyperplastic polyp',  idAnns[3].coveredText
+//        assertEquals 'C0333983',            idAnns[3].ontologyConcepts[0].cui
+//        assertEquals IdentifiedAnnotation,  idAnns[3].class
+//        
+//        assertEquals 'Tubular adenoma',     idAnns[4].coveredText
+//        assertEquals 'C1112503',            idAnns[4].ontologyConcepts[0].cui
+//        assertEquals IdentifiedAnnotation,  idAnns[4].class
+//        
+//        assertEquals 'adenoma .',           idAnns[5].coveredText
+//        assertEquals 'C0206677',            idAnns[5].ontologyConcepts[0].cui
+//        assertEquals IdentifiedAnnotation,  idAnns[5].class
     }
 }
