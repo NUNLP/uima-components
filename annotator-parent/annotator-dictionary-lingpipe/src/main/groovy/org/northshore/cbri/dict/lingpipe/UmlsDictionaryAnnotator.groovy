@@ -38,7 +38,7 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
     public static final String PARAM_DICTIONARY_FILE_ENCODING = 'dictFileEncoding'
     @ConfigurationParameter(name = 'dictFileEncoding', mandatory = true, defaultValue='UTF-8')
     private String dictFileEncoding
-    
+
     public static final String PARAM_MAX_DISTANCE = 'maxDistance'
     @ConfigurationParameter(name = 'maxDistance', mandatory = true)
     private Integer maxDistance
@@ -46,6 +46,8 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
     // the chunker instance
     private ApproxDictionaryChunker chunker;
 
+    // phrase semantics
+    private Map<String, Map<String, String>> phraseSems = [:];
 
     @Override
     public void initialize(UimaContext aContext)
@@ -60,11 +62,10 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
         dictContents.eachLine { String line ->
             Map<String, String> dictEntryMap = slurper.parseText(line)
             String phrase = dictEntryMap['phrase']
-            String cui = dictEntryMap['cui']
-            println "Phrase: ${phrase}, CUI: ${cui}"
-            dict.addEntry(new DictionaryEntry<String>(phrase, cui))
+            this.phraseSems[line] = dictEntryMap
+            dict.addEntry(new DictionaryEntry<String>(phrase, line))
         }
-        
+
         // extract the tokenizer model resource
         TokenizerModel model
         try {
@@ -79,7 +80,6 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
                 new OpenNLPTokenizerFactory(model),
                 editDistance,
                 maxDistance)
-
     }
 
     @Override
@@ -87,7 +87,7 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
             throws AnalysisEngineProcessException
     {
         UIMAUtil.jcas = jcas
-        
+
         Chunking chunking = chunker.chunk(jcas.documentText)
         ////CharSequence cs = chunking.charSequence()
         Set<Chunk> chunkSet = chunking.chunkSet()
@@ -96,8 +96,11 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
             int end = chunk.end()
             ////CharSequence str = cs.subSequence(start,end)
             double distance = chunk.score()
-            UIMAUtil.create(type:IdentifiedAnnotation, begin:start, end:end,
-                ontologyConcepts:[UIMAUtil.create(type:UmlsConcept, cui:chunk.type())])
+            Map<String, String> phraseSem = this.phraseSems[chunk.type()]
+            UIMAUtil.create(type:(phraseSem['type'] as Class), begin:start, end:end,
+            ontologyConcepts:[
+                UIMAUtil.create(type:UmlsConcept, cui:phraseSem['cui'], tui:phraseSem['tui'])
+            ])
         }
     }
 }
