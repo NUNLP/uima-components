@@ -18,15 +18,15 @@ class UmlsDictionaryFileCreator {
         sql.eachRow(sql_str) { row ->
             String mentionType;
             switch (row.tui) {
-                case 'T191': mentionType = 'DiseaseDisorderMention'; break;
-                case 'T023': mentionType = 'AnatomicalSiteMention'; break;
+                case 'T191': mentionType = 'org.apache.ctakes.typesystem.type.textsem.DiseaseDisorderMention'; break;
+                case 'T023': mentionType = 'org.apache.ctakes.typesystem.type.textsem.AnatomicalSiteMention'; break;
             }
             def builder = new groovy.json.JsonBuilder()
             def root = builder {
                 cui "${row.cui}"
                 tui "${row.tui}"
-                codingScheme 'SNOMED'
-                code "${row.code}"
+                ////codingScheme 'SNOMED'
+                ////code "${row.code}"
                 phrase "${row.str}"
                 type mentionType
             }
@@ -39,6 +39,12 @@ class UmlsDictionaryFileCreator {
 
     static public void main(args) {
         File dictFile = new File('src/test/resources/dict/test-umls-dict-auto.txt')
-        createDictFile(dictFile, ['C0334292', 'C0227391'].toSet())
+        UmlsDictionaryFileCreator.createDictFile(dictFile, [
+            'C0334292',
+            'C0227391',
+            'C0001430',
+            'C0333983',
+            'C0206677'
+        ].toSet())
     }
 }
