@@ -6,37 +6,7 @@
   <vendor/>
   <types>
     <typeDescription>
-      <name>org.northshore.cbri.dsl.dsl.type.NegationTrigger</name>
-      <description>Type defined in org.northshore.cbri.dsl.dsl.type</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
-    </typeDescription>
-    <typeDescription>
-      <name>org.northshore.cbri.dsl.dsl.type.PreNegationTrigger</name>
-      <description>Type defined in org.northshore.cbri.dsl.dsl.type</description>
-      <supertypeName>org.northshore.cbri.dsl.dsl.type.NegationTrigger</supertypeName>
-    </typeDescription>
-    <typeDescription>
-      <name>org.northshore.cbri.dsl.dsl.type.PostNegationTrigger</name>
-      <description>Type defined in org.northshore.cbri.dsl.dsl.type</description>
-      <supertypeName>org.northshore.cbri.dsl.dsl.type.NegationTrigger</supertypeName>
-    </typeDescription>
-    <typeDescription>
-      <name>org.northshore.cbri.dsl.dsl.type.PseudoNegationTrigger</name>
-      <description>Type defined in org.northshore.cbri.dsl.dsl.type</description>
-      <supertypeName>org.northshore.cbri.dsl.dsl.type.NegationTrigger</supertypeName>
-    </typeDescription>
-    <typeDescription>
-      <name>org.northshore.cbri.dsl.dsl.type.NegationScopeTerminator</name>
-      <description/>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
-    </typeDescription>
-    <typeDescription>
-      <name>org.northshore.cbri.dsl.dsl.type.NegationScope</name>
-      <description>Type defined in org.northshore.cbri.dsl.dsl.type</description>
-      <supertypeName>uima.tcas.Annotation</supertypeName>
-    </typeDescription>
-    <typeDescription>
-      <name>org.northshore.cbri.dsl.dsl.type.SegmentHeading</name>
+      <name>org.northshore.cbri.type.SegmentHeading</name>
       <description/>
       <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>

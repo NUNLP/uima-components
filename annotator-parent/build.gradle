@@ -4,7 +4,7 @@ allprojects {
     apply plugin: 'maven-publish'
 
     version = '1.0'
-    group = 'org.northshore.cbri.dsl.dsl.lex.lex.pos.pos.sent.sent.time.time.token.token'
+    group = 'org.northshore.cbri'
 
     jar { manifest.attributes provider: 'NorthShore University HealthSystem' }
 

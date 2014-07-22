@@ -18,8 +18,8 @@ class UmlsDictionaryFileCreator {
         sql.eachRow(sql_str) { row ->
             String mentionType;
             switch (row.tui) {
-                case 'T191': mentionType = 'org.apache.ctakes.typesystem.type.textsem.DiseaseDisorderMention'; break;
-                case 'T023': mentionType = 'org.apache.ctakes.typesystem.type.textsem.AnatomicalSiteMention'; break;
+                case 'T191': mentionType = 'DiseaseDisorderMention'; break;
+                case 'T023': mentionType = 'AnatomicalSiteMention'; break;
             }
             def builder = new groovy.json.JsonBuilder()
             def root = builder {
