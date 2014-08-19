@@ -97,7 +97,8 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
             ////CharSequence str = cs.subSequence(start,end)
             double distance = chunk.score()
             Map<String, String> phraseSem = this.phraseSems[chunk.type()]
-            UIMAUtil.create(type:(phraseSem['type'] as Class), begin:start, end:end,
+            Class typeClass = UIMAUtil.getIdentifiedAnnotationClass(phraseSem['type'])
+            UIMAUtil.create(type:typeClass, begin:start, end:end,
             ontologyConcepts:[
                 UIMAUtil.create(type:UmlsConcept, cui:phraseSem['cui'], tui:phraseSem['tui'])
             ])

@@ -1,15 +1,15 @@
 
-include 'type-system', 
-	'annotator-brat',
-	'annotator-groovy-dsl',
-	'annotator-segment',
-	'annotator-negation',
-	'annotator-token',
-	'annotator-sentence',
-	'annotator-pos',
-	'annotator-chunk',
-	'annotator-lex-normalize',
-	'annotator-dictionary',
-    'annotator-time',
-    'annotator-dictionary-lingpipe'
+include 'type-system',
+        'annotator-brat',
+        'annotator-groovy-dsl',
+        'annotator-segment',
+        'annotator-negation',
+        'annotator-token',
+        'annotator-sentence',
+        'annotator-pos',
+        'annotator-chunk',
+        'annotator-lex-normalize',
+        'annotator-dictionary',
+        'annotator-time',
+        'annotator-dictionary-lingpipe'
 

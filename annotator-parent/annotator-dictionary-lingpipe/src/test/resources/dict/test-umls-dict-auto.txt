@@ -1,0 +1,34 @@
+{"cui":"C0001430","tui":"T191","phrase":"Adenoma, no subtype","type":"DiseaseDisorderMention"}
+{"cui":"C0001430","tui":"T191","phrase":"Benign adenomatous neoplasm (disorder)","type":"DiseaseDisorderMention"}
+{"cui":"C0001430","tui":"T191","phrase":"Benign adenomatous neoplasm","type":"DiseaseDisorderMention"}
+{"cui":"C0001430","tui":"T191","phrase":"Benign adenoma","type":"DiseaseDisorderMention"}
+{"cui":"C0001430","tui":"T191","phrase":"Adenoma","type":"DiseaseDisorderMention"}
+{"cui":"C0001430","tui":"T191","phrase":"[M]Adenoma NOS (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0001430","tui":"T191","phrase":"[M]Adenoma NOS","type":"DiseaseDisorderMention"}
+{"cui":"C0001430","tui":"T191","phrase":"[M]Adenomas","type":"DiseaseDisorderMention"}
+{"cui":"C0001430","tui":"T191","phrase":"Adenoma","type":"DiseaseDisorderMention"}
+{"cui":"C0001430","tui":"T191","phrase":"Adenoma, no subtype (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0001430","tui":"T191","phrase":"Adenoma, NOS","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","phrase":"[M]Adenomatous polyp NOS","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","phrase":"[M]Adenomatous polyp NOS (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","phrase":"Adenomatous polyp","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","phrase":"Polypoid adenoma","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","phrase":"Adenomatous polyp (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0206677","tui":"T191","phrase":"Adenomatous polyp, NOS","type":"DiseaseDisorderMention"}
+{"cui":"C0227391","tui":"T023","phrase":"Sigmoid colon","type":"AnatomicalSiteMention"}
+{"cui":"C0227391","tui":"T023","phrase":"Sigmoid colon structure (body structure)","type":"AnatomicalSiteMention"}
+{"cui":"C0227391","tui":"T023","phrase":"Sigmoid colon structure","type":"AnatomicalSiteMention"}
+{"cui":"C0333983","tui":"T191","phrase":"Hyperplastic polyp","type":"DiseaseDisorderMention"}
+{"cui":"C0333983","tui":"T191","phrase":"Hyperplasic polyp","type":"DiseaseDisorderMention"}
+{"cui":"C0333983","tui":"T191","phrase":"Metaplastic polyp","type":"DiseaseDisorderMention"}
+{"cui":"C0333983","tui":"T191","phrase":"Hyperplastic polyp (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0333983","tui":"T191","phrase":"Metaplastic polyp (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0334292","tui":"T191","phrase":"Tubular adenoma","type":"DiseaseDisorderMention"}
+{"cui":"C0334292","tui":"T191","phrase":"Tubular adenoma, no ICD-O subtype (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0334292","tui":"T191","phrase":"Tubular adenoma, no ICD-O subtype","type":"DiseaseDisorderMention"}
+{"cui":"C0334292","tui":"T191","phrase":"Tubular adenoma (disorder)","type":"DiseaseDisorderMention"}
+{"cui":"C0334292","tui":"T191","phrase":"Tubular adenoma","type":"DiseaseDisorderMention"}
+{"cui":"C0334292","tui":"T191","phrase":"Tubular adenoma (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0334292","tui":"T191","phrase":"[M]Tubular adenoma NOS (morphologic abnormality)","type":"DiseaseDisorderMention"}
+{"cui":"C0334292","tui":"T191","phrase":"[M]Tubular adenoma NOS","type":"DiseaseDisorderMention"}
+{"cui":"C0334292","tui":"T191","phrase":"Tubular adenoma, NOS","type":"DiseaseDisorderMention"}

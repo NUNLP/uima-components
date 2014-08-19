@@ -37,7 +37,8 @@ class LexNormalizerAnnotatorTest {
     @After
     public void tearDown() throws Exception {
     }
-    
+
+    @Ignore
     @Test
     public void testNormApi() {
         NormApi normalizer = new NormApi()
@@ -45,7 +46,8 @@ class LexNormalizerAnnotatorTest {
         assert normsters.size() == 1
         normsters.each { println it }
     }
-    
+
+    @Ignore
     @Test
     public void testLexNormalizerAnnotator() {
         AnalysisEngine engine = createEngine(LexNormalizerAnnotator,
@@ -59,7 +61,7 @@ class LexNormalizerAnnotatorTest {
 
         Map<String, String> normMap = [
             "THERE":"there",
-            "is":null, 
+            "is":null,
             "a":"a",
             "Tubular":"tubular",
             "ADEnOeMA":"adenoma",
