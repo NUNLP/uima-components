@@ -1,0 +1,10 @@
+jar {
+    from {
+        zipTree('lib/*.jar')
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'lib', include: '*.jar')
+}
+
