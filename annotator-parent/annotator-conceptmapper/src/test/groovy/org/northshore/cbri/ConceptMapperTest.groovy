@@ -5,9 +5,13 @@ import groovy.util.logging.Log4j
 
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Level
+import org.apache.uima.UIMAFramework
 import org.apache.uima.analysis_engine.AnalysisEngine
 import org.apache.uima.analysis_engine.AnalysisEngineDescription
 import org.apache.uima.fit.factory.AnalysisEngineFactory
+import org.apache.uima.resource.ResourceInitializationException
+import org.apache.uima.util.InvalidXMLException
+import org.apache.uima.util.XMLInputSource
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
@@ -30,7 +34,19 @@ class ConceptMapperTest {
     }
 
     @Test
-    public void smokeTest() {
+    public void createEngineDescFile() {
+        AnalysisEngineDescription desc = UIMAFramework
+                .getXMLParser()
+                .parseAnalysisEngineDescription(
+                new XMLInputSource(
+                ConceptMapperTest.class
+                .getResource('/descriptors/aggregate/OffsetTokenizerMatcher.xml')))
+        AnalysisEngine engine = AnalysisEngineFactory.createEngine(desc)
+        assert engine != null
+    }
+
+    @Test
+    public void createEngineUIMAfit() {
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
                 org.apache.uima.conceptMapper.ConceptMapper)
         assert desc != null
