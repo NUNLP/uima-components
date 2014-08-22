@@ -1,4 +1,4 @@
-package org.northshore.cbri;
+package org.northshore.cbri.dict;
 
 import static org.junit.Assert.*
 import groovy.util.logging.Log4j
@@ -16,6 +16,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
+import org.northshore.cbri.dict.ConceptMapperTest;
 
 @Log4j
 class ConceptMapperTest {
@@ -48,7 +49,7 @@ class ConceptMapperTest {
     @Test
     public void createEngineUIMAfit() {
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
-                org.apache.uima.conceptMapper.ConceptMapper)
+                org.northshore.cbri.conceptmapper.ConceptMapper)
         assert desc != null
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(desc)
         assert engine != null
