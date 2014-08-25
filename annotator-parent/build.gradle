@@ -35,9 +35,7 @@ allprojects {
 }
 
 project(':') {
-    task wrapper(type: Wrapper) {
-        gradleVersion = '2.0'
-    }
+    task wrapper(type: Wrapper) { gradleVersion = '2.0' }
 
     dependencies {
         compile project(':type-system')
@@ -51,6 +49,7 @@ project(':') {
         compile project(':annotator-time')
         compile project(':annotator-dictionary')
         compile project(':annotator-dictionary-lingpipe')
+        compile project(':annotator-conceptmapper')
     }
 }
 
@@ -99,6 +98,10 @@ project(':annotator-dictionary') {
 
 project(':annotator-dictionary-lingpipe') {
     dependencies { compile project(':annotator-dictionary') }
+}
+
+project(':annotator-conceptmapper') {
+    dependencies { compile project(':annotator-groovy-dsl')  }
 }
 
 project(':annotator-time') {

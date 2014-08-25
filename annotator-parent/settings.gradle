@@ -2,6 +2,7 @@
 include 'type-system',
         'annotator-brat',
         'annotator-groovy-dsl',
+        'annotator-conceptmapper',
         'annotator-segment',
         'annotator-negation',
         'annotator-token',

@@ -1,10 +1,10 @@
-jar {
-    from {
-        zipTree('lib/*.jar')
-    }
-}
+//jar {
+//    from {
+//        zipTree('lib/*.jar')
+//    }
+//}
 
 dependencies {
-    compile fileTree(dir: 'lib', include: '*.jar')
+    ////compile fileTree(dir: 'lib', include: '*.jar')
 }
 
