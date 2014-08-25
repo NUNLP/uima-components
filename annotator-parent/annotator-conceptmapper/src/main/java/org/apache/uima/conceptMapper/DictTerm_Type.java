@@ -15,7 +15,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** Annotation for dictionary lookup matches
- * Updated by JCasGen Tue Mar 25 15:43:47 EDT 2008
+ * Updated by JCasGen Mon Aug 25 12:28:12 CDT 2014
  * @generated */
 public class DictTerm_Type extends Annotation_Type {
   /** @generated */
@@ -79,6 +79,30 @@ public class DictTerm_Type extends Annotation_Type {
   
  
   /** @generated */
+  final Feature casFeat_POS;
+  /** @generated */
+  final int     casFeatCode_POS;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getPOS(int addr) {
+        if (featOkTst && casFeat_POS == null)
+      jcas.throwFeatMissing("POS", "org.apache.uima.conceptMapper.DictTerm");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_POS);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setPOS(int addr, String v) {
+        if (featOkTst && casFeat_POS == null)
+      jcas.throwFeatMissing("POS", "org.apache.uima.conceptMapper.DictTerm");
+    ll_cas.ll_setStringValue(addr, casFeatCode_POS, v);}
+    
+  
+ 
+  /** @generated */
   final Feature casFeat_matchedText;
   /** @generated */
   final int     casFeatCode_matchedText;
@@ -93,6 +117,54 @@ public class DictTerm_Type extends Annotation_Type {
         if (featOkTst && casFeat_matchedText == null)
       jcas.throwFeatMissing("matchedText", "org.apache.uima.conceptMapper.DictTerm");
     ll_cas.ll_setStringValue(addr, casFeatCode_matchedText, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_key;
+  /** @generated */
+  final int     casFeatCode_key;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getKey(int addr) {
+        if (featOkTst && casFeat_key == null)
+      jcas.throwFeatMissing("key", "org.apache.uima.conceptMapper.DictTerm");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_key);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setKey(int addr, String v) {
+        if (featOkTst && casFeat_key == null)
+      jcas.throwFeatMissing("key", "org.apache.uima.conceptMapper.DictTerm");
+    ll_cas.ll_setStringValue(addr, casFeatCode_key, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_parent;
+  /** @generated */
+  final int     casFeatCode_parent;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getParent(int addr) {
+        if (featOkTst && casFeat_parent == null)
+      jcas.throwFeatMissing("parent", "org.apache.uima.conceptMapper.DictTerm");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_parent);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setParent(int addr, String v) {
+        if (featOkTst && casFeat_parent == null)
+      jcas.throwFeatMissing("parent", "org.apache.uima.conceptMapper.DictTerm");
+    ll_cas.ll_setStringValue(addr, casFeatCode_parent, v);}
     
   
  
@@ -135,6 +207,102 @@ public class DictTerm_Type extends Annotation_Type {
 
 
 
+  /** @generated */
+  final Feature casFeat_AttributeType;
+  /** @generated */
+  final int     casFeatCode_AttributeType;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getAttributeType(int addr) {
+        if (featOkTst && casFeat_AttributeType == null)
+      jcas.throwFeatMissing("AttributeType", "org.apache.uima.conceptMapper.DictTerm");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_AttributeType);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setAttributeType(int addr, String v) {
+        if (featOkTst && casFeat_AttributeType == null)
+      jcas.throwFeatMissing("AttributeType", "org.apache.uima.conceptMapper.DictTerm");
+    ll_cas.ll_setStringValue(addr, casFeatCode_AttributeType, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_AttributeValue;
+  /** @generated */
+  final int     casFeatCode_AttributeValue;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getAttributeValue(int addr) {
+        if (featOkTst && casFeat_AttributeValue == null)
+      jcas.throwFeatMissing("AttributeValue", "org.apache.uima.conceptMapper.DictTerm");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_AttributeValue);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setAttributeValue(int addr, String v) {
+        if (featOkTst && casFeat_AttributeValue == null)
+      jcas.throwFeatMissing("AttributeValue", "org.apache.uima.conceptMapper.DictTerm");
+    ll_cas.ll_setStringValue(addr, casFeatCode_AttributeValue, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_SemClass;
+  /** @generated */
+  final int     casFeatCode_SemClass;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getSemClass(int addr) {
+        if (featOkTst && casFeat_SemClass == null)
+      jcas.throwFeatMissing("SemClass", "org.apache.uima.conceptMapper.DictTerm");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_SemClass);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setSemClass(int addr, String v) {
+        if (featOkTst && casFeat_SemClass == null)
+      jcas.throwFeatMissing("SemClass", "org.apache.uima.conceptMapper.DictTerm");
+    ll_cas.ll_setStringValue(addr, casFeatCode_SemClass, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_marked;
+  /** @generated */
+  final int     casFeatCode_marked;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public int getMarked(int addr) {
+        if (featOkTst && casFeat_marked == null)
+      jcas.throwFeatMissing("marked", "org.apache.uima.conceptMapper.DictTerm");
+    return ll_cas.ll_getIntValue(addr, casFeatCode_marked);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setMarked(int addr, int v) {
+        if (featOkTst && casFeat_marked == null)
+      jcas.throwFeatMissing("marked", "org.apache.uima.conceptMapper.DictTerm");
+    ll_cas.ll_setIntValue(addr, casFeatCode_marked, v);}
+    
+  
+ 
   /** initialize variables to correspond with Cas Type and Features
 	* @generated */
   public DictTerm_Type(JCas jcas, Type casType) {
@@ -146,12 +314,40 @@ public class DictTerm_Type extends Annotation_Type {
     casFeatCode_DictCanon  = (null == casFeat_DictCanon) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_DictCanon).getCode();
 
  
+    casFeat_AttributeValue = jcas.getRequiredFeatureDE(casType, "AttributeValue", "uima.cas.String", featOkTst);
+    casFeatCode_AttributeValue  = (null == casFeat_AttributeValue) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_AttributeValue).getCode();
+
+ 
+    casFeat_SemClass = jcas.getRequiredFeatureDE(casType, "SemClass", "uima.cas.String", featOkTst);
+    casFeatCode_SemClass  = (null == casFeat_SemClass) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_SemClass).getCode();
+
+ 
+    casFeat_marked = jcas.getRequiredFeatureDE(casType, "marked", "uima.cas.Integer", featOkTst);
+    casFeatCode_marked  = (null == casFeat_marked) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_marked).getCode();
+
+ 
     casFeat_enclosingSpan = jcas.getRequiredFeatureDE(casType, "enclosingSpan", "uima.tcas.Annotation", featOkTst);
     casFeatCode_enclosingSpan  = (null == casFeat_enclosingSpan) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_enclosingSpan).getCode();
 
  
+    casFeat_POS = jcas.getRequiredFeatureDE(casType, "POS", "uima.cas.String", featOkTst);
+    casFeatCode_POS  = (null == casFeat_POS) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_POS).getCode();
+
+ 
+    casFeat_AttributeType = jcas.getRequiredFeatureDE(casType, "AttributeType", "uima.cas.String", featOkTst);
+    casFeatCode_AttributeType  = (null == casFeat_AttributeType) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_AttributeType).getCode();
+
+ 
     casFeat_matchedText = jcas.getRequiredFeatureDE(casType, "matchedText", "uima.cas.String", featOkTst);
     casFeatCode_matchedText  = (null == casFeat_matchedText) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_matchedText).getCode();
+
+ 
+    casFeat_key = jcas.getRequiredFeatureDE(casType, "key", "uima.cas.String", featOkTst);
+    casFeatCode_key  = (null == casFeat_key) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_key).getCode();
+
+ 
+    casFeat_parent = jcas.getRequiredFeatureDE(casType, "parent", "uima.cas.String", featOkTst);
+    casFeatCode_parent  = (null == casFeat_parent) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_parent).getCode();
 
  
     casFeat_matchedTokens = jcas.getRequiredFeatureDE(casType, "matchedTokens", "uima.cas.FSArray", featOkTst);

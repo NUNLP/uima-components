@@ -8,15 +8,16 @@ import org.apache.log4j.Level
 import org.apache.uima.UIMAFramework
 import org.apache.uima.analysis_engine.AnalysisEngine
 import org.apache.uima.analysis_engine.AnalysisEngineDescription
+import org.apache.uima.conceptMapper.DictTerm
 import org.apache.uima.fit.factory.AnalysisEngineFactory
-import org.apache.uima.resource.ResourceInitializationException
-import org.apache.uima.util.InvalidXMLException
+import org.apache.uima.jcas.JCas
 import org.apache.uima.util.XMLInputSource
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
+import org.junit.Ignore
 import org.junit.Test
-import org.northshore.cbri.dict.ConceptMapperTest;
+import org.northshore.cbri.dsl.UIMAUtil
 
 @Log4j
 class ConceptMapperTest {
@@ -44,8 +45,16 @@ class ConceptMapperTest {
                 .getResource('/descriptors/aggregate/OffsetTokenizerMatcher.xml')))
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(desc)
         assert engine != null
+        JCas jcas = engine.newJCas()
+        jcas.setDocumentText('There is carcinoma in the wall of the bladder.')
+        engine.process(jcas)
+        UIMAUtil.jcas = jcas
+        Collection<DictTerm> terms = UIMAUtil.select(type:DictTerm)
+        terms.each { println "DictTerm: ${it.coveredText}: [${it.attributeType}, ${it.attributeValue}]" }
+        assert terms.size() == 1
     }
 
+    @Ignore
     @Test
     public void createEngineUIMAfit() {
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(

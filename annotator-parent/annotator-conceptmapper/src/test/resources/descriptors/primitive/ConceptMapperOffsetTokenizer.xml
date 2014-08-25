@@ -254,7 +254,10 @@
 				<value>
 					<array>
 						<string>canonical</string>
-					</array>
+					<string>AttributeType</string>
+            <string>AttributeValue</string>
+            <string>SemClass</string>
+          </array>
 				</value>
 			</nameValuePair>
 			<nameValuePair>
@@ -262,7 +265,10 @@
 				<value>
 					<array>
 						<string>DictCanon</string>
-					</array>
+					<string>AttributeType</string>
+            <string>AttributeValue</string>
+            <string>SemClass</string>
+          </array>
 				</value>
 			</nameValuePair>
 			<nameValuePair>
@@ -328,7 +334,7 @@
 			<nameValuePair>
 				<name>TokenizerDescriptorPath</name>
 				<value>
-					<string>/home/wkt/Projects/uima-components/annotator-parent/annotator-conceptmapper/src/test/resources/descriptors/primitive/OffsetTokenizer.xml</string>
+					<string>src/test/resources/descriptors/primitive/OffsetTokenizer.xml</string>
 				</value>
 			</nameValuePair>
 			<nameValuePair>
