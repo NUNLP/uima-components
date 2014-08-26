@@ -46,7 +46,7 @@ class ConceptMapperTest {
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(desc)
         assert engine != null
         JCas jcas = engine.newJCas()
-        jcas.setDocumentText('There is carcinoma in the wall of the bladder.')
+        jcas.setDocumentText('Tumor, benign in the wall of the bladder.')
         engine.process(jcas)
         UIMAUtil.jcas = jcas
         Collection<DictTerm> terms = UIMAUtil.select(type:DictTerm)

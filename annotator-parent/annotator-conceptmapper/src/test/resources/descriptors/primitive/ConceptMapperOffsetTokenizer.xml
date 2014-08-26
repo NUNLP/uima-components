@@ -440,10 +440,10 @@
 		<externalResources>
 			<externalResource>
 				<name>DictionaryFileName</name>
-				<description>A file containing the dictionary. Modify this URL to
+				<description>A file containing the dictionary. Modify this URL to&#13;
 					use a different dictionary.</description>
 				<fileResourceSpecifier>
-					<fileUrl>file:dict/testDict.xml</fileUrl>
+					<fileUrl>file:dict/Morphenglish.xml</fileUrl>
 				</fileResourceSpecifier>
 				<implementationName>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource_impl</implementationName>
 			</externalResource>
