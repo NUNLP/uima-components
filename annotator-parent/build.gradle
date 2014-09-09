@@ -101,7 +101,12 @@ project(':annotator-dictionary-lingpipe') {
 }
 
 project(':annotator-conceptmapper') {
-    dependencies { compile project(':annotator-groovy-dsl')  }
+    dependencies { 
+        compile project(':type-system')  
+        compile project(':annotator-segment')
+        compile project(':annotator-sentence')
+        compile project(':annotator-token')
+    }
 }
 
 project(':annotator-time') {

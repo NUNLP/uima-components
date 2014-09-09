@@ -3,21 +3,29 @@ package org.northshore.cbri.dict;
 import static org.junit.Assert.*
 import groovy.util.logging.Log4j
 
+import org.apache.ctakes.typesystem.type.syntax.BaseToken
+import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.log4j.BasicConfigurator
 import org.apache.log4j.Level
 import org.apache.uima.UIMAFramework
 import org.apache.uima.analysis_engine.AnalysisEngine
 import org.apache.uima.analysis_engine.AnalysisEngineDescription
 import org.apache.uima.conceptMapper.DictTerm
+import org.apache.uima.fit.factory.AggregateBuilder
 import org.apache.uima.fit.factory.AnalysisEngineFactory
+import org.apache.uima.fit.factory.ExternalResourceFactory
 import org.apache.uima.jcas.JCas
+import org.apache.uima.resource.ExternalResourceDescription
 import org.apache.uima.util.XMLInputSource
 import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Ignore
 import org.junit.Test
+import org.northshore.cbri.dsl.GroovyAnnotator
 import org.northshore.cbri.dsl.UIMAUtil
+import org.northshore.cbri.sent.SentenceDetector
+import org.northshore.cbri.token.TokenAnnotator
 
 @Log4j
 class ConceptMapperTest {
@@ -35,6 +43,7 @@ class ConceptMapperTest {
     public void tearDown() throws Exception {
     }
 
+    @Ignore
     @Test
     public void createEngineDescFile() {
         AnalysisEngineDescription desc = UIMAFramework
@@ -56,11 +65,77 @@ class ConceptMapperTest {
 
     @Ignore
     @Test
+    public void createConceptMapperPipeline() {
+        // segmenter
+        AnalysisEngineDescription segmenter = AnalysisEngineFactory.createEngineDescription(GroovyAnnotator,
+                GroovyAnnotator.PARAM_SCRIPT_FILE, 'groovy/SimpleSegmenter.groovy')
+
+        // sentence detector
+        AnalysisEngineDescription sentDetector = AnalysisEngineFactory.createEngineDescription(
+                SentenceDetector,
+                SentenceDetector.SD_MODEL_FILE_PARAM, 'models/sd-med-model.zip')
+
+        // tokenizer
+        AnalysisEngineDescription tokenizer = AnalysisEngineFactory.createEngineDescription(
+                TokenAnnotator)
+        ExternalResourceFactory.createDependencyAndBind(tokenizer,
+                TokenAnnotator.TOKEN_MODEL_KEY,
+                opennlp.uima.tokenize.TokenizerModelResourceImpl,
+                "file:models/en-token.bin")
+        PrintWriter writer = new PrintWriter(new File("src/test/resources/descriptors/primitive/TokenizerUIMAFit.xml"))
+        tokenizer.toXML(writer)
+        writer.close()
+
+        // concept mapper
+        AnalysisEngineDescription conceptMapper = UIMAFramework
+                .getXMLParser()
+                .parseAnalysisEngineDescription(
+                new XMLInputSource(
+                ConceptMapperTest.class
+                .getResource('/descriptors/primitive/ConceptMapper.xml')))
+
+        AggregateBuilder builder = new AggregateBuilder()
+        builder.add(segmenter)
+        builder.add(sentDetector)
+        builder.add(tokenizer)
+        builder.add(conceptMapper)
+
+        AnalysisEngine pipeline = builder.createAggregate()
+        JCas jcas = pipeline.newJCas()
+        jcas.setDocumentText('Papillary squamous cell carcinoma in situ.')
+        pipeline.process(jcas)
+        UIMAUtil.jcas = jcas
+        
+        Collection<Sentence> sents = UIMAUtil.select(type:Sentence)
+        assert sents.size() == 1
+        
+        Collection<BaseToken> tokens = UIMAUtil.select(type:BaseToken)
+        assert tokens.size() == 7
+        
+        Collection<DictTerm> terms = UIMAUtil.select(type:DictTerm)
+        terms.each { println "DictTerm: ${it.coveredText}: [${it.attributeType}, ${it.attributeValue}]" }
+        assert terms.size() == 1
+    }
+
+    @Test
     public void createEngineUIMAfit() {
+        ExternalResourceDescription extDesc = ExternalResourceFactory.createExternalResourceDescription(
+                DictionaryModel, 'file:dict/Morphenglish.xml');
+        assert extDesc != null
+        
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
-                org.northshore.cbri.conceptmapper.ConceptMapper)
+                org.northshore.cbri.dict.ConceptMapper,
+                ConceptMapper.PARAM_DICT_FILE, 'file:dict/Morphenglish.xml',
+                ConceptMapper.MODEL_KEY, extDesc
+                )
         assert desc != null
+        
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(desc)
         assert engine != null
+        
+        JCas jcas = engine.newJCas()
+        jcas.setDocumentText('The patient is Jane Doe. Papillary squamous cell carcinoma in situ.')
+        engine.process(jcas)
+
     }
 }
