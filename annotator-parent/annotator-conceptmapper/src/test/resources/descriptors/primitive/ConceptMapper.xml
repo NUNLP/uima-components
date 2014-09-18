@@ -274,7 +274,7 @@
 			<nameValuePair>
 				<name>TokenAnnotation</name>
 				<value>
-					<string>org.apache.ctakes.typesystem.type.syntax.BaseToken</string>
+					<string>uima.tt.TokenAnnotation</string>
 				</value>
 			</nameValuePair>
 			<nameValuePair>
@@ -334,7 +334,7 @@
 			<nameValuePair>
 				<name>TokenizerDescriptorPath</name>
 				<value>
-					<string>src/test/resources/descriptors/primitive/TokenizerUIMAFit.xml</string>
+					<string>src/test/resources/descriptors/primitive/OffsetTokenizer.xml</string>
 				</value>
 			</nameValuePair>
 			<nameValuePair>
@@ -407,10 +407,7 @@
 		<fsIndexCollection/>
 		<capabilities>
 			<capability>
-				<inputs>
-					<!-- <type allAnnotatorFeatures="true">uima.tt.SentenceAnnotation</type>
-						<type allAnnotatorFeatures="true">uima.tt.ParagraphAnnotation</type> -->
-				</inputs>
+				<inputs/>
 				<outputs>
 					<type>org.apache.uima.conceptMapper.DictTerm</type>
 					</outputs>

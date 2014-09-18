@@ -2609,7 +2609,7 @@
     <resourceManagerConfiguration>
         <externalResources>
             <externalResource>
-                <name>opennlp.uima.tokenize.TokenizerModelResourceImpl-1</name>
+                <name>opennlp.uima.tokenize.TokenizerModelResourceImpl-0</name>
                 <description/>
                 <configurableDataResourceSpecifier>
                     <url>file:models/en-token.bin</url>
@@ -2625,7 +2625,7 @@
         <externalResourceBindings>
             <externalResourceBinding>
                 <key>token_model</key>
-                <resourceName>opennlp.uima.tokenize.TokenizerModelResourceImpl-1</resourceName>
+                <resourceName>opennlp.uima.tokenize.TokenizerModelResourceImpl-0</resourceName>
             </externalResourceBinding>
         </externalResourceBindings>
     </resourceManagerConfiguration>

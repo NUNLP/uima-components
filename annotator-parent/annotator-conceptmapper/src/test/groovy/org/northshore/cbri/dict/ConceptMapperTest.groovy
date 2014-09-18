@@ -1,4 +1,4 @@
-package org.northshore.cbri.dict;
+package org.northshore.cbri.dict
 
 import static org.junit.Assert.*
 import groovy.util.logging.Log4j
@@ -43,7 +43,6 @@ class ConceptMapperTest {
     public void tearDown() throws Exception {
     }
 
-    @Ignore
     @Test
     public void createEngineDescFile() {
         AnalysisEngineDescription desc = UIMAFramework
@@ -63,7 +62,6 @@ class ConceptMapperTest {
         assert terms.size() == 1
     }
 
-    @Ignore
     @Test
     public void createConceptMapperPipeline() {
         // segmenter
@@ -82,9 +80,13 @@ class ConceptMapperTest {
                 TokenAnnotator.TOKEN_MODEL_KEY,
                 opennlp.uima.tokenize.TokenizerModelResourceImpl,
                 "file:models/en-token.bin")
-        PrintWriter writer = new PrintWriter(new File("src/test/resources/descriptors/primitive/TokenizerUIMAFit.xml"))
-        tokenizer.toXML(writer)
-        writer.close()
+
+        AnalysisEngineDescription offsetTokenizer = UIMAFramework
+                .getXMLParser()
+                .parseAnalysisEngineDescription(
+                new XMLInputSource(
+                ConceptMapperTest.class
+                .getResource('/descriptors/primitive/OffsetTokenizer.xml')))
 
         // concept mapper
         AnalysisEngineDescription conceptMapper = UIMAFramework
@@ -98,6 +100,7 @@ class ConceptMapperTest {
         builder.add(segmenter)
         builder.add(sentDetector)
         builder.add(tokenizer)
+        builder.add(offsetTokenizer)
         builder.add(conceptMapper)
 
         AnalysisEngine pipeline = builder.createAggregate()
@@ -105,13 +108,13 @@ class ConceptMapperTest {
         jcas.setDocumentText('Papillary squamous cell carcinoma in situ.')
         pipeline.process(jcas)
         UIMAUtil.jcas = jcas
-        
+
         Collection<Sentence> sents = UIMAUtil.select(type:Sentence)
         assert sents.size() == 1
-        
+
         Collection<BaseToken> tokens = UIMAUtil.select(type:BaseToken)
         assert tokens.size() == 7
-        
+
         Collection<DictTerm> terms = UIMAUtil.select(type:DictTerm)
         terms.each { println "DictTerm: ${it.coveredText}: [${it.attributeType}, ${it.attributeValue}]" }
         assert terms.size() == 1
@@ -120,19 +123,19 @@ class ConceptMapperTest {
     @Test
     public void createEngineUIMAfit() {
         ExternalResourceDescription extDesc = ExternalResourceFactory.createExternalResourceDescription(
-                DictionaryModel, 'file:dict/Morphenglish.xml');
+                DictionaryModel, 'file:dict/Morphenglish.xml')
         assert extDesc != null
-        
+
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
                 org.northshore.cbri.dict.ConceptMapper,
                 ConceptMapper.PARAM_DICT_FILE, 'file:dict/Morphenglish.xml',
                 ConceptMapper.MODEL_KEY, extDesc
                 )
         assert desc != null
-        
+
         AnalysisEngine engine = AnalysisEngineFactory.createEngine(desc)
         assert engine != null
-        
+
         JCas jcas = engine.newJCas()
         jcas.setDocumentText('The patient is Jane Doe. Papillary squamous cell carcinoma in situ.')
         engine.process(jcas)
