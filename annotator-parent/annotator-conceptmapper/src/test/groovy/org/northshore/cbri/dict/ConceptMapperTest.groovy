@@ -81,6 +81,7 @@ class ConceptMapperTest {
                 opennlp.uima.tokenize.TokenizerModelResourceImpl,
                 "file:models/en-token.bin")
 
+        // offset tokenizer
         AnalysisEngineDescription offsetTokenizer = UIMAFramework
                 .getXMLParser()
                 .parseAnalysisEngineDescription(
@@ -102,6 +103,11 @@ class ConceptMapperTest {
         builder.add(tokenizer)
         builder.add(offsetTokenizer)
         builder.add(conceptMapper)
+        
+        PrintWriter writer = new PrintWriter(new File('src/test/resources/descriptors/aggregate/ConceptMapperPipeline.xml'))
+        def desc = builder.createAggregateDescription()
+        desc.toXML(writer)
+        writer.close()
 
         AnalysisEngine pipeline = builder.createAggregate()
         JCas jcas = pipeline.newJCas()
@@ -119,9 +125,48 @@ class ConceptMapperTest {
         terms.each { println "DictTerm: ${it.coveredText}: [${it.attributeType}, ${it.attributeValue}]" }
         assert terms.size() == 1
     }
+    
+    @Test
+    public void creatPipelineUIMAfit() {
+        // concept mapper
+        AnalysisEngineDescription conceptMapper = AnalysisEngineFactory.createEngineDescription(
+            org.apache.uima.conceptMapper.ConceptMapper,
+            'caseMatch', 'ignoreall',
+            'featureNames', ['DictCanon'] as String[],
+            'attributeNames', ['DictCanon'] as String[]
+            )
+        ExternalResourceFactory.createDependencyAndBind(conceptMapper,
+            ConceptMapper.PARAM_DICT_FILE,
+            org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource_impl,
+            'file:dict/Morphenglish.xml')
+        assert conceptMapper != null
+
+        // offset tokenizer
+        AnalysisEngineDescription offsetTokenizer = UIMAFramework
+                .getXMLParser()
+                .parseAnalysisEngineDescription(
+                new XMLInputSource(
+                ConceptMapperTest.class
+                .getResource('/descriptors/primitive/OffsetTokenizer.xml')))
+                
+        AggregateBuilder builder = new AggregateBuilder()
+        builder.add(offsetTokenizer)
+        builder.add(conceptMapper)
+
+        AnalysisEngine pipeline = builder.createAggregate()
+        JCas jcas = pipeline.newJCas()
+        jcas.setDocumentText('Papillary squamous cell carcinoma in situ.')
+        pipeline.process(jcas)
+        UIMAUtil.jcas = jcas
+        
+        Collection<DictTerm> terms = UIMAUtil.select(type:DictTerm)
+        terms.each { println "DictTerm: ${it.coveredText}: [${it.attributeType}, ${it.attributeValue}]" }
+        assert terms.size() == 1
+
+    }
 
     @Test
-    public void createEngineUIMAfit() {
+    public void createOwnEngineUIMAfit() {
         ExternalResourceDescription extDesc = ExternalResourceFactory.createExternalResourceDescription(
                 DictionaryModel, 'file:dict/Morphenglish.xml')
         assert extDesc != null

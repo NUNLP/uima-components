@@ -435,7 +435,7 @@
 				<description>A file containing the dictionary. Modify this URL to&#13;
 					use a different dictionary.</description>
 				<fileResourceSpecifier>
-					<fileUrl>file:dict/Morphenglish.xml</fileUrl>
+					<fileUrl>file:dict/NAACCRSearchTerm.xml</fileUrl>
 				</fileResourceSpecifier>
 				<implementationName>org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource_impl</implementationName>
 			</externalResource>
