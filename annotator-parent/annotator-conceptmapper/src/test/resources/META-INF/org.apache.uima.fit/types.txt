@@ -1,2 +1,1 @@
-classpath*:descriptors/primitive/ConceptMapper.xml
-org/apache/uima/conceptMapper/DictTerm.xml
+classpath*:org/apache/uima/conceptMapper/DictTerm.xml
