@@ -71,8 +71,11 @@ public class AnnotatorAdaptor {
           throws DictionaryLoaderException {
     super();
     try {
+//      aeSpecifier = UIMAFramework.getXMLParser().parseResourceSpecifier(
+//              new XMLInputSource(analysisEngineDescriptorPath));
       aeSpecifier = UIMAFramework.getXMLParser().parseResourceSpecifier(
-              new XMLInputSource(analysisEngineDescriptorPath));
+              new XMLInputSource(AnnotatorAdaptor.class.getResource(analysisEngineDescriptorPath)));
+   
       this.tokenTypeName = tokenTypeName;
       this.tokenTypeFeature = tokenFilter.getTokenTypeFeature();
       this.tokenClassFeature = tokenFilter.getTokenClassFeature();
