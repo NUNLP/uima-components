@@ -38,6 +38,8 @@ class TokenAnnotatorTest {
     public void testTokenAnnotator() {
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
                 TokenAnnotator,
+                TokenAnnotator.PARAM_CONTAINER_TYPE,
+                'org.apache.ctakes.typesystem.type.textspan.Sentence',
                 TokenAnnotator.PARAM_POST_PROCESS_SCRIPT_FILE, 
                 "/groovy/TokenPostProcess.groovy")
         ExternalResourceFactory.createDependencyAndBind(desc, 
