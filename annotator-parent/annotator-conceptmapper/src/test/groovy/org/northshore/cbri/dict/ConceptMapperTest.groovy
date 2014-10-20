@@ -43,25 +43,6 @@ class ConceptMapperTest {
     public void tearDown() throws Exception {
     }
 
-//    @Test
-//    public void createEngineDescFile() {
-//        AnalysisEngineDescription desc = UIMAFramework
-//                .getXMLParser()
-//                .parseAnalysisEngineDescription(
-//                new XMLInputSource(
-//                ConceptMapperTest.class
-//                .getResource('/descriptors/aggregate/OffsetTokenizerMatcher.xml')))
-//        AnalysisEngine engine = AnalysisEngineFactory.createEngine(desc)
-//        assert engine != null
-//        JCas jcas = engine.newJCas()
-//        jcas.setDocumentText('Papillary squamous cell carcinoma in situ.')
-//        engine.process(jcas)
-//        UIMAUtil.jcas = jcas
-//        Collection<DictTerm> terms = UIMAUtil.select(type:DictTerm)
-//        terms.each { println "DictTerm: ${it.coveredText}: [${it.attributeType}, ${it.attributeValue}]" }
-//        assert terms.size() == 1
-//    }
-
     @Test
     public void createPipelineUIMAfit() {
         // concept mapper
@@ -114,6 +95,25 @@ class ConceptMapperTest {
         assert terms.size() == 1
 
     }
+    
+    //    @Test
+    //    public void createEngineDescFile() {
+    //        AnalysisEngineDescription desc = UIMAFramework
+    //                .getXMLParser()
+    //                .parseAnalysisEngineDescription(
+    //                new XMLInputSource(
+    //                ConceptMapperTest.class
+    //                .getResource('/descriptors/aggregate/OffsetTokenizerMatcher.xml')))
+    //        AnalysisEngine engine = AnalysisEngineFactory.createEngine(desc)
+    //        assert engine != null
+    //        JCas jcas = engine.newJCas()
+    //        jcas.setDocumentText('Papillary squamous cell carcinoma in situ.')
+    //        engine.process(jcas)
+    //        UIMAUtil.jcas = jcas
+    //        Collection<DictTerm> terms = UIMAUtil.select(type:DictTerm)
+    //        terms.each { println "DictTerm: ${it.coveredText}: [${it.attributeType}, ${it.attributeValue}]" }
+    //        assert terms.size() == 1
+    //    }
 
     //    @Test
     //    public void createConceptMapperPipeline() {
