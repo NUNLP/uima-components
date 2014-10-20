@@ -105,9 +105,7 @@ public final class TokenAnnotator extends JCasAnnotator_ImplBase {
 
     public static void main(String[] args) {
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
-                TokenAnnotator,
-                TokenAnnotator.PARAM_POST_PROCESS_SCRIPT_FILE,
-                '/groovy/TokenPostProcess.groovy')
+                TokenAnnotator)
         ExternalResourceFactory.createDependencyAndBind(desc,
                 TokenAnnotator.TOKEN_MODEL_KEY,
                 opennlp.uima.tokenize.TokenizerModelResourceImpl,

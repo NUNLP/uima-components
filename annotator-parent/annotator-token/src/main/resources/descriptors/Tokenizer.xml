@@ -10,6 +10,13 @@
         <vendor>org.northshore.cbri.token</vendor>
         <configurationParameters>
             <configurationParameter>
+                <name>containerTypeName</name>
+                <description/>
+                <type>String</type>
+                <multiValued>false</multiValued>
+                <mandatory>false</mandatory>
+            </configurationParameter>
+            <configurationParameter>
                 <name>postProcessScriptFileName</name>
                 <description/>
                 <type>String</type>
@@ -19,9 +26,9 @@
         </configurationParameters>
         <configurationParameterSettings>
             <nameValuePair>
-                <name>postProcessScriptFileName</name>
+                <name>containerTypeName</name>
                 <value>
-                    <string>/groovy/TokenPostProcess.groovy</string>
+                    <string>org.apache.uima.jcas.tcas.DocumentAnnotation</string>
                 </value>
             </nameValuePair>
         </configurationParameterSettings>
