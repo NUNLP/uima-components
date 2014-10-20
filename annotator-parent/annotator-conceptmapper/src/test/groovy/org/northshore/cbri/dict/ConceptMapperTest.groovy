@@ -132,13 +132,27 @@ class ConceptMapperTest {
         AnalysisEngineDescription conceptMapper = AnalysisEngineFactory.createEngineDescription(
             org.apache.uima.conceptMapper.ConceptMapper,
             'caseMatch', 'ignoreall',
-            'featureNames', ['DictCanon'] as String[],
-            'attributeNames', ['DictCanon'] as String[]
+            'ResultingAnnotationName', 'org.apache.uima.conceptMapper.DictTerm',
+            'AttributeList', ['canonical', 'AttributeType', 'AttributeValue', 'SemClass'] as String[],
+            'FeatureList', ['DictCanon', 'AttributeType', 'AttributeValue', 'SemClass'] as String[],
+            'TokenAnnotation', 'uima.tt.TokenAnnotation',
+            'ResultingAnnotationName', 'org.apache.uima.conceptMapper.DictTerm', 
+            'SpanFeatureStructure', 'uima.tcas.DocumentAnnotation',
+            'OrderIndependentLookup', false,
+            'PrintDictionary', false,
+            'FindAllMatches', false,
+            'ReplaceCommaWithAND', false,
+            'TokenizerDescriptorPath', 'src/test/resources/descriptors/primitive/OffsetTokenizer.xml',
+            'ResultingEnclosingSpanName', 'enclosingSpan',
+            'MatchedTokensFeatureName', 'matchedTokens',
+            'ResultingAnnotationMatchedTextFeature', 'matchedText',
+            'SearchStrategy', 'ContiguousMatch', 
+            'LanguageID', 'en'
             )
         ExternalResourceFactory.createDependencyAndBind(conceptMapper,
-            ConceptMapper.PARAM_DICT_FILE,
+            org.apache.uima.conceptMapper.ConceptMapper.PARAM_DICT_FILE,
             org.apache.uima.conceptMapper.support.dictionaryResource.DictionaryResource_impl,
-            'file:dict/Morphenglish.xml')
+            'file:dict/NAACCRSearchTerm.xml')
         assert conceptMapper != null
 
         // offset tokenizer
@@ -173,7 +187,7 @@ class ConceptMapperTest {
 
         AnalysisEngineDescription desc = AnalysisEngineFactory.createEngineDescription(
                 org.northshore.cbri.dict.ConceptMapper,
-                ConceptMapper.PARAM_DICT_FILE, 'file:dict/Morphenglish.xml',
+                ConceptMapper.PARAM_DICT_FILE, 'dict/Morphenglish.xml',
                 ConceptMapper.MODEL_KEY, extDesc
                 )
         assert desc != null
@@ -184,6 +198,5 @@ class ConceptMapperTest {
         JCas jcas = engine.newJCas()
         jcas.setDocumentText('The patient is Jane Doe. Papillary squamous cell carcinoma in situ.')
         engine.process(jcas)
-
     }
 }
