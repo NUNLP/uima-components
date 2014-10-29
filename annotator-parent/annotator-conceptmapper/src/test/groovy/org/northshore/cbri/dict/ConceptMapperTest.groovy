@@ -58,7 +58,7 @@ class ConceptMapperTest {
                 'FindAllMatches', false,
                 'ReplaceCommaWithAND', false,
                 'LanguageID', 'en',
-                'TokenizerDescriptorPath', '/descriptors/primitive/OffsetTokenizer.xml',
+                'TokenizerDescriptorPath', '/descriptors/OffsetTokenizer.xml',
                 'TokenAnnotation', 'uima.tt.TokenAnnotation',
                 'SpanFeatureStructure', 'uima.tcas.DocumentAnnotation',
                 'ResultingAnnotationName', 'org.apache.uima.conceptMapper.DictTerm',
@@ -78,7 +78,7 @@ class ConceptMapperTest {
                 .parseAnalysisEngineDescription(
                 new XMLInputSource(
                 ConceptMapperTest.class
-                .getResource('/descriptors/primitive/OffsetTokenizer.xml')))
+                .getResource('/descriptors/OffsetTokenizer.xml')))
 
         AggregateBuilder builder = new AggregateBuilder()
         builder.add(offsetTokenizer)
