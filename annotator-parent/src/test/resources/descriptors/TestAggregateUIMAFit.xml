@@ -6329,6 +6329,13 @@
                     <vendor>org.northshore.cbri.token</vendor>
                     <configurationParameters>
                         <configurationParameter>
+                            <name>containerTypeName</name>
+                            <description/>
+                            <type>String</type>
+                            <multiValued>false</multiValued>
+                            <mandatory>false</mandatory>
+                        </configurationParameter>
+                        <configurationParameter>
                             <name>postProcessScriptFileName</name>
                             <description/>
                             <type>String</type>
@@ -6336,7 +6343,14 @@
                             <mandatory>false</mandatory>
                         </configurationParameter>
                     </configurationParameters>
-                    <configurationParameterSettings/>
+                    <configurationParameterSettings>
+                        <nameValuePair>
+                            <name>containerTypeName</name>
+                            <value>
+                                <string>org.apache.uima.jcas.tcas.DocumentAnnotation</string>
+                            </value>
+                        </nameValuePair>
+                    </configurationParameterSettings>
                     <typeSystemDescription>
                         <types>
                             <typeDescription>
