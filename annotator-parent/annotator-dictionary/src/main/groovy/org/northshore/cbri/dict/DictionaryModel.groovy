@@ -24,7 +24,7 @@ public class DictionaryModel {
 		}
 	}
 	
-	public Map<Collection<String>, DictionaryEntry> lookup(final String[] tokens) {
+	public Map<Collection<String>, DictionaryEntry> findMatches(final String[] tokens) {
 		Map<Collection<String>, DictionaryEntry> matches = new HashMap<>()
 		for (int i = 0; i < tokens.length; i++) {
 			String[] tokensToEnd = tokens[i, tokens.length - 1]

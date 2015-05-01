@@ -29,6 +29,10 @@ import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.DictionaryAnnotator
 
 @Log4j
 class ConceptMapperTest {
+	static TEST_TEXT = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
+	
+	TokenizerME tokenizer;
+	DictionaryModel model;
 
 	@BeforeClass
 	public static void setupClass() {
@@ -37,49 +41,36 @@ class ConceptMapperTest {
 
 	@Before
 	public void setUp() throws Exception {
-	}
-	
-	@Test
-	public void testDictModel() {
 		File dictFile = new File(this.class.getResource('/abstractionSchema/test-abstraction-schema.json').file)
 		ObjectMapper mapper = new ObjectMapper()
 		AbstractionSchema schema = mapper.readValue(dictFile, AbstractionSchema.class);
 		assert schema != null
 		
-		TokenizerME tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
+		this.tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
 		assert tokenizer != null
 		
-		DictionaryModel model = DictionaryModelFactory.make(schema, tokenizer)
+		this.model = DictionaryModelFactory.make(schema, tokenizer)
 		assert model != null
-		
-		String[] tokens = DictionaryModelFactory.tokenize("The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma.",
+
+	}
+	
+	@Test
+	public void testDictModel() {		
+		String[] tokens = DictionaryModelFactory.tokenize(TEST_TEXT,
 			tokenizer)
 		assert tokens.length == 24
 		
-		Map<Collection<String>, DictionaryEntry> matches = model.lookup(tokens)
+		Map<Collection<String>, DictionaryEntry> matches = this.model.findMatches(tokens)
 		assert matches.size() == 2
 		matches.each { k, v -> println "Match: ${k}" }
 	}
 
-	@Ignore
 	@Test
 	public void testUIMAPipeline() {
-		String testText = """
-			FINAL DIAGNOSIS:
-			A) Ileocecal valve, colon, polyp:
-			    - Colonic mucosa with a small well-circumscribed lymphoid aggregate.
-			B) Transverse colon polyp:
-			    - Adenomatous polyp.
-			C) Sigmoid colon:
-			    - Hyperplastic polyp.
-			    - Tubular adenoma .
-			"""
-
 		// --------------------------------------------------------------------
 		// load dictionary
 		// --------------------------------------------------------------------
-		DictionaryModel dictModel = new DictionaryModel()
-		DictionaryModelPool.put(1, dictModel)
+		DictionaryModelPool.put(1, this.model)
 
 		// --------------------------------------------------------------------
 		// external resources
@@ -98,20 +89,21 @@ class ConceptMapperTest {
 		AnalysisEngine tokenizer = AnalysisEngineFactory.createEngine(tokenDesc)
 
 		AnalysisEngineDescription mapperDesc = AnalysisEngineFactory.createEngineDescription(
-			DictionaryAnnotator)
+			ConceptAnnotator,
+			ConceptAnnotator.PARAM_DICTIONARY_ID, 1)
 		AnalysisEngine mapper = AnalysisEngineFactory.createEngine(mapperDesc)
-
 
 		// --------------------------------------------------------------------
 		// test
 		// --------------------------------------------------------------------
 		
 		JCas jcas = JCasFactory.createJCas()
-		jcas.setDocumentText(testText)
+		jcas.setDocumentText(TEST_TEXT)
 		UIMAUtil.JCas = jcas
-		UIMAUtil.create(type:Sentence, begin:0, end:testText.length()-1)
+		UIMAUtil.create(type:Sentence, begin:0, end:TEST_TEXT.length()-1)
 		
 		tokenizer.process(jcas)
 		mapper.process(jcas)
+		
 	}
 }

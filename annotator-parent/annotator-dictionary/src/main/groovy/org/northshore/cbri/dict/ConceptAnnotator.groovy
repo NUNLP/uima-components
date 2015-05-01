@@ -3,13 +3,14 @@ package org.northshore.cbri.dict
 import static org.northshore.cbri.dsl.UIMAUtil.*
 import groovy.util.logging.Log4j
 
-import org.apache.ctakes.typesystem.type.syntax.WordToken
+import org.apache.ctakes.typesystem.type.syntax.BaseToken
 import org.apache.ctakes.typesystem.type.textspan.Sentence
 import org.apache.uima.UimaContext
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase
 import org.apache.uima.fit.descriptor.ConfigurationParameter
 import org.apache.uima.jcas.JCas
+import org.apache.uima.jcas.tcas.Annotation
 import org.apache.uima.resource.ResourceInitializationException
 import org.northshore.cbri.dsl.UIMAUtil
 
@@ -28,8 +29,8 @@ public class ConceptAnnotator extends JCasAnnotator_ImplBase {
     @Override
     public void process(JCas jcas) throws AnalysisEngineProcessException
     {
-		println "Dictionary to load: ${dictionaryId}"
-		DictionaryModel dict = DictionaryLib.get(dictionaryId)
+		logger.info "Dictionary to load: ${dictionaryId}"
+		DictionaryModel dict = DictionaryModelPool.get(dictionaryId)
 		if (dict == null) {
 			logger.warn "No dictionary loaded with id: ${dictionaryId}"
 			return;
@@ -37,10 +38,14 @@ public class ConceptAnnotator extends JCasAnnotator_ImplBase {
 		
 		UIMAUtil.jcas = jcas
 		select(type:Sentence).each { Sentence sent ->
-			
-			Map results = dict.lookup(select(type:WordToken, filter:coveredBy(sent)))
+			Collection<Annotation> anns = select(type:BaseToken, filter:coveredBy(sent))
+			Collection<String> tokens = new ArrayList<>()
+			anns.each { Annotation ann ->
+				tokens << ann.coveredText
+			}
+			Map results = dict.findMatches(tokens as String[])
 			results.each { k, v ->
-				
+				println "Match: $k"
 			}
 		}
     }
