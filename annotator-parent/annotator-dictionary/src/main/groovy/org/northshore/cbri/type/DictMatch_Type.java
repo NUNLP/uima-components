@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** 
- * Updated by JCasGen Sun Apr 26 13:41:17 CDT 2015
+ * Updated by JCasGen Fri May 01 01:13:33 CDT 2015
  * @generated */
 public class DictMatch_Type extends TOP_Type {
   /** @generated 
@@ -79,7 +79,7 @@ public class DictMatch_Type extends TOP_Type {
     if (lowLevelTypeChecks)
       return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokens), i, true);
     jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_tokens), i);
-	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokens), i);
+  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokens), i);
   }
    
   /** @generated
@@ -146,26 +146,26 @@ public class DictMatch_Type extends TOP_Type {
   
  
   /** @generated */
-  final Feature casFeat_terminology;
+  final Feature casFeat_vocabulary;
   /** @generated */
-  final int     casFeatCode_terminology;
+  final int     casFeatCode_vocabulary;
   /** @generated
    * @param addr low level Feature Structure reference
    * @return the feature value 
    */ 
-  public String getTerminology(int addr) {
-        if (featOkTst && casFeat_terminology == null)
-      jcas.throwFeatMissing("terminology", "org.northshore.cbri.type.DictMatch");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_terminology);
+  public String getVocabulary(int addr) {
+        if (featOkTst && casFeat_vocabulary == null)
+      jcas.throwFeatMissing("vocabulary", "org.northshore.cbri.type.DictMatch");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_vocabulary);
   }
   /** @generated
    * @param addr low level Feature Structure reference
    * @param v value to set 
    */    
-  public void setTerminology(int addr, String v) {
-        if (featOkTst && casFeat_terminology == null)
-      jcas.throwFeatMissing("terminology", "org.northshore.cbri.type.DictMatch");
-    ll_cas.ll_setStringValue(addr, casFeatCode_terminology, v);}
+  public void setVocabulary(int addr, String v) {
+        if (featOkTst && casFeat_vocabulary == null)
+      jcas.throwFeatMissing("vocabulary", "org.northshore.cbri.type.DictMatch");
+    ll_cas.ll_setStringValue(addr, casFeatCode_vocabulary, v);}
     
   
  
@@ -217,8 +217,8 @@ public class DictMatch_Type extends TOP_Type {
     casFeatCode_code  = (null == casFeat_code) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_code).getCode();
 
  
-    casFeat_terminology = jcas.getRequiredFeatureDE(casType, "terminology", "uima.cas.String", featOkTst);
-    casFeatCode_terminology  = (null == casFeat_terminology) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_terminology).getCode();
+    casFeat_vocabulary = jcas.getRequiredFeatureDE(casType, "vocabulary", "uima.cas.String", featOkTst);
+    casFeatCode_vocabulary  = (null == casFeat_vocabulary) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_vocabulary).getCode();
 
  
     casFeat_container = jcas.getRequiredFeatureDE(casType, "container", "uima.tcas.Annotation", featOkTst);

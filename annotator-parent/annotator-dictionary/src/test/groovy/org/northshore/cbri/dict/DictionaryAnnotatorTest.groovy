@@ -21,6 +21,7 @@ import org.junit.Test
 import org.northshore.cbri.dict.DictionaryModel.DictionaryEntry
 import org.northshore.cbri.dsl.UIMAUtil
 import org.northshore.cbri.token.TokenAnnotator
+import org.northshore.cbri.type.DictMatch
 
 import com.fasterxml.jackson.databind.ObjectMapper
 
@@ -101,6 +102,8 @@ class DictionaryAnnotatorTest {
 		
 		tokenizer.process(jcas)
 		mapper.process(jcas)
-		
+
+		Collection<DictMatch> matches = UIMAUtil.select(type:DictMatch)
+		assert matches.size() == 2		
 	}
 }

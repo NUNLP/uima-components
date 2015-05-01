@@ -13,7 +13,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Sun Apr 26 13:41:17 CDT 2015
+ * Updated by JCasGen Fri May 01 01:13:33 CDT 2015
  * XML source: C:/WKT/git/Schorndorfer/uima-components/annotator-parent/annotator-dictionary/src/main/resources/descriptors/DictionaryTypeSystem.xml
  * @generated */
 public class DictMatch extends TOP {
@@ -155,25 +155,25 @@ public class DictMatch extends TOP {
    
     
   //*--------------*
-  //* Feature: terminology
+  //* Feature: vocabulary
 
-  /** getter for terminology - gets 
+  /** getter for vocabulary - gets 
    * @generated
    * @return value of the feature 
    */
-  public String getTerminology() {
-    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_terminology == null)
-      jcasType.jcas.throwFeatMissing("terminology", "org.northshore.cbri.type.DictMatch");
-    return jcasType.ll_cas.ll_getStringValue(addr, ((DictMatch_Type)jcasType).casFeatCode_terminology);}
+  public String getVocabulary() {
+    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_vocabulary == null)
+      jcasType.jcas.throwFeatMissing("vocabulary", "org.northshore.cbri.type.DictMatch");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((DictMatch_Type)jcasType).casFeatCode_vocabulary);}
     
-  /** setter for terminology - sets  
+  /** setter for vocabulary - sets  
    * @generated
    * @param v value to set into the feature 
    */
-  public void setTerminology(String v) {
-    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_terminology == null)
-      jcasType.jcas.throwFeatMissing("terminology", "org.northshore.cbri.type.DictMatch");
-    jcasType.ll_cas.ll_setStringValue(addr, ((DictMatch_Type)jcasType).casFeatCode_terminology, v);}    
+  public void setVocabulary(String v) {
+    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_vocabulary == null)
+      jcasType.jcas.throwFeatMissing("vocabulary", "org.northshore.cbri.type.DictMatch");
+    jcasType.ll_cas.ll_setStringValue(addr, ((DictMatch_Type)jcasType).casFeatCode_vocabulary, v);}    
    
     
   //*--------------*

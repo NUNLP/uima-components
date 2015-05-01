@@ -13,6 +13,7 @@ import org.apache.uima.jcas.JCas
 import org.apache.uima.jcas.tcas.Annotation
 import org.apache.uima.resource.ResourceInitializationException
 import org.northshore.cbri.dsl.UIMAUtil
+import org.northshore.cbri.type.DictMatch
 
 @Log4j
 public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
@@ -45,7 +46,7 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 			}
 			Map results = dict.findMatches(tokens as String[])
 			results.each { k, v ->
-				println "Match: $k"
+				UIMAUtil.create(type:DictMatch)
 			}
 		}
     }

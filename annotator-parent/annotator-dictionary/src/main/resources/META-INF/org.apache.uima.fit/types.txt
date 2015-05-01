@@ -1,0 +1,1 @@
+classpath*:descriptors/DictionaryTypeSystem.xml
