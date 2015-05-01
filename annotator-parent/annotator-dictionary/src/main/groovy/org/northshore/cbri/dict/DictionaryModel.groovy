@@ -1,4 +1,4 @@
-package org.northshore.cbri.mapper;
+package org.northshore.cbri.dict;
 
 import groovy.util.logging.Log4j
 import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree

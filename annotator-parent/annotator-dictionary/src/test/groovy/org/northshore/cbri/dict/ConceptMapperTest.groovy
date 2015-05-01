@@ -1,10 +1,6 @@
-package org.northshore.cbri.mapper;
+package org.northshore.cbri.dict;
 
 import static org.junit.Assert.*
-
-import java.util.Collection;
-import java.util.Map;
-
 import groovy.util.logging.Log4j
 import opennlp.tools.tokenize.TokenizerME
 import opennlp.tools.tokenize.TokenizerModel
@@ -23,8 +19,8 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Ignore
 import org.junit.Test
+import org.northshore.cbri.dict.DictionaryModel.DictionaryEntry
 import org.northshore.cbri.dsl.UIMAUtil
-import org.northshore.cbri.mapper.DictionaryModel.DictionaryEntry;
 import org.northshore.cbri.token.TokenAnnotator
 
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -44,7 +40,7 @@ class ConceptMapperTest {
 	}
 	
 	@Test
-	public void testDictModelFactory() {
+	public void testDictModel() {
 		File dictFile = new File(this.class.getResource('/abstractionSchema/test-abstraction-schema.json').file)
 		ObjectMapper mapper = new ObjectMapper()
 		AbstractionSchema schema = mapper.readValue(dictFile, AbstractionSchema.class);
@@ -98,16 +94,12 @@ class ConceptMapperTest {
 		
 		AnalysisEngineDescription tokenDesc = AnalysisEngineFactory.createEngineDescription(
 				TokenAnnotator, 
-				TokenAnnotator.TOKEN_MODEL_KEY, tokenModelResDesc
-				)
+				TokenAnnotator.TOKEN_MODEL_KEY, tokenModelResDesc)
 		AnalysisEngine tokenizer = AnalysisEngineFactory.createEngine(tokenDesc)
 
 		AnalysisEngineDescription mapperDesc = AnalysisEngineFactory.createEngineDescription(
-				DictionaryAnnotator
-				)
+			DictionaryAnnotator)
 		AnalysisEngine mapper = AnalysisEngineFactory.createEngine(mapperDesc)
-		mapper.setConfigParameterValue(DictionaryAnnotator.PARAM_DICTIONARY_ID, 1)
-		mapper.reconfigure()
 
 
 		// --------------------------------------------------------------------

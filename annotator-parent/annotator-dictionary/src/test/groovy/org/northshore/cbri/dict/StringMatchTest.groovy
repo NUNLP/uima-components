@@ -1,4 +1,4 @@
-package org.northshore.cbri.mapper;
+package org.northshore.cbri.dict;
 
 import static org.junit.Assert.*
 

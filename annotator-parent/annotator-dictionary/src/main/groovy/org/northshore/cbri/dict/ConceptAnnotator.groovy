@@ -1,4 +1,4 @@
-package org.northshore.cbri.mapper
+package org.northshore.cbri.dict
 
 import static org.northshore.cbri.dsl.UIMAUtil.*
 import groovy.util.logging.Log4j

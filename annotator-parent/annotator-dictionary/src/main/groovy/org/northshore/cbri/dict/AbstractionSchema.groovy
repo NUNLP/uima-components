@@ -1,4 +1,4 @@
-package org.northshore.cbri.mapper
+package org.northshore.cbri.dict
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString

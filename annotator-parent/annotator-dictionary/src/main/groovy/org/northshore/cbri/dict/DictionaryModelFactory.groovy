@@ -1,4 +1,4 @@
-package org.northshore.cbri.mapper
+package org.northshore.cbri.dict
 
 import opennlp.tools.tokenize.TokenizerME
 import opennlp.tools.util.Span
