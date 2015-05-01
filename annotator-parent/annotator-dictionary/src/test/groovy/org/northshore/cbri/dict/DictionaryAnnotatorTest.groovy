@@ -49,7 +49,6 @@ class DictionaryAnnotatorTest {
 		
 		this.model = DictionaryModelFactory.make(schema, tokenizer)
 		assert model != null
-
 	}
 	
 	@Test
@@ -57,6 +56,9 @@ class DictionaryAnnotatorTest {
 		String[] tokens = DictionaryModelFactory.tokenize(TEST_TEXT,
 			tokenizer)
 		assert tokens.length == 24
+		
+		DictionaryEntry entry = this.model.get(['glioblastoma'] as String[])
+		assert entry != null
 		
 		Map<Collection<String>, DictionaryEntry> matches = this.model.findMatches(tokens)
 		assert matches.size() == 2

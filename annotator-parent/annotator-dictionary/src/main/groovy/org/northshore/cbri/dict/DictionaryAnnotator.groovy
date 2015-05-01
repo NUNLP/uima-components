@@ -46,7 +46,8 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 			}
 			Map results = dict.findMatches(tokens as String[])
 			results.each { k, v ->
-				UIMAUtil.create(type:DictMatch)
+				println "Key: $k, Value: $v"
+				UIMAUtil.create(type:DictMatch, canonical:v.canonical)
 			}
 		}
     }
