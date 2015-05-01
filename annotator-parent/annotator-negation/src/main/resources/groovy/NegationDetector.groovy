@@ -106,3 +106,4 @@ select(type:NegationScope, filter:contains(IdentifiedAnnotation)).each { Negatio
         }
     }
 }
+

@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Mon Jun 23 14:44:24 CEST 2008
- * XML source: D:/code/eclipse330/apache/ConceptMapper/desc/analysis_engine/primitive/OffsetTokenizer.xml
+ * Updated by JCasGen Thu Feb 26 23:25:04 CST 2015
+ * XML source: C:/WKT/git/Schorndorfer/uima-components/annotator-parent/annotator-conceptmapper/src/main/resources/descriptors/OffsetToken
  * @generated */
 public class TokenAnnotation extends Annotation {
   /** @generated
@@ -28,7 +28,7 @@ public class TokenAnnotation extends Annotation {
  
   /** Never called.  Disable default constructor
    * @generated */
-  protected TokenAnnotation() {}
+  protected TokenAnnotation() {/* intentionally empty block */}
     
   /** Internal - constructor used by generator 
    * @generated */
@@ -51,10 +51,13 @@ public class TokenAnnotation extends Annotation {
     readObject();
   }   
 
-  /** <!-- begin-user-doc -->
+  /** 
+   * <!-- begin-user-doc -->
     * Write your own initialization here
     * <!-- end-user-doc -->
-  @generated modifiable */
+  *
+   * @generated modifiable 
+   */
   private void readObject() {}
      
 }

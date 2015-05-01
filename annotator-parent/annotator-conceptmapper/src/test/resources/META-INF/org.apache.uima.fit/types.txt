@@ -1,1 +1,2 @@
-classpath*:org/apache/uima/conceptMapper/DictTerm.xml
+classpath*:descriptors/DictTerm.xml
+classpath*:descriptors/OffsetToken.xml

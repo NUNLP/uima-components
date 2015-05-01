@@ -254,16 +254,7 @@ public class ConceptMapper extends JCasAnnotator_ImplBase {
 
     // Process configration parameters
     try {
-      // logger = new Logger (annotatorContext.getLogger ());
       logger = new Logger("ConceptMapper", uimaContext.getLogger());
-      // tokenDebugFile = new FileWriter("/tmp/cm/tokens."+
-      // Calendar.getInstance ().getTimeInMillis () + ".txt");
-      // potentialMatchDebugFile = new FileWriter("/tmp/cm/pm."+
-      // Calendar.getInstance ().getTimeInMillis () + ".txt");
-      // findMatchDebugFile = new FileWriter("/tmp/cm/fm."+
-      // Calendar.getInstance ().getTimeInMillis () + ".txt");
-      // FileWriter dictDebugFile = new FileWriter("/tmp/cm/dict."+
-      // Calendar.getInstance ().getTimeInMillis () + ".txt");
 
       tokenAnnotationName = (String) uimaContext
               .getConfigParameterValue(PARAM_TOKENANNOTATION);
@@ -307,7 +298,6 @@ public class ConceptMapper extends JCasAnnotator_ImplBase {
 
       searchStrategy = detectSearchStrategy((String) uimaContext
               .getConfigParameterValue(PARAM_SEARCHSTRATEGY));
-      // System.err.println("SEARCH STRATEGY = " + searchStrategy);
 
       Boolean findAllMatchesParam = (Boolean) uimaContext
               .getConfigParameterValue(PARAM_FINDALLMATCHES);
@@ -322,11 +312,6 @@ public class ConceptMapper extends JCasAnnotator_ImplBase {
       if (featureNames.length != attributeNames.length) {
         throw new Exception("AttributeList and FeatureList are inconsistent");
       }
-      // for (int i = 0; i < featureNames.length; i++ )
-      // {
-      // logger.logInfo ("Attribute \"" + attributeNames [i] + "\" mapped
-      // to feature \"" + featureNames [i] + "\"");
-      // }
 
       tokenNormalizer = new TokenNormalizer(uimaContext, logger);
       tokenFilter = new TokenFilter(tokenAnnotationName, tokenTypeFeatureName,
@@ -335,12 +320,8 @@ public class ConceptMapper extends JCasAnnotator_ImplBase {
 
       dict = (DictionaryResource) uimaContext.getResourceObject(PARAM_DICT_FILE);
       if (!dict.isLoaded()) {
-        // logger.logInfo("dictionary not yet loaded");
         dict.loadDictionaryContents(uimaContext, logger, tokenAnnotationName,
                 tokenTypeFeatureName, tokenClassFeatureName, tokenizerDescriptor);
-        // logger.logInfo( "now is loaded: "+dict.toString() );
-        // System.err.println ("NEW DICTIONARY:\n" + dict.toString());
-        // debugWrite (dictDebugFile, dict.toString());
       }
 
     } catch (Exception e) {

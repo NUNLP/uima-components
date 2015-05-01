@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <name>OffsetToken</name>
+    <description/>
+    <version>1.0</version>
+    <vendor/>
+			<types>
+				<typeDescription>
+					<name>org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation</name>
+					<description/>
+					<supertypeName>uima.tt.TokenAnnotation</supertypeName>
+					<features>
+						<featureDescription>
+							<name>text</name>
+							<description/>
+							<rangeTypeName>uima.cas.String</rangeTypeName>
+						</featureDescription>
+					</features>
+				</typeDescription>
+				<typeDescription>
+					<name>uima.tt.TokenAnnotation</name>
+					<description/>
+					<supertypeName>uima.tcas.Annotation</supertypeName>
+				</typeDescription>
+			</types>
+		</typeSystemDescription>
+  

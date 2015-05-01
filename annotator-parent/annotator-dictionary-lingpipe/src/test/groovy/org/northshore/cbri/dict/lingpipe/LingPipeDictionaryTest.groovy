@@ -33,6 +33,7 @@ C) Sigmoid colon:
 D) Sigmod colon: 
     - Hyperplystic polyp. 
     - Tubluar adinoma.
+    - adenoma Tubular.
     """
 
     @BeforeClass
@@ -101,7 +102,7 @@ D) Sigmod colon:
                 false)  // case sensitive
 
         Chunking chunking = dictionaryChunkerTT.chunk(testText)
-        assert chunking.chunkSet().size() == 4
+        assert chunking.chunkSet().size() == 5
 
         chunking.chunkSet().each { Chunk chunk ->
             int start = chunk.start()
@@ -134,7 +135,7 @@ D) Sigmod colon:
         Chunking chunking = chunker.chunk(testText)
         CharSequence cs = chunking.charSequence()
         Set<Chunk> chunkSet = chunking.chunkSet()
-        assert chunkSet.size() == 12
+        assert chunkSet.size() == 14
 
         printf("%15s  %15s   %8s\n",
                 "Matched Phrase",

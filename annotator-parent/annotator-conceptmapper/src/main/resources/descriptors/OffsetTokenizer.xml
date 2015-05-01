@@ -16,7 +16,7 @@
   KIND, either express or implied.  See the License for the
   specific language governing permissions and limitations
   under the License.    
--->  
+-->
 <taeDescription xmlns="http://uima.apache.org/resourceSpecifier">
 	<frameworkImplementation>org.apache.uima.java</frameworkImplementation>
 	<primitive>true</primitive>
@@ -53,43 +53,23 @@
 			<nameValuePair>
 				<name>tokenDelimiters</name>
 				<value>
-					<string>
-						/-*&amp;@(){}|[]&gt;&lt;\'`":;,$%+.?!
-					</string>
+					<string>/-*&amp;@(){}|[]&gt;&lt;\'`":;,$%+.?!</string>
 				</value>
 			</nameValuePair>
 		</configurationParameterSettings>
 		
 		<typeSystemDescription>
-			<types>
-				<typeDescription>
-					<name>org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation</name>
-					<description />
-					<supertypeName>uima.tt.TokenAnnotation</supertypeName>
-					<features>
-						<featureDescription>
-							<name>text</name>
-							<description></description>
-							<rangeTypeName>uima.cas.String</rangeTypeName>
-						</featureDescription>
-					</features>
-				</typeDescription>
-				<typeDescription>
-					<name>uima.tt.TokenAnnotation</name>
-					<description />
-					<supertypeName>uima.tcas.Annotation</supertypeName>
-				</typeDescription>
-			</types>
-		</typeSystemDescription>
+      <imports>
+        <import name="descriptors.OffsetToken"/>
+      </imports>
+    </typeSystemDescription>
 		<capabilities>
 			<capability>
-				<inputs />
+				<inputs/>
 				<outputs>
-					<type allAnnotatorFeatures="true">org.apache.uima.conceptMapper.support.tokenizer.TokenAnnotation</type>
-					<type allAnnotatorFeatures="true">uima.tt.TokenAnnotation</type>
 					<type allAnnotatorFeatures="true">uima.tcas.DocumentAnnotation</type>
-				</outputs>
-				<languagesSupported />
+					</outputs>
+				<languagesSupported/>
 			</capability>
 		</capabilities>
 		<operationalProperties>

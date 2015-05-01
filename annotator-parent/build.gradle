@@ -17,7 +17,7 @@ allprojects {
     repositories { mavenCentral() }
 
     dependencies {
-        compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.3.6'
+        compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.3'
 
         compile group: 'org.apache.uima', name: 'uimaj-core', version: '2.6.0'
         compile group: 'org.apache.uima', name: 'uimaj-document-annotation', version: '2.6.0'
@@ -93,7 +93,12 @@ project(':annotator-lex-normalize') {
 }
 
 project(':annotator-dictionary') {
-    dependencies { compile project(':annotator-token') }
+    dependencies { 
+        compile project(':type-system')  
+        compile project(':annotator-segment')
+        compile project(':annotator-sentence')
+        compile project(':annotator-token')
+    }
 }
 
 project(':annotator-dictionary-lingpipe') {

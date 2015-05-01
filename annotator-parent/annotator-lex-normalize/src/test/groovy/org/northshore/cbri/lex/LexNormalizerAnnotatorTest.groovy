@@ -68,7 +68,8 @@ class LexNormalizerAnnotatorTest {
             "in":null,
             "the":null,
             "SigmoiDp":"sigmoid",
-            "cooLon":"colon"
+            "cooLon":"colon",
+			"histerectymy":"hysterectomy"
             ]
         Collection<BaseToken> tokens = UIMAUtil.select(type:WordToken)
         assertEquals(10, tokens.size())

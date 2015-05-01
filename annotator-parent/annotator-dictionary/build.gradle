@@ -2,7 +2,11 @@ dependencies {
     compile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.2'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.29'
     
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.5.1'
+	
     compile group: 'de.tudarmstadt.ukp.dkpro.core', name: 'de.tudarmstadt.ukp.dkpro.core.dictionaryannotator-asl', version: '1.6.0'
     compile group: 'org.ahocorasick', name: 'ahocorasick', version: '0.2.2'
+	
+	compile fileTree(dir: 'lib', include: '*.jar')
 }
 

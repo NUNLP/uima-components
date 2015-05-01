@@ -104,7 +104,8 @@ public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
                     
                     Class typeClass = UIMAUtil.getIdentifiedAnnotationClass(phraseSem['type'])
                     UIMAUtil.create(type:typeClass, begin:beginToken.getBegin() ,
-                    end:endToken.getEnd(), polarity:1 , uncertainty:0,
+                    end:endToken.getEnd(), polarity:1 , uncertainty:0, 
+					sentenceID:currSentence.sentenceNumber,
                     ontologyConcepts:[
                         UIMAUtil.create(type:UmlsConcept, code:phraseSem['code'],
                         codingScheme:phraseSem['codingScheme'],
