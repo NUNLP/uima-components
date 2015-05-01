@@ -15,7 +15,7 @@ import org.apache.uima.resource.ResourceInitializationException
 import org.northshore.cbri.dsl.UIMAUtil
 
 @Log4j
-public class ConceptAnnotator extends JCasAnnotator_ImplBase {
+public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 	    
     public static final String PARAM_DICTIONARY_ID = 'dictionaryId'
     @ConfigurationParameter(name='dictionaryId', mandatory=false)

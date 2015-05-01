@@ -17,15 +17,12 @@ import org.apache.uima.jcas.JCas
 import org.apache.uima.resource.ExternalResourceDescription
 import org.junit.Before
 import org.junit.BeforeClass
-import org.junit.Ignore
 import org.junit.Test
 import org.northshore.cbri.dict.DictionaryModel.DictionaryEntry
 import org.northshore.cbri.dsl.UIMAUtil
 import org.northshore.cbri.token.TokenAnnotator
 
 import com.fasterxml.jackson.databind.ObjectMapper
-
-import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.DictionaryAnnotator
 
 @Log4j
 class ConceptMapperTest {
@@ -89,8 +86,8 @@ class ConceptMapperTest {
 		AnalysisEngine tokenizer = AnalysisEngineFactory.createEngine(tokenDesc)
 
 		AnalysisEngineDescription mapperDesc = AnalysisEngineFactory.createEngineDescription(
-			ConceptAnnotator,
-			ConceptAnnotator.PARAM_DICTIONARY_ID, 1)
+			DictionaryAnnotator,
+			DictionaryAnnotator.PARAM_DICTIONARY_ID, 1)
 		AnalysisEngine mapper = AnalysisEngineFactory.createEngine(mapperDesc)
 
 		// --------------------------------------------------------------------
