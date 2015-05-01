@@ -12,6 +12,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter
 import org.apache.uima.jcas.JCas
 import org.apache.uima.jcas.tcas.Annotation
 import org.apache.uima.resource.ResourceInitializationException
+import org.northshore.cbri.dict.DictionaryModel.DictionaryEntry
 import org.northshore.cbri.dsl.UIMAUtil
 import org.northshore.cbri.type.DictMatch
 
@@ -45,9 +46,8 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 				tokens << ann.coveredText
 			}
 			Map results = dict.findMatches(tokens as String[])
-			results.each { k, v ->
-				println "Key: $k, Value: $v"
-				UIMAUtil.create(type:DictMatch, canonical:v.canonical)
+			results.each { k, DictionaryEntry v ->
+				UIMAUtil.create(type:DictMatch, canonical:v.canonical, code:v.code, vocabulary:v.vocabulary)
 			}
 		}
     }
