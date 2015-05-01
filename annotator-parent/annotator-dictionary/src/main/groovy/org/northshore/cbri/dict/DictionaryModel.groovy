@@ -11,6 +11,12 @@ public class DictionaryModel {
 		Collection<String[]> variants = new ArrayList<>()
 		Map<String, String> attrs = new HashMap<>()
 	}
+	
+	static class LookupMatch {
+		Integer begin
+		Integer end
+		DictionaryEntry entry;
+	}
 		
 	private Map<String[], DictionaryEntry> entries = new HashMap<>()
 	private PhraseTree phrases = new PhraseTree()
@@ -28,15 +34,22 @@ public class DictionaryModel {
 		}
 	}
 		
-	public Map<Collection<Integer>, DictionaryEntry> findMatches(final String[] tokens) {
-		Map<Collection<Integer>, DictionaryEntry> matches = new HashMap<ArrayList<Integer>, DictionaryEntry>()
+	public Collection<LookupMatch> findMatches(final String[] tokens) {
+		Collection<LookupMatch> matches = new ArrayList<>()
+		
 		for (int i = 0; i < tokens.length; i++) {
 			String[] tokensToEnd = tokens[i, tokens.length - 1]
-			String[] longestMatch = phrases.getLongestMatch(tokensToEnd)
-			if (longestMatch != null) {
-				matches[Arrays.toString(longestMatch)] = entries.get(Arrays.toString(longestMatch))
+			Integer endMatchPosition = phrases.getLongestMatch(tokensToEnd)
+			if (endMatchPosition != null) {
+				String[] matchedTokens = Arrays.copyOfRange(tokensToEnd, 0, endMatchPosition)
+				matches << new LookupMatch(
+					begin:i,
+					end:(i+endMatchPosition),
+					entry:entries.get(Arrays.toString(matchedTokens))
+					)
 			}
 		}
+		
 		return matches;
 	}
 }

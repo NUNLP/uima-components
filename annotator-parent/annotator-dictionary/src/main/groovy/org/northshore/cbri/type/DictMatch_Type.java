@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.cas.TOP_Type;
 
 /** 
- * Updated by JCasGen Fri May 01 01:13:33 CDT 2015
+ * Updated by JCasGen Fri May 01 15:08:01 CDT 2015
  * @generated */
 public class DictMatch_Type extends TOP_Type {
   /** @generated 
@@ -47,39 +47,39 @@ public class DictMatch_Type extends TOP_Type {
   public final static boolean featOkTst = JCasRegistry.getFeatOkTst("org.northshore.cbri.type.DictMatch");
  
   /** @generated */
-  final Feature casFeat_tokens;
+  final Feature casFeat_matched;
   /** @generated */
-  final int     casFeatCode_tokens;
+  final int     casFeatCode_matched;
   /** @generated
    * @param addr low level Feature Structure reference
    * @return the feature value 
    */ 
-  public int getTokens(int addr) {
-        if (featOkTst && casFeat_tokens == null)
-      jcas.throwFeatMissing("tokens", "org.northshore.cbri.type.DictMatch");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_tokens);
+  public int getMatched(int addr) {
+        if (featOkTst && casFeat_matched == null)
+      jcas.throwFeatMissing("matched", "org.northshore.cbri.type.DictMatch");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_matched);
   }
   /** @generated
    * @param addr low level Feature Structure reference
    * @param v value to set 
    */    
-  public void setTokens(int addr, int v) {
-        if (featOkTst && casFeat_tokens == null)
-      jcas.throwFeatMissing("tokens", "org.northshore.cbri.type.DictMatch");
-    ll_cas.ll_setRefValue(addr, casFeatCode_tokens, v);}
+  public void setMatched(int addr, int v) {
+        if (featOkTst && casFeat_matched == null)
+      jcas.throwFeatMissing("matched", "org.northshore.cbri.type.DictMatch");
+    ll_cas.ll_setRefValue(addr, casFeatCode_matched, v);}
     
    /** @generated
    * @param addr low level Feature Structure reference
    * @param i index of item in the array
    * @return value at index i in the array 
    */
-  public int getTokens(int addr, int i) {
-        if (featOkTst && casFeat_tokens == null)
-      jcas.throwFeatMissing("tokens", "org.northshore.cbri.type.DictMatch");
+  public int getMatched(int addr, int i) {
+        if (featOkTst && casFeat_matched == null)
+      jcas.throwFeatMissing("matched", "org.northshore.cbri.type.DictMatch");
     if (lowLevelTypeChecks)
-      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokens), i, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_tokens), i);
-  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokens), i);
+      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_matched), i, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_matched), i);
+  return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_matched), i);
   }
    
   /** @generated
@@ -87,13 +87,13 @@ public class DictMatch_Type extends TOP_Type {
    * @param i index of item in the array
    * @param v value to set
    */ 
-  public void setTokens(int addr, int i, int v) {
-        if (featOkTst && casFeat_tokens == null)
-      jcas.throwFeatMissing("tokens", "org.northshore.cbri.type.DictMatch");
+  public void setMatched(int addr, int i, int v) {
+        if (featOkTst && casFeat_matched == null)
+      jcas.throwFeatMissing("matched", "org.northshore.cbri.type.DictMatch");
     if (lowLevelTypeChecks)
-      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokens), i, v, true);
-    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_tokens), i);
-    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokens), i, v);
+      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_matched), i, v, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_matched), i);
+    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_matched), i, v);
   }
  
  
@@ -205,8 +205,8 @@ public class DictMatch_Type extends TOP_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_tokens = jcas.getRequiredFeatureDE(casType, "tokens", "uima.cas.FSArray", featOkTst);
-    casFeatCode_tokens  = (null == casFeat_tokens) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_tokens).getCode();
+    casFeat_matched = jcas.getRequiredFeatureDE(casType, "matched", "uima.cas.FSArray", featOkTst);
+    casFeatCode_matched  = (null == casFeat_matched) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_matched).getCode();
 
  
     casFeat_canonical = jcas.getRequiredFeatureDE(casType, "canonical", "uima.cas.String", featOkTst);

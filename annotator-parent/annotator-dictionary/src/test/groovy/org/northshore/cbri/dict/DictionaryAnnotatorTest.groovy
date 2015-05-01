@@ -1,6 +1,7 @@
 package org.northshore.cbri.dict;
 
 import static org.junit.Assert.*
+import groovy.json.JsonBuilder
 import groovy.util.logging.Log4j
 import opennlp.tools.tokenize.TokenizerME
 import opennlp.tools.tokenize.TokenizerModel
@@ -19,6 +20,7 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
 import org.northshore.cbri.dict.DictionaryModel.DictionaryEntry
+import org.northshore.cbri.dict.DictionaryModel.LookupMatch
 import org.northshore.cbri.dsl.UIMAUtil
 import org.northshore.cbri.token.TokenAnnotator
 import org.northshore.cbri.type.DictMatch
@@ -29,18 +31,21 @@ import com.fasterxml.jackson.databind.ObjectMapper
 class DictionaryAnnotatorTest {
 	static TEST_TEXT = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
 	
+	static ObjectMapper mapper;
+		
 	TokenizerME tokenizer;
 	DictionaryModel model;
+	
 
 	@BeforeClass
 	public static void setupClass() {
 		BasicConfigurator.configure()
+		mapper = new ObjectMapper()
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		File dictFile = new File(this.class.getResource('/abstractionSchema/test-abstraction-schema.json').file)
-		ObjectMapper mapper = new ObjectMapper()
 		AbstractionSchema schema = mapper.readValue(dictFile, AbstractionSchema.class);
 		assert schema != null
 		
@@ -60,9 +65,9 @@ class DictionaryAnnotatorTest {
 		DictionaryEntry entry = this.model.get(['glioblastoma'] as String[])
 		assert entry != null
 		
-		Map<Collection<String>, DictionaryEntry> matches = this.model.findMatches(tokens)
+		Collection<LookupMatch> matches = this.model.findMatches(tokens)
 		assert matches.size() == 2
-		matches.each { k, v -> println "Match: ${k}" }
+//		matches.each { println "Match: ${new JsonBuilder(it).toString()}" }
 	}
 
 	@Test
@@ -88,10 +93,10 @@ class DictionaryAnnotatorTest {
 				TokenAnnotator.TOKEN_MODEL_KEY, tokenModelResDesc)
 		AnalysisEngine tokenizer = AnalysisEngineFactory.createEngine(tokenDesc)
 
-		AnalysisEngineDescription mapperDesc = AnalysisEngineFactory.createEngineDescription(
+		AnalysisEngineDescription dictDesc = AnalysisEngineFactory.createEngineDescription(
 			DictionaryAnnotator,
 			DictionaryAnnotator.PARAM_DICTIONARY_ID, 1)
-		AnalysisEngine mapper = AnalysisEngineFactory.createEngine(mapperDesc)
+		AnalysisEngine dict = AnalysisEngineFactory.createEngine(dictDesc)
 
 		// --------------------------------------------------------------------
 		// test
@@ -100,12 +105,15 @@ class DictionaryAnnotatorTest {
 		JCas jcas = JCasFactory.createJCas()
 		jcas.setDocumentText(TEST_TEXT)
 		UIMAUtil.JCas = jcas
-		UIMAUtil.create(type:Sentence, begin:0, end:TEST_TEXT.length()-1)
+		UIMAUtil.create(type:Sentence, begin:0, end:TEST_TEXT.size()-1)
 		
 		tokenizer.process(jcas)
-		mapper.process(jcas)
+		dict.process(jcas)
 
 		Collection<DictMatch> matches = UIMAUtil.select(type:DictMatch)
-		assert matches.size() == 2		
+		assert matches.size() == 2
+		matches.each { DictMatch m ->
+			println "Match found: ${m.matchedTokens}"
+		}
 	}
 }

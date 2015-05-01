@@ -17,7 +17,8 @@
  ******************************************************************************/
 package org.northshore.cbri.dict;
 
-import java.util.Arrays;
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 
 public class PhraseTree
 {
@@ -79,9 +80,9 @@ public class PhraseTree
      * 
      * @param matchText
      *            Text to match against, pre-tokenized
-     * @return Longest matching phrase stored in the tree, as token-array
+     * @return End index of longest matching phrase stored in the tree
      */
-    public String[] getLongestMatch(String[] matchText)
+    public Integer getLongestMatch(String[] matchText)
     {
         int i = 0;
 
@@ -98,13 +99,12 @@ public class PhraseTree
             PhraseTreeElement child = match.getChild(childToken);
             match = child;
         }
-
-        String[] matchedString = null;
-
+		
+        Integer endMatchPosition;
         if (isEndElement) {
-            matchedString = Arrays.copyOfRange(matchText, 0, i);
+			endMatchPosition = i
         }
-
-        return matchedString;
+		
+        return endMatchPosition;
     }
 }

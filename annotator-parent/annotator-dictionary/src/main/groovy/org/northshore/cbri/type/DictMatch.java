@@ -13,7 +13,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Fri May 01 01:13:33 CDT 2015
+ * Updated by JCasGen Fri May 01 15:08:01 CDT 2015
  * XML source: C:/WKT/git/Schorndorfer/uima-components/annotator-parent/annotator-dictionary/src/main/resources/descriptors/DictionaryTypeSystem.xml
  * @generated */
 public class DictMatch extends TOP {
@@ -67,47 +67,47 @@ public class DictMatch extends TOP {
  
     
   //*--------------*
-  //* Feature: tokens
+  //* Feature: matched
 
-  /** getter for tokens - gets 
+  /** getter for matched - gets 
    * @generated
    * @return value of the feature 
    */
-  public FSArray getTokens() {
-    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_tokens == null)
-      jcasType.jcas.throwFeatMissing("tokens", "org.northshore.cbri.type.DictMatch");
-    return (FSArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_tokens)));}
+  public FSArray getMatched() {
+    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_matched == null)
+      jcasType.jcas.throwFeatMissing("matched", "org.northshore.cbri.type.DictMatch");
+    return (FSArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_matched)));}
     
-  /** setter for tokens - sets  
+  /** setter for matched - sets  
    * @generated
    * @param v value to set into the feature 
    */
-  public void setTokens(FSArray v) {
-    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_tokens == null)
-      jcasType.jcas.throwFeatMissing("tokens", "org.northshore.cbri.type.DictMatch");
-    jcasType.ll_cas.ll_setRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_tokens, jcasType.ll_cas.ll_getFSRef(v));}    
+  public void setMatched(FSArray v) {
+    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_matched == null)
+      jcasType.jcas.throwFeatMissing("matched", "org.northshore.cbri.type.DictMatch");
+    jcasType.ll_cas.ll_setRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_matched, jcasType.ll_cas.ll_getFSRef(v));}    
     
-  /** indexed getter for tokens - gets an indexed value - 
+  /** indexed getter for matched - gets an indexed value - 
    * @generated
    * @param i index in the array to get
    * @return value of the element at index i 
    */
-  public TOP getTokens(int i) {
-    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_tokens == null)
-      jcasType.jcas.throwFeatMissing("tokens", "org.northshore.cbri.type.DictMatch");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_tokens), i);
-    return (TOP)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_tokens), i)));}
+  public TOP getMatched(int i) {
+    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_matched == null)
+      jcasType.jcas.throwFeatMissing("matched", "org.northshore.cbri.type.DictMatch");
+    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_matched), i);
+    return (TOP)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_matched), i)));}
 
-  /** indexed setter for tokens - sets an indexed value - 
+  /** indexed setter for matched - sets an indexed value - 
    * @generated
    * @param i index in the array to set
    * @param v value to set into the array 
    */
-  public void setTokens(int i, TOP v) { 
-    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_tokens == null)
-      jcasType.jcas.throwFeatMissing("tokens", "org.northshore.cbri.type.DictMatch");
-    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_tokens), i);
-    jcasType.ll_cas.ll_setRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_tokens), i, jcasType.ll_cas.ll_getFSRef(v));}
+  public void setMatched(int i, TOP v) { 
+    if (DictMatch_Type.featOkTst && ((DictMatch_Type)jcasType).casFeat_matched == null)
+      jcasType.jcas.throwFeatMissing("matched", "org.northshore.cbri.type.DictMatch");
+    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_matched), i);
+    jcasType.ll_cas.ll_setRefArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((DictMatch_Type)jcasType).casFeatCode_matched), i, jcasType.ll_cas.ll_getFSRef(v));}
    
     
   //*--------------*
