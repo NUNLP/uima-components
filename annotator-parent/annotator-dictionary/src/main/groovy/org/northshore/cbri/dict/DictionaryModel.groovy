@@ -1,7 +1,6 @@
 package org.northshore.cbri.dict;
 
 import groovy.util.logging.Log4j
-import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree
 
 @Log4j
 public class DictionaryModel {
@@ -29,8 +28,8 @@ public class DictionaryModel {
 		}
 	}
 		
-	public Map<Collection<String>, DictionaryEntry> findMatches(final String[] tokens) {
-		Map<String[], DictionaryEntry> matches = new HashMap<>()
+	public Map<Collection<Integer>, DictionaryEntry> findMatches(final String[] tokens) {
+		Map<Collection<Integer>, DictionaryEntry> matches = new HashMap<ArrayList<Integer>, DictionaryEntry>()
 		for (int i = 0; i < tokens.length; i++) {
 			String[] tokensToEnd = tokens[i, tokens.length - 1]
 			String[] longestMatch = phrases.getLongestMatch(tokensToEnd)
