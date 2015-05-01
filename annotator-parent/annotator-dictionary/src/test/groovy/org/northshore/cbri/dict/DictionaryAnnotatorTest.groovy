@@ -25,7 +25,7 @@ import org.northshore.cbri.token.TokenAnnotator
 import com.fasterxml.jackson.databind.ObjectMapper
 
 @Log4j
-class ConceptMapperTest {
+class DictionaryAnnotatorTest {
 	static TEST_TEXT = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
 	
 	TokenizerME tokenizer;
