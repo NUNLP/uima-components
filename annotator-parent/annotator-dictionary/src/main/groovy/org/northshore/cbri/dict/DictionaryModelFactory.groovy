@@ -2,19 +2,25 @@ package org.northshore.cbri.dict
 
 import opennlp.tools.tokenize.TokenizerME
 import opennlp.tools.util.Span
-import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree
 
 class DictionaryModelFactory {
-	
-	private PhraseTree phrases
-	private Map<List<String>, Map<String, String>> phraseSems
-
-	
-	static public DictionaryModel make(final File umlsDictFile, TokenizerME tokenizer) {
 		
+	/**
+	 * 
+	 * @param umlsDictFile
+	 * @param tokenizer
+	 * @return
+	 */
+	static public DictionaryModel make(final File umlsDictFile, TokenizerME tokenizer) {
 		return new DictionaryModel()
 	}
 		
+	/**
+	 * 
+	 * @param schema
+	 * @param tokenizer
+	 * @return
+	 */
 	static public DictionaryModel make(AbstractionSchema schema, TokenizerME tokenizer) {
 		DictionaryModel model = new DictionaryModel()
 		DictionaryModel.DictionaryEntry entry;		
@@ -31,6 +37,12 @@ class DictionaryModelFactory {
 		return model
 	}
 	
+	/**
+	 * 
+	 * @param phrase
+	 * @param tokenizer
+	 * @return
+	 */
 	static public String[] tokenize(String phrase, TokenizerME tokenizer) {
 		Collection<String> tokens = new ArrayList<>()
 		Span[] tokenSpans = tokenizer.tokenizePos(phrase)

@@ -80,9 +80,12 @@ class DictionaryAnnotatorTest {
 		// --------------------------------------------------------------------
 		// external resources
 		// --------------------------------------------------------------------
-			
+
 		ExternalResourceDescription tokenModelResDesc = ExternalResourceFactory.createExternalResourceDescription(
 			TokenizerModelResourceImpl, "file:models/en-token.bin");
+
+		ExternalResourceDescription dictModelResDesc = ExternalResourceFactory.createExternalResourceDescription(
+			DictionaryResource, "file:abstractionSchema/test-abstraction-schema.json");
 			
 		// --------------------------------------------------------------------
 		// analysis engines
@@ -95,7 +98,8 @@ class DictionaryAnnotatorTest {
 
 		AnalysisEngineDescription dictDesc = AnalysisEngineFactory.createEngineDescription(
 			DictionaryAnnotator,
-			DictionaryAnnotator.PARAM_DICTIONARY_ID, 1)
+			DictionaryAnnotator.PARAM_DICTIONARY_ID, 1,
+			)
 		AnalysisEngine dict = AnalysisEngineFactory.createEngine(dictDesc)
 
 		// --------------------------------------------------------------------

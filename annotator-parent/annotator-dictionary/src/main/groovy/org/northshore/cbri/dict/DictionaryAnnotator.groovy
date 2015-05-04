@@ -9,6 +9,7 @@ import org.apache.uima.UimaContext
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase
 import org.apache.uima.fit.descriptor.ConfigurationParameter
+import org.apache.uima.fit.descriptor.ExternalResource
 import org.apache.uima.jcas.JCas
 import org.apache.uima.jcas.cas.FSArray
 import org.apache.uima.jcas.tcas.Annotation
@@ -25,7 +26,9 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 			org.apache.uima.fit.util.JCasUtil.select(delegate.matched, Annotation))
 		}
 		DictMatch.metaClass.setMatchedTokens = { anns ->
-			if (anns == null) { return; }
+			if (anns == null) {
+				return;
+			}
 			FSArray array = new FSArray(jcas, anns.size())
 			int i = 0
 			anns.each {
@@ -35,26 +38,30 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 			delegate.matched = array
 		}
 	}
-	    
-    public static final String PARAM_DICTIONARY_ID = 'dictionaryId'
-    @ConfigurationParameter(name='dictionaryId', mandatory=false)
-    private Integer dictionaryId
 
-    @Override
-    public void initialize(UimaContext aContext) throws ResourceInitializationException {
-        super.initialize(aContext)
-    }
+//	final static String DIC_RESROURCE_KEY = "dictResource";
+//	@ExternalResource(key = "")
+//	private DictionaryResource dictResource;
 
-    @Override
-    public void process(JCas jcas) throws AnalysisEngineProcessException
-    {
+
+	public static final String PARAM_DICTIONARY_ID = 'dictionaryId'
+	@ConfigurationParameter(name='dictionaryId', mandatory=false)
+	private Integer dictionaryId
+
+	@Override
+	public void initialize(UimaContext aContext) throws ResourceInitializationException {
+		super.initialize(aContext)
+	}
+
+	@Override
+	public void process(JCas jcas) throws AnalysisEngineProcessException {
 		logger.info "Loading dictionary: ${dictionaryId}"
 		DictionaryModel dict = DictionaryModelPool.get(dictionaryId)
 		if (dict == null) {
 			logger.warn "No dictionary available with id: ${dictionaryId}"
 			return;
 		}
-		
+
 		UIMAUtil.jcas = jcas
 		select(type:Sentence).each { Sentence sent ->
 			Collection<Annotation> anns = select(type:BaseToken, filter:coveredBy(sent))
@@ -68,14 +75,14 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 				for (int i = m.begin; i < m.end; i++) {
 					matched << anns.get(i)
 				}
-				UIMAUtil.create(type:DictMatch, 
-					canonical:m.entry.canonical, 
-					code:m.entry.code, 
-					vocabulary:m.entry.vocabulary,
-					container:sent,
-					matchedTokens:matched
-					)
+				UIMAUtil.create(type:DictMatch,
+				canonical:m.entry.canonical,
+				code:m.entry.code,
+				vocabulary:m.entry.vocabulary,
+				container:sent,
+				matchedTokens:matched
+				)
 			}
 		}
-    }
+	}
 }
