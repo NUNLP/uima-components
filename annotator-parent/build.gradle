@@ -48,7 +48,6 @@ project(':') {
         compile project(':annotator-lex-normalize')
         compile project(':annotator-time')
         compile project(':annotator-dictionary')
-        compile project(':annotator-dictionary-lingpipe')
         compile project(':annotator-conceptmapper')
     }
 }
@@ -99,10 +98,6 @@ project(':annotator-dictionary') {
         compile project(':annotator-sentence')
         compile project(':annotator-token')
     }
-}
-
-project(':annotator-dictionary-lingpipe') {
-    dependencies { compile project(':annotator-dictionary') }
 }
 
 project(':annotator-conceptmapper') {

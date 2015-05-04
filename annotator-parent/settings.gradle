@@ -11,6 +11,4 @@ include 'type-system',
         'annotator-chunk',
         'annotator-lex-normalize',
         'annotator-dictionary',
-        'annotator-time',
-        'annotator-dictionary-lingpipe'
-
+        'annotator-time'

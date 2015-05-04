@@ -14,7 +14,6 @@
 	<classpathentry kind="src" path="/annotator-lex-normalize" exported="true"/>
 	<classpathentry kind="src" path="/annotator-time" exported="true"/>
 	<classpathentry kind="src" path="/annotator-dictionary" exported="true"/>
-	<classpathentry kind="src" path="/annotator-dictionary-lingpipe" exported="true"/>
 	<classpathentry kind="src" path="/annotator-conceptmapper" exported="true"/>
 	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.4.3/8722c4f1d3657f989d3d24e8373f8cbbb6f44d92/groovy-all-2.4.3-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.4.3/472f5124c90a551d7ac7ffa39a4a3ba36ac4586a/groovy-all-2.4.3.jar" exported="true"/>
 	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-core/2.6.0/76a53793e18bb632fef87d21838e78fa8fbaeee0/uimaj-core-2.6.0-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-core/2.6.0/15b291e0f072154a3c9a14e4f9de5a95e7e7869f/uimaj-core-2.6.0.jar" exported="true"/>

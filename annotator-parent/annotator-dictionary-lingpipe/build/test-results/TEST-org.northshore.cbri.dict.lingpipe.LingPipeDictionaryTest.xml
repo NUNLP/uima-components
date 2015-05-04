@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.northshore.cbri.dict.lingpipe.LingPipeDictionaryTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2015-02-12T00:40:32" hostname="r1001-lt-100-f" time="0.835">
+  <properties/>
+  <testcase name="approxDictionaryTest" classname="org.northshore.cbri.dict.lingpipe.LingPipeDictionaryTest" time="0.805"/>
+  <testcase name="exactDictionaryTest" classname="org.northshore.cbri.dict.lingpipe.LingPipeDictionaryTest" time="0.02"/>
+  <testcase name="tokenizerTest" classname="org.northshore.cbri.dict.lingpipe.LingPipeDictionaryTest" time="0.01"/>
+  <system-out><![CDATA[Dictionary: [adenoma:C0206677 1.0, hyperplastic polyp:C0333983 1.0, sigmoid colon:C0227391 1.0, tubular adenoma:C1112503 1.0]
+
+ Matched Phrase       Dict Entry   Distance
+ Sigmoid colon:         C0227391        2.0
+Hyperplastic polyp.         C0333983        2.0
+Tubular adenoma.         C1112503        2.0
+Tubular adenoma         C1112503        1.0
+   Sigmod colon         C0227391        2.0
+  Sigmoid colon         C0227391        1.0
+Hyperplastic polyp         C0333983        1.0
+Hyperplystic polyp         C0333983        2.0
+       adenoma.         C0206677        1.0
+       adinoma.         C0206677        2.0
+        adenoma         C0206677        0.0
+        adinoma         C0206677        1.0
+
+
+phrase=|Sigmoid colon| start=185 end=198 type=C0227391 score=1.0
+phrase=|Hyperplastic polyp| start=207 end=225 type=C0333983 score=1.0
+phrase=|Tubular adenoma| start=234 end=249 type=C1112503 score=1.0
+phrase=|adenoma| start=242 end=249 type=C0206677 score=1.0
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
