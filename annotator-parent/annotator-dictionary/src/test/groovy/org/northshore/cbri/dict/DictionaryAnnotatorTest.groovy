@@ -28,9 +28,7 @@ import org.northshore.cbri.type.DictMatch
 import com.fasterxml.jackson.databind.ObjectMapper
 
 @Log4j
-class DictionaryAnnotatorTest {
-	static TEST_TEXT = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
-	
+class DictionaryAnnotatorTest {	
 	static ObjectMapper mapper;
 		
 	TokenizerME tokenizer;
@@ -52,26 +50,30 @@ class DictionaryAnnotatorTest {
 		this.tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
 		assert tokenizer != null
 		
-		this.model = DictionaryModelFactory.make(schema, tokenizer)
+		this.model = DictionaryModelFactory.make(schema, tokenizer, true)
 		assert model != null
 	}
 	
 	@Test
-	public void testDictModel() {		
-		String[] tokens = DictionaryModelFactory.tokenize(TEST_TEXT,
-			tokenizer)
+	public void testDictModel() {
+		String text = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
+		
+		String[] tokens = DictionaryModelFactory.tokenize(text,
+			tokenizer, true)
 		assert tokens.length == 24
 		
 		DictionaryEntry entry = this.model.get(['glioblastoma'] as String[])
 		assert entry != null
 		
 		Collection<LookupMatch> matches = this.model.findMatches(tokens)
-		assert matches.size() == 2
-//		matches.each { println "Match: ${new JsonBuilder(it).toString()}" }
+		matches.each { println "Match: ${new JsonBuilder(it).toString()}" }
+		assert matches.size() == 3
 	}
 
 	@Test
 	public void testUIMAPipeline() {
+		String text = "The patient has a diagnosis of Glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
+		
 		// --------------------------------------------------------------------
 		// load dictionary
 		// --------------------------------------------------------------------
@@ -107,17 +109,17 @@ class DictionaryAnnotatorTest {
 		// --------------------------------------------------------------------
 		
 		JCas jcas = JCasFactory.createJCas()
-		jcas.setDocumentText(TEST_TEXT)
+		jcas.setDocumentText(text)
 		UIMAUtil.JCas = jcas
-		UIMAUtil.create(type:Sentence, begin:0, end:TEST_TEXT.size()-1)
+		UIMAUtil.create(type:Sentence, begin:0, end:text.size()-1)
 		
 		tokenizer.process(jcas)
 		dict.process(jcas)
 
 		Collection<DictMatch> matches = UIMAUtil.select(type:DictMatch)
-		assert matches.size() == 2
 		matches.each { DictMatch m ->
 			println "Match found: ${m.matchedTokens}"
 		}
+		assert matches.size() == 3
 	}
 }

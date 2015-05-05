@@ -4,6 +4,8 @@ import groovy.util.logging.Log4j
 
 @Log4j
 public class DictionaryModel {
+	Boolean PARAM_CASE_INSENSITIVE;
+	
 	static class DictionaryEntry {
 		String vocabulary
 		String code
@@ -39,6 +41,11 @@ public class DictionaryModel {
 		
 		for (int i = 0; i < tokens.length; i++) {
 			String[] tokensToEnd = tokens[i, tokens.length - 1]
+			if (PARAM_CASE_INSENSITIVE) {
+				tokensToEnd.eachWithIndex { token, idx ->
+					tokensToEnd[idx] = token.toLowerCase()
+				}
+			}
 			Integer endMatchPosition = phrases.getLongestMatch(tokensToEnd)
 			if (endMatchPosition != null) {
 				String[] matchedTokens = Arrays.copyOfRange(tokensToEnd, 0, endMatchPosition)

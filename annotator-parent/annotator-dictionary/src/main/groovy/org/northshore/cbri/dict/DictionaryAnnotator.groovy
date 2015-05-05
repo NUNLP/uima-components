@@ -9,7 +9,6 @@ import org.apache.uima.UimaContext
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase
 import org.apache.uima.fit.descriptor.ConfigurationParameter
-import org.apache.uima.fit.descriptor.ExternalResource
 import org.apache.uima.jcas.JCas
 import org.apache.uima.jcas.cas.FSArray
 import org.apache.uima.jcas.tcas.Annotation
@@ -42,8 +41,7 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 //	final static String DIC_RESROURCE_KEY = "dictResource";
 //	@ExternalResource(key = "")
 //	private DictionaryResource dictResource;
-
-
+	
 	public static final String PARAM_DICTIONARY_ID = 'dictionaryId'
 	@ConfigurationParameter(name='dictionaryId', mandatory=false)
 	private Integer dictionaryId
