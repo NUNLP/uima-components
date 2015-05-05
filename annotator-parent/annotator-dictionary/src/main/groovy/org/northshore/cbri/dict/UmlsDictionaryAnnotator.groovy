@@ -23,8 +23,6 @@ import org.apache.uima.resource.ResourceAccessException
 import org.apache.uima.resource.ResourceInitializationException
 import org.northshore.cbri.dsl.UIMAUtil
 
-import de.tudarmstadt.ukp.dkpro.core.dictionaryannotator.PhraseTree
-
 @Log4j
 public class UmlsDictionaryAnnotator extends JCasAnnotator_ImplBase {
     

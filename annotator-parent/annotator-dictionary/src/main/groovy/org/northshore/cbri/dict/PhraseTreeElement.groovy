@@ -17,31 +17,21 @@
  ******************************************************************************/
 package org.northshore.cbri.dict;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.wcohen.ss.AbstractStringDistance
 
-public class PhraseTreeElement
-{
-	private String word;
+public class PhraseTreeElement {
+	String word;
 
-	private boolean endElement;
+	boolean endElement;
 
-	private Map<String, PhraseTreeElement> children;
+	Map<String, PhraseTreeElement> children;
 
-	public PhraseTreeElement(String aWord)
-	{
+	public PhraseTreeElement(String aWord) {
 		word = aWord;
-
 		children = new HashMap<String, PhraseTreeElement>();
 	}
-
-	public String getWord()
-	{
-		return word;
-	}
-
-	public PhraseTreeElement addChild(String aWord)
-	{
+	
+	public PhraseTreeElement addChild(String aWord) {
 		// do not add if it exists
 		PhraseTreeElement child = getChild(aWord);
 
@@ -53,18 +43,24 @@ public class PhraseTreeElement
 		return child;
 	}
 
-	public PhraseTreeElement getChild(String aWord)
-	{
+	public PhraseTreeElement getChild(String aWord) {
 		return children.get(aWord);
 	}
 
-	public boolean isEndElement()
-	{
+	public boolean isEndElement() {
 		return endElement;
 	}
 
-	public void setEndElement(boolean aEndElement)
-	{
+	public void setEndElement(boolean aEndElement) {
 		endElement = aEndElement;
+	}
+
+	public Collection<PhraseTreeElement> getApproximateMatches(String aWord, AbstractStringDistance dist, Double threshhold) {
+		Collection<PhraseTreeElement> matches = new ArrayList<>()
+		children.each { String key, PhraseTreeElement value ->
+			println "Score: <$aWord, $key>: ${dist.score(aWord, key)}"
+			if (dist.score(aWord, key) > threshhold) { matches << value }
+		}
+		return matches
 	}
 }

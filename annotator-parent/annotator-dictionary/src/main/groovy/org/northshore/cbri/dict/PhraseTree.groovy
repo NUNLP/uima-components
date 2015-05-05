@@ -17,8 +17,7 @@
  ******************************************************************************/
 package org.northshore.cbri.dict;
 
-import groovy.transform.EqualsAndHashCode
-import groovy.transform.ToString
+import com.wcohen.ss.AbstractStringDistance
 
 public class PhraseTree
 {
@@ -107,4 +106,12 @@ public class PhraseTree
 		
         return endMatchPosition;
     }
+	
+	public Collection<PhraseTreeElement> getApproximateMatches(String[] matchText, AbstractStringDistance dist, Double threshhold) {
+		Collection<PhraseTreeElement> matches = new ArrayList<>()
+		root.getApproximateMatches(matchText[0], dist, threshhold).each { PhraseTreeElement pte ->
+			matches << pte
+		}
+		return matches
+	}
 }
