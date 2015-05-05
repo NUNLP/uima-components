@@ -1,17 +1,18 @@
-package org.northshore.cbri.dict.phrase
+package org.northshore.cbri.dict
 
 import org.apache.uima.resource.DataResource
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.SharedResourceObject;
+import org.northshore.cbri.dict.phrase.PhraseDictionaryModel;
 
 class DictionaryResource implements SharedResourceObject {
 	
-	DictionaryModel model;
+	PhraseDictionaryModel model;
 
 	@Override
 	public void load(DataResource aData) throws ResourceInitializationException {
 
 	}
 
-	DictionaryModel getModel() { return model }
+	PhraseDictionaryModel getModel() { return model }
 }

@@ -10,9 +10,8 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
 import org.northshore.cbri.dict.AbstractionSchema
-import org.northshore.cbri.dict.trie.DictionaryModelFactory
-import org.northshore.cbri.dict.trie.DictionaryModel.DictionaryEntry
-import org.northshore.cbri.dict.trie.DictionaryModel.LookupMatch
+import org.northshore.cbri.dict.DictionaryModelFactory
+import org.northshore.cbri.dict.LookupMatch
 
 import com.fasterxml.jackson.databind.ObjectMapper
 
@@ -42,7 +41,8 @@ class DictionaryModelTest {
 		TokenizerME tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
 		assert tokenizer != null
 		
-		DictionaryModel model = DictionaryModelFactory.make(schema, tokenizer, false)
+		TrieDictionaryModel model = DictionaryModelFactory.make(DictionaryModelFactory.DICT_MODEL_TYPE_TRIE, 
+			schema, tokenizer, false)
 		assert model != null
 		
 		String[] tokens = DictionaryModelFactory.tokenize(text, tokenizer)
@@ -63,7 +63,8 @@ class DictionaryModelTest {
 		TokenizerME tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
 		assert tokenizer != null
 		
-		DictionaryModel model = DictionaryModelFactory.make(schema, tokenizer, true)
+		TrieDictionaryModel model = DictionaryModelFactory.make(DictionaryModelFactory.DICT_MODEL_TYPE_TRIE, 
+			schema, tokenizer, true)
 		assert model != null
 		
 		String[] tokens = DictionaryModelFactory.tokenize(text, tokenizer)

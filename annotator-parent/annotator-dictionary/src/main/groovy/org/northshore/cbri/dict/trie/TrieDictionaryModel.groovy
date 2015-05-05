@@ -4,37 +4,28 @@ import groovy.util.logging.Log4j
 
 import org.ahocorasick.trie.Emit
 import org.ahocorasick.trie.Trie
+import org.northshore.cbri.dict.DictionaryEntry
+import org.northshore.cbri.dict.DictionaryModel
+import org.northshore.cbri.dict.LookupMatch
 
 @Log4j
-public class DictionaryModel {
-
-	static class DictionaryEntry {
-		String vocabulary
-		String code
-		String[] canonical
-		Collection<String[]> variants = new ArrayList<>()
-		Map<String, String> attrs = new HashMap<>()
-	}
-
-	static class LookupMatch {
-		Integer begin
-		Integer end
-		DictionaryEntry entry;
-	}
+public class TrieDictionaryModel implements DictionaryModel {
 
 	Trie trie;
 	Map<String[], DictionaryEntry> entries;
 	
-	public DictionaryModel(Boolean caseInsensitive) {
+	public TrieDictionaryModel(Boolean caseInsensitive) {
 		if (caseInsensitive) { trie = new Trie().caseInsensitive(); }
 		else { trie = new Trie() }
 		entries = new HashMap<>()
 	}
 	
+	@Override
 	public DictionaryEntry get(String[] tokens) {
 		return this.entries.get(join(tokens))
 	}
 
+	@Override
 	public void add(final DictionaryEntry entry) {
 		this.trie.addKeyword(join(entry.canonical))
 		this.entries.put(join(entry.canonical), entry)
@@ -46,6 +37,7 @@ public class DictionaryModel {
 		}
 	}
 	
+	@Override
 	public Collection<LookupMatch> findMatches(final String[] tokens) {
 		Collection<LookupMatch> matches = new ArrayList<>()
 		

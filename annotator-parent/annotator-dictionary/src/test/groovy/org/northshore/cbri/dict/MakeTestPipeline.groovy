@@ -4,7 +4,6 @@ import opennlp.tools.tokenize.TokenizerME
 import opennlp.tools.tokenize.TokenizerModel
 import opennlp.uima.tokenize.TokenizerModelResourceImpl
 
-import org.apache.uima.analysis_engine.AnalysisEngine
 import org.apache.uima.analysis_engine.AnalysisEngineDescription
 import org.apache.uima.fit.factory.AggregateBuilder
 import org.apache.uima.fit.factory.AnalysisEngineFactory
@@ -14,13 +13,10 @@ import org.apache.uima.resource.ExternalResourceDescription
 import org.apache.uima.resource.ResourceInitializationException
 import org.apache.uima.resource.metadata.TypeSystemDescription
 import org.apache.uima.util.InvalidXMLException
-import org.northshore.cbri.dict.phrase.DictionaryModel;
-import org.northshore.cbri.dict.phrase.DictionaryModelFactory;
-import org.northshore.cbri.dict.phrase.DictionaryModelPool;
+import org.northshore.cbri.dict.phrase.PhraseDictionaryModel
 import org.northshore.cbri.dsl.GroovyAnnotator
 import org.northshore.cbri.sent.SentenceDetector
 import org.northshore.cbri.token.TokenAnnotator
-import org.northshore.cbri.dict.DictionaryAnnotator;
 import org.xml.sax.SAXException
 
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -86,7 +82,7 @@ class MakeTestPipeline {
 			new File(this.class.getResource('/abstractionSchema/test-abstraction-schema.json').file),
 			AbstractionSchema.class);
 		
-		DictionaryModel model = DictionaryModelFactory.make(schema, tokenizer)
+		PhraseDictionaryModel model = DictionaryModelFactory.make(schema, tokenizer)
 		DictionaryModelPool.put(1, model)
 
 		AggregateBuilder builder = makePipeline()

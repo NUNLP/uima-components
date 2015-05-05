@@ -19,16 +19,10 @@ import org.apache.uima.resource.ExternalResourceDescription
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-import org.northshore.cbri.dict.phrase.DictionaryModel.DictionaryEntry
-import org.northshore.cbri.dict.phrase.DictionaryModel.LookupMatch
-import org.northshore.cbri.dict.phrase.DictionaryModel;
-import org.northshore.cbri.dict.phrase.DictionaryModelFactory;
-import org.northshore.cbri.dict.phrase.DictionaryModelPool;
-import org.northshore.cbri.dict.phrase.DictionaryResource;
+import org.northshore.cbri.dict.phrase.PhraseDictionaryModel
 import org.northshore.cbri.dsl.UIMAUtil
 import org.northshore.cbri.token.TokenAnnotator
 import org.northshore.cbri.type.DictMatch
-import org.northshore.cbri.dict.DictionaryAnnotator;
 
 import com.fasterxml.jackson.databind.ObjectMapper
 
@@ -55,7 +49,7 @@ class DictionaryAnnotatorTest {
 		this.tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
 		assert tokenizer != null
 		
-		this.model = DictionaryModelFactory.make(schema, tokenizer, true)
+		this.model = DictionaryModelFactory.make(DictionaryModelFactory.DICT_MODEL_TYPE_PHRASE, schema, tokenizer, true)
 		assert model != null
 	}
 	
@@ -63,8 +57,10 @@ class DictionaryAnnotatorTest {
 	public void testDictModel() {
 		String text = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
 		
-		String[] tokens = DictionaryModelFactory.tokenize(text,
-			tokenizer, true)
+		String[] tokens = DictionaryModelFactory.tokenize(text, tokenizer)
+		tokens.eachWithIndex { tok, i ->
+			tokens[i] = tok.toLowerCase()
+		}
 		assert tokens.length == 24
 		
 		DictionaryEntry entry = this.model.get(['glioblastoma'] as String[])
