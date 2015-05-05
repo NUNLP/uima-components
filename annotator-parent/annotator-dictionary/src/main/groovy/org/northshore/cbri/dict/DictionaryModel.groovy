@@ -26,8 +26,8 @@ public class DictionaryModel {
 	}
 
 	public void add(final DictionaryEntry entry) {
-		this.entries.put(entry.canonical, entry)
 		this.phrases.addPhrase(entry.canonical)
+		this.entries.put(Arrays.toString(entry.canonical), entry)
 		entry.variants.each {
 			this.phrases.addPhrase(it)
 			this.entries.put(Arrays.toString(it), entry)
