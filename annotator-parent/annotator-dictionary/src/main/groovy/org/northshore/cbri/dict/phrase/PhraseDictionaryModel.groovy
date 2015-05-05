@@ -15,21 +15,21 @@ public class PhraseDictionaryModel implements DictionaryModel {
 	private Boolean caseInsensitive;
 
 	public PhraseDictionaryModel(Boolean caseInsensitive) {
-		caseInsensitive = caseInsensitive;
+		this.caseInsensitive = caseInsensitive;
 	}
 	
 	@Override
 	public DictionaryEntry get(String[] tokens) {
-		return this.entries.get(Arrays.toString(tokens))
+		return this.entries.get(this.join(tokens))
 	}
 
 	@Override
 	public void add(final DictionaryEntry entry) {
-		this.phrases.addPhrase(entry.canonical)
-		this.entries.put(Arrays.toString(entry.canonical), entry)
+		this.phrases.addPhrase(this.transformArray(entry.canonical))
+		this.entries.put(this.join(entry.canonical), entry)
 		entry.variants.each {
-			this.phrases.addPhrase(it)
-			this.entries.put(Arrays.toString(it), entry)
+			this.phrases.addPhrase(this.transformArray(it))
+			this.entries.put(this.join(it), entry)
 		}
 	}
 		
@@ -39,22 +39,41 @@ public class PhraseDictionaryModel implements DictionaryModel {
 		
 		for (int i = 0; i < tokens.length; i++) {
 			String[] tokensToEnd = tokens[i, tokens.length - 1]
-			if (caseInsensitive) {
-				tokensToEnd.eachWithIndex { token, idx ->
-					tokensToEnd[idx] = token.toLowerCase()
-				}
-			}
+			tokensToEnd = transformArray(tokensToEnd)
 			Integer endMatchPosition = phrases.getLongestMatch(tokensToEnd)
 			if (endMatchPosition != null) {
 				String[] matchedTokens = Arrays.copyOfRange(tokensToEnd, 0, endMatchPosition)
 				matches << new LookupMatch(
 					begin:i,
 					end:(i+endMatchPosition),
-					entry:entries.get(Arrays.toString(matchedTokens))
+					entry:entries.get(this.join(matchedTokens))
 					)
 			}
 		}
 		
 		return matches;
 	}
+
+	private String[] transformArray(String[] tokens) {
+		tokens.eachWithIndex { tok, i ->
+			tokens[i] = transform(tok)
+		}
+		return tokens
+	}
+
+	private String transform(String token) {
+		if (caseInsensitive) {
+			token = token.toLowerCase()
+		}
+		return token
+	}
+	
+	private String join(String[] tokens, String sep=' ') {
+		StringJoiner joiner = new StringJoiner(sep)
+		tokens.each {
+			joiner.add(this.transform(it))
+		}
+		return joiner.toString()
+	}
+
 }

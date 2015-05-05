@@ -12,7 +12,6 @@ import org.apache.uima.jcas.JCas
 import org.apache.uima.jcas.cas.FSArray
 import org.apache.uima.jcas.tcas.Annotation
 import org.apache.uima.resource.ResourceInitializationException
-import org.northshore.cbri.dict.phrase.PhraseDictionaryModel
 import org.northshore.cbri.dsl.UIMAUtil
 import org.northshore.cbri.type.DictMatch
 
@@ -57,7 +56,7 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 	@Override
 	public void process(JCas jcas) throws AnalysisEngineProcessException {
 		logger.info "Loading dictionary: ${dictionaryId}"
-		PhraseDictionaryModel dict = DictionaryModelPool.get(dictionaryId)
+		DictionaryModel dict = DictionaryModelPool.get(dictionaryId)
 		if (dict == null) {
 			logger.warn "No dictionary available with id: ${dictionaryId}"
 			return;

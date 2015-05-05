@@ -29,11 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 @Log4j
 class DictionaryAnnotatorTest {	
 	static ObjectMapper mapper;
-		
-	TokenizerME tokenizer;
-	DictionaryModel model;
 	
-
 	@BeforeClass
 	public static void setupClass() {
 		BasicConfigurator.configure()
@@ -42,20 +38,46 @@ class DictionaryAnnotatorTest {
 
 	@Before
 	public void setUp() throws Exception {
+	}
+	
+	@Test
+	public void testPhraseDictModel() {
+		String text = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
+		
 		File dictFile = new File(this.class.getResource('/abstractionSchema/test-abstraction-schema.json').file)
 		AbstractionSchema schema = mapper.readValue(dictFile, AbstractionSchema.class);
 		assert schema != null
 		
-		this.tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
+		TokenizerME tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
 		assert tokenizer != null
 		
-		this.model = DictionaryModelFactory.make(DictionaryModelFactory.DICT_MODEL_TYPE_PHRASE, schema, tokenizer, true)
+		DictionaryModel model = DictionaryModelFactory.make(DictionaryModelFactory.DICT_MODEL_TYPE_PHRASE, schema, tokenizer, true)
 		assert model != null
+		
+		DictionaryEntry entry = model.get(['glioblastoma'] as String[])
+		assert entry != null
+		
+		String[] tokens = DictionaryModelFactory.tokenize(text, tokenizer)
+		assert tokens.length == 24
+				
+		Collection<LookupMatch> matches = model.findMatches(tokens)
+		matches.each { println "Match: ${new JsonBuilder(it).toString()}" }
+		assert matches.size() == 3
 	}
-	
+
 	@Test
-	public void testDictModel() {
+	public void testTrieDictModel() {
 		String text = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
+		
+		File dictFile = new File(this.class.getResource('/abstractionSchema/test-abstraction-schema.json').file)
+		AbstractionSchema schema = mapper.readValue(dictFile, AbstractionSchema.class);
+		assert schema != null
+		
+		TokenizerME tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
+		assert tokenizer != null
+		
+		DictionaryModel model = DictionaryModelFactory.make(DictionaryModelFactory.DICT_MODEL_TYPE_TRIE, schema, tokenizer, true)
+		assert model != null
 		
 		String[] tokens = DictionaryModelFactory.tokenize(text, tokenizer)
 		tokens.eachWithIndex { tok, i ->
@@ -63,33 +85,40 @@ class DictionaryAnnotatorTest {
 		}
 		assert tokens.length == 24
 		
-		DictionaryEntry entry = this.model.get(['glioblastoma'] as String[])
+		DictionaryEntry entry = model.get(['glioblastoma'] as String[])
 		assert entry != null
 		
-		Collection<LookupMatch> matches = this.model.findMatches(tokens)
+		Collection<LookupMatch> matches = model.findMatches(tokens)
 		matches.each { println "Match: ${new JsonBuilder(it).toString()}" }
 		assert matches.size() == 3
 	}
-
+	
 	@Test
 	public void testUIMAPipeline() {
-		String text = "The patient has a diagnosis of Glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
+		String text = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
 		
 		// --------------------------------------------------------------------
-		// load dictionary
+		// load dictionary model
 		// --------------------------------------------------------------------
-		DictionaryModelPool.put(1, this.model)
+		File dictFile = new File(this.class.getResource('/abstractionSchema/test-abstraction-schema.json').file)
+		AbstractionSchema schema = mapper.readValue(dictFile, AbstractionSchema.class);
+		assert schema != null
+		
+		TokenizerME tokenizerME = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
+		assert tokenizerME != null
+		
+		DictionaryModel model = DictionaryModelFactory.make(DictionaryModelFactory.DICT_MODEL_TYPE_PHRASE, schema, tokenizerME, true)
+		assert model != null
+
+		DictionaryModelPool.put(1, model)
 
 		// --------------------------------------------------------------------
 		// external resources
 		// --------------------------------------------------------------------
 
 		ExternalResourceDescription tokenModelResDesc = ExternalResourceFactory.createExternalResourceDescription(
-			TokenizerModelResourceImpl, "file:models/en-token.bin");
-
-		ExternalResourceDescription dictModelResDesc = ExternalResourceFactory.createExternalResourceDescription(
-			DictionaryResource, "file:abstractionSchema/test-abstraction-schema.json");
-			
+			TokenizerModelResourceImpl, "file:models/en-token.bin")
+					
 		// --------------------------------------------------------------------
 		// analysis engines
 		// --------------------------------------------------------------------
