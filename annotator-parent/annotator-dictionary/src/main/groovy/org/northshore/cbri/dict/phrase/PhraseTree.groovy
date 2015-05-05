@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package org.northshore.cbri.dict;
+package org.northshore.cbri.dict.phrase;
 
 import com.wcohen.ss.AbstractStringDistance
 

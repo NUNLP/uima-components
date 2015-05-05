@@ -1,4 +1,4 @@
-package org.northshore.cbri.dict
+package org.northshore.cbri.dict.phrase
 
 import org.apache.uima.resource.DataResource
 import org.apache.uima.resource.ResourceInitializationException;

@@ -19,11 +19,16 @@ import org.apache.uima.resource.ExternalResourceDescription
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-import org.northshore.cbri.dict.DictionaryModel.DictionaryEntry
-import org.northshore.cbri.dict.DictionaryModel.LookupMatch
+import org.northshore.cbri.dict.phrase.DictionaryModel.DictionaryEntry
+import org.northshore.cbri.dict.phrase.DictionaryModel.LookupMatch
+import org.northshore.cbri.dict.phrase.DictionaryModel;
+import org.northshore.cbri.dict.phrase.DictionaryModelFactory;
+import org.northshore.cbri.dict.phrase.DictionaryModelPool;
+import org.northshore.cbri.dict.phrase.DictionaryResource;
 import org.northshore.cbri.dsl.UIMAUtil
 import org.northshore.cbri.token.TokenAnnotator
 import org.northshore.cbri.type.DictMatch
+import org.northshore.cbri.dict.DictionaryAnnotator;
 
 import com.fasterxml.jackson.databind.ObjectMapper
 

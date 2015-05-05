@@ -1,4 +1,4 @@
-package org.northshore.cbri.dict
+package org.northshore.cbri.dict.phrase
 
 import static org.apache.uima.fit.util.CasUtil.getType
 import static org.apache.uima.fit.util.JCasUtil.select

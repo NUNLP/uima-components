@@ -1,4 +1,8 @@
-package org.northshore.cbri.dict
+package org.northshore.cbri.dict.phrase
+
+import org.northshore.cbri.dict.AbstractionSchema;
+import org.northshore.cbri.dict.ObjectValue;
+import org.northshore.cbri.dict.ObjectValueVariant;
 
 import opennlp.tools.tokenize.TokenizerME
 import opennlp.tools.util.Span

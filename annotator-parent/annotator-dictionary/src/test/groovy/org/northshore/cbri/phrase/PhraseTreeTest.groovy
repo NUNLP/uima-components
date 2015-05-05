@@ -1,8 +1,10 @@
-package org.northshore.cbri.dict;
+package org.northshore.cbri.phrase;
 
 import static org.junit.Assert.*
 
 import org.junit.Test
+import org.northshore.cbri.dict.phrase.PhraseTree;
+import org.northshore.cbri.dict.phrase.PhraseTreeElement;
 
 import com.wcohen.ss.AbstractStringDistance
 import com.wcohen.ss.JaroWinkler

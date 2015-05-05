@@ -14,9 +14,13 @@ import org.apache.uima.resource.ExternalResourceDescription
 import org.apache.uima.resource.ResourceInitializationException
 import org.apache.uima.resource.metadata.TypeSystemDescription
 import org.apache.uima.util.InvalidXMLException
+import org.northshore.cbri.dict.phrase.DictionaryModel;
+import org.northshore.cbri.dict.phrase.DictionaryModelFactory;
+import org.northshore.cbri.dict.phrase.DictionaryModelPool;
 import org.northshore.cbri.dsl.GroovyAnnotator
 import org.northshore.cbri.sent.SentenceDetector
 import org.northshore.cbri.token.TokenAnnotator
+import org.northshore.cbri.dict.DictionaryAnnotator;
 import org.xml.sax.SAXException
 
 import com.fasterxml.jackson.databind.ObjectMapper

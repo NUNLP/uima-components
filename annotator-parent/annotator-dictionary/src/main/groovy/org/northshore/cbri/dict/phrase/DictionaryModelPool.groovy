@@ -1,4 +1,4 @@
-package org.northshore.cbri.dict
+package org.northshore.cbri.dict.phrase
 
 class DictionaryModelPool {
 	private static Map<Integer, DictionaryModel> dicts;
