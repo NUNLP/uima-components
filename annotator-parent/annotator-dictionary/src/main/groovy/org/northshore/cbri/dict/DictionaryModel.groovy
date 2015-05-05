@@ -5,6 +5,7 @@ import groovy.util.logging.Log4j
 @Log4j
 public class DictionaryModel {
 	Boolean PARAM_CASE_INSENSITIVE;
+	Double  PARAM_DISTANCE_THRESSHOLD;
 	
 	static class DictionaryEntry {
 		String vocabulary

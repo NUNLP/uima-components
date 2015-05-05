@@ -109,9 +109,7 @@ public class PhraseTree
 	
 	public Collection<PhraseTreeElement> getApproximateMatches(String[] matchText, AbstractStringDistance dist, Double threshhold) {
 		Collection<PhraseTreeElement> matches = new ArrayList<>()
-		root.getApproximateMatches(matchText[0], dist, threshhold).each { PhraseTreeElement pte ->
-			matches << pte
-		}
+		matches << root.getApproximateMatches(matchText[0], dist, threshhold)
 		return matches
 	}
 }

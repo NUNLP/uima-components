@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 @Log4j
 class DictionaryModelTest {
 
-	static TEST_TEXT = "The patient has a diagnosis of glioblastoma, nos.  GBM does not have a good prognosis.  But I can't rule out meningioma."
+	static TEST_TEXT = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
 	
 	static ObjectMapper mapper;
 		
@@ -48,14 +48,13 @@ class DictionaryModelTest {
 	@Test
 	public void testDictModel() {		
 		String[] tokens = DictionaryModelFactory.tokenize(TEST_TEXT, tokenizer)
-		assert tokens.length == 26
+		assert tokens.length == 24
 		
 		DictionaryEntry entry = this.model.get(['glioblastoma'] as String[])
 		assert entry != null
 		
 		Collection<LookupMatch> matches = this.model.findMatches(tokens)
 		assert matches.size() == 2
-//		matches.each { println "Match: ${new JsonBuilder(it).toString()}" }
 	}
 
 }
