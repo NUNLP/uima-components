@@ -104,7 +104,7 @@ class ConceptMapperTest {
 				'ResultingAnnotationName', 'org.apache.uima.conceptMapper.DictTerm',
 				'AttributeList', ['canonical', 'AttributeType', 'AttributeValue', 'SemClass'] as String[],
 				'FeatureList', ['DictCanon', 'AttributeType', 'AttributeValue', 'SemClass'] as String[],
-				'SearchStrategy', 'ContiguousMatch',
+				'SearchStrategy', 'SkipAnyMatch',
 				'OrderIndependentLookup', true,
 				'PrintDictionary', true,
 				'FindAllMatches', false,
@@ -147,6 +147,13 @@ class ConceptMapperTest {
 		assert terms.size() == 1
 
 		jcas.reset()
+		jcas.setDocumentText('situ papillary cell foo carcinoma bar squamous in.')
+		pipeline.process(jcas)
+		terms = UIMAUtil.select(type:DictTerm)
+		terms.each { println "DictTerm: ${it.coveredText}: [${it.attributeType}, ${it.attributeValue}]" }
+		assert terms.size() == 1
+
+		jcas.reset()
 		jcas.setDocumentText('The patient has carcinoma in situ, of the papillary squamous cell type.')
 		pipeline.process(jcas)
 		terms = UIMAUtil.select(type:DictTerm)
@@ -158,6 +165,6 @@ class ConceptMapperTest {
 		pipeline.process(jcas)
 		terms = UIMAUtil.select(type:DictTerm)
 		terms.each { println "DictTerm: ${it.coveredText}: [${it.attributeType}, ${it.attributeValue}]" }
-		assert terms.size() == 5
+		assert terms.size() == 1
 	}
 }
