@@ -18,13 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 
 @Log4j
 class DictionaryModelTest {
-
-	static TEST_TEXT = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
 	
 	static ObjectMapper mapper;
-		
-	TokenizerME tokenizer;
-	DictionaryModel model;
 
 	@BeforeClass
 	public static void setupClass() {
@@ -34,27 +29,48 @@ class DictionaryModelTest {
 
 	@Before
 	public void setUp() throws Exception {
+	}
+	
+	@Test
+	public void testDictModel() {
+		String text = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
+		
 		File dictFile = new File(this.class.getResource('/abstractionSchema/test-abstraction-schema.json').file)
 		AbstractionSchema schema = mapper.readValue(dictFile, AbstractionSchema.class);
 		assert schema != null
 		
-		this.tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
+		TokenizerME tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
 		assert tokenizer != null
 		
-		this.model = DictionaryModelFactory.make(schema, tokenizer)
+		DictionaryModel model = DictionaryModelFactory.make(schema, tokenizer, false)
 		assert model != null
+		
+		String[] tokens = DictionaryModelFactory.tokenize(text, tokenizer)
+		assert tokens.length == 24
+		
+		Collection<LookupMatch> matches = model.findMatches(tokens)
+		assert matches.size() == 2
 	}
 	
 	@Test
-	public void testDictModel() {		
-		String[] tokens = DictionaryModelFactory.tokenize(TEST_TEXT, tokenizer)
+	public void testCaseInsensitiveDictModel() {
+		String text = "The patient has a diagnosis of Glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meninGioma."
+		
+		File dictFile = new File(this.class.getResource('/abstractionSchema/test-abstraction-schema.json').file)
+		AbstractionSchema schema = mapper.readValue(dictFile, AbstractionSchema.class);
+		assert schema != null
+		
+		TokenizerME tokenizer = new TokenizerME(new TokenizerModel(new File(this.class.getResource('/models/en-token.bin').file)))
+		assert tokenizer != null
+		
+		DictionaryModel model = DictionaryModelFactory.make(schema, tokenizer, true)
+		assert model != null
+		
+		String[] tokens = DictionaryModelFactory.tokenize(text, tokenizer)
 		assert tokens.length == 24
 		
-		DictionaryEntry entry = this.model.get(['glioblastoma'] as String[])
-		assert entry != null
-		
-		Collection<LookupMatch> matches = this.model.findMatches(tokens)
-		assert matches.size() == 2
+		Collection<LookupMatch> matches = model.findMatches(tokens)
+		assert matches.size() == 3
 	}
 
 }

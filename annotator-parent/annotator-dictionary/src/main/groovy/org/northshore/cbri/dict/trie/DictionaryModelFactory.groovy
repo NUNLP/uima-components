@@ -14,8 +14,8 @@ class DictionaryModelFactory {
 	 * @param tokenizer
 	 * @return
 	 */
-	static public DictionaryModel make(AbstractionSchema schema, TokenizerME tokenizer) {
-		DictionaryModel model = new DictionaryModel()
+	static public DictionaryModel make(AbstractionSchema schema, TokenizerME tokenizer, Boolean caseInsensitive) {
+		DictionaryModel model = new DictionaryModel(caseInsensitive)
 		DictionaryModel.DictionaryEntry entry;		
 		schema.object_values.each { ObjectValue objVal ->
 			entry = new DictionaryModel.DictionaryEntry()

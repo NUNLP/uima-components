@@ -7,6 +7,7 @@ import org.ahocorasick.trie.Trie
 
 @Log4j
 public class DictionaryModel {
+
 	static class DictionaryEntry {
 		String vocabulary
 		String code
@@ -21,8 +22,14 @@ public class DictionaryModel {
 		DictionaryEntry entry;
 	}
 
-	Trie trie = new Trie()
-	Map<String[], DictionaryEntry> entries = new HashMap<>()
+	Trie trie;
+	Map<String[], DictionaryEntry> entries;
+	
+	public DictionaryModel(Boolean caseInsensitive) {
+		if (caseInsensitive) { trie = new Trie().caseInsensitive(); }
+		else { trie = new Trie() }
+		entries = new HashMap<>()
+	}
 	
 	public DictionaryEntry get(String[] tokens) {
 		return this.entries.get(join(tokens))
