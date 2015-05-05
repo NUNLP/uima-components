@@ -46,6 +46,10 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 	@ConfigurationParameter(name='dictionaryId', mandatory=false)
 	private Integer dictionaryId
 
+	public static final String PARAM_CONTAINER_CLASS = 'containerClassName'
+	@ConfigurationParameter(name='containerClassName', mandatory=true, defaultValue='org.apache.ctakes.typesystem.type.textspan.Sentence')
+	private String containerClassName
+
 	@Override
 	public void initialize(UimaContext aContext) throws ResourceInitializationException {
 		super.initialize(aContext)
@@ -59,10 +63,12 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 			logger.warn "No dictionary available with id: ${dictionaryId}"
 			return;
 		}
-
+		
 		UIMAUtil.jcas = jcas
-		select(type:Sentence).each { Sentence sent ->
-			Collection<Annotation> anns = select(type:BaseToken, filter:coveredBy(sent))
+		
+		Class<Annotation> ContainerClass = Class.forName(containerClassName)
+		select(type:ContainerClass).each { container ->
+			Collection<Annotation> anns = select(type:BaseToken, filter:coveredBy(container))
 			Collection<String> tokens = new ArrayList<>()
 			anns.each { Annotation ann ->
 				tokens << ann.coveredText
@@ -77,7 +83,7 @@ public class DictionaryAnnotator extends JCasAnnotator_ImplBase {
 				canonical:m.entry.canonical,
 				code:m.entry.code,
 				vocabulary:m.entry.vocabulary,
-				container:sent,
+				container:container,
 				matchedTokens:matched
 				)
 			}
