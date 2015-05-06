@@ -10,7 +10,7 @@ class DictionaryModelPool {
 	}
 
 	public synchronized static void put(Integer id, DictionaryModel dict) {
-		dicts[1] = dict
+		dicts[id] = dict
 	}
 
 	public synchronized static DictionaryModel get(Integer id) {
