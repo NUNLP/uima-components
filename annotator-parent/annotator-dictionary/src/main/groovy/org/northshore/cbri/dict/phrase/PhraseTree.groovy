@@ -106,10 +106,4 @@ public class PhraseTree
 		
         return endMatchPosition;
     }
-	
-	public Collection<PhraseTreeElement> getApproximateMatches(String[] matchText, AbstractStringDistance dist, Double threshhold) {
-		Collection<PhraseTreeElement> matches = new ArrayList<>()
-		matches << root.getApproximateMatches(matchText[0], dist, threshhold)
-		return matches
-	}
 }

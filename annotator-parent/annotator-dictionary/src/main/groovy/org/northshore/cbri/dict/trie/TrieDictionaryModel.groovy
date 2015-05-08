@@ -1,5 +1,7 @@
 package org.northshore.cbri.dict.trie;
 
+import java.util.Collection;
+
 import groovy.util.logging.Log4j
 
 import org.ahocorasick.trie.Emit
@@ -49,6 +51,13 @@ public class TrieDictionaryModel implements DictionaryModel {
 				entry:this.get(join(it.keyword)))
 		}
 		
+		return matches;
+	}
+	
+	@Override
+	public Collection<LookupMatch> findMatches(String[] tokens, Double tolerance) {
+		Collection<LookupMatch> matches = new ArrayList<>()
+				
 		return matches;
 	}
 

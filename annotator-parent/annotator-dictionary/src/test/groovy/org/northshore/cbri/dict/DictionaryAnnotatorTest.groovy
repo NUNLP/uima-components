@@ -174,6 +174,5 @@ class DictionaryAnnotatorTest {
 		matches = UIMAUtil.select(type:DictMatch)
 		matches.each { DictMatch m -> println "Match found: ${m.matchedTokens}" }
 		assert matches.size() == 3
-
 	}
 }

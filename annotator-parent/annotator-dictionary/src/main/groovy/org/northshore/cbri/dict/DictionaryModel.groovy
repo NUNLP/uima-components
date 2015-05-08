@@ -9,4 +9,6 @@ public interface DictionaryModel {
 	public void add (final DictionaryEntry entry);
 	
 	public Collection<LookupMatch> findMatches (final String[] tokens);
+	
+	public Collection<LookupMatch> findMatches (final String[] tokens, Double tolerance);
 }

@@ -6,6 +6,11 @@ import org.northshore.cbri.dict.DictionaryEntry
 import org.northshore.cbri.dict.DictionaryModel
 import org.northshore.cbri.dict.LookupMatch
 
+import com.wcohen.ss.JaroWinkler
+import com.wcohen.ss.SoftTFIDF
+import com.wcohen.ss.api.Tokenizer
+import com.wcohen.ss.tokens.SimpleTokenizer
+
 @Log4j
 public class PhraseDictionaryModel implements DictionaryModel {
 		
@@ -53,6 +58,17 @@ public class PhraseDictionaryModel implements DictionaryModel {
 		
 		return matches;
 	}
+	
+	@Override
+	public Collection<LookupMatch> findMatches(String[] tokens, Double tolerance) {
+		Collection<LookupMatch> matches = new ArrayList<>()
+		
+		Tokenizer tokenizer = new SimpleTokenizer(false,true);
+		SoftTFIDF distance = new SoftTFIDF(tokenizer, new JaroWinkler(), tolerance);
+		
+		return matches;
+	}
+
 
 	private String[] transformArray(String[] tokens) {
 		tokens.eachWithIndex { tok, i ->
@@ -75,5 +91,4 @@ public class PhraseDictionaryModel implements DictionaryModel {
 		}
 		return joiner.toString()
 	}
-
 }
