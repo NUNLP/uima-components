@@ -8,6 +8,7 @@ import opennlp.tools.tokenize.TokenizerModel
 import org.apache.log4j.BasicConfigurator
 import org.junit.Before
 import org.junit.BeforeClass
+import org.junit.Ignore
 import org.junit.Test
 import org.northshore.cbri.dict.AbstractionSchema
 import org.northshore.cbri.dict.DictionaryModelFactory
@@ -30,6 +31,7 @@ class DictionaryModelTest {
 	public void setUp() throws Exception {
 	}
 	
+	@Ignore
 	@Test
 	public void testDictModel() {
 		String text = "The patient has a diagnosis of glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meningioma."
@@ -52,6 +54,7 @@ class DictionaryModelTest {
 		assert matches.size() == 2
 	}
 	
+	@Ignore
 	@Test
 	public void testCaseInsensitiveDictModel() {
 		String text = "The patient has a diagnosis of Glioblastoma.  GBM does not have a good prognosis.  But I can't rule out meninGioma."

@@ -2,6 +2,7 @@ package org.northshore.cbri.dict;
 
 import static org.junit.Assert.*
 
+import org.junit.Ignore
 import org.junit.Test
 
 import com.wcohen.ss.JaroWinklerTFIDF

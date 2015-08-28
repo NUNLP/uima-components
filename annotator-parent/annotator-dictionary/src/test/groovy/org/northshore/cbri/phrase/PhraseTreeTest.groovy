@@ -2,9 +2,10 @@ package org.northshore.cbri.phrase;
 
 import static org.junit.Assert.*
 
+import org.junit.Ignore
 import org.junit.Test
-import org.northshore.cbri.dict.phrase.PhraseTree;
-import org.northshore.cbri.dict.phrase.PhraseTreeElement;
+import org.northshore.cbri.dict.phrase.PhraseTree
+import org.northshore.cbri.dict.phrase.PhraseTreeElement
 
 import com.wcohen.ss.AbstractStringDistance
 import com.wcohen.ss.JaroWinkler
@@ -14,6 +15,7 @@ import com.wcohen.ss.tokens.SimpleTokenizer
 
 class PhraseTreeTest {
 
+	@Ignore
 	@Test
 	public void testApproximateMatches() {
 		PhraseTree phrases = new PhraseTree()

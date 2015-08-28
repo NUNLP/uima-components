@@ -1,36 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="src/main/java">
+		<attributes>
+			<attribute name="FROM_GRADLE_MODEL" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src/main/groovy">
+		<attributes>
+			<attribute name="FROM_GRADLE_MODEL" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src/test/groovy">
+		<attributes>
+			<attribute name="FROM_GRADLE_MODEL" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src/test/resources">
+		<attributes>
+			<attribute name="FROM_GRADLE_MODEL" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
+	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
+	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
-	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="src" path="src/main/groovy"/>
-	<classpathentry kind="src" path="src/test/groovy"/>
-	<classpathentry kind="src" path="src/test/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
-	<classpathentry kind="src" path="/annotator-groovy-dsl" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.4.3/8722c4f1d3657f989d3d24e8373f8cbbb6f44d92/groovy-all-2.4.3-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.4.3/472f5124c90a551d7ac7ffa39a4a3ba36ac4586a/groovy-all-2.4.3.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-core/2.6.0/76a53793e18bb632fef87d21838e78fa8fbaeee0/uimaj-core-2.6.0-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-core/2.6.0/15b291e0f072154a3c9a14e4f9de5a95e7e7869f/uimaj-core-2.6.0.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-document-annotation/2.6.0/31dd83b9654cb3ee03a82076765f54da68166c87/uimaj-document-annotation-2.6.0-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-document-annotation/2.6.0/350da1290f2852ffa693dff517aa59ec4de1e09e/uimaj-document-annotation-2.6.0.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimafit-core/2.1.0/db536c29c9842e3f791f3cd781aa7759b1940031/uimafit-core-2.1.0-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimafit-core/2.1.0/942c772485c087dfe094678a85fe5d610f7fc8ac/uimafit-core-2.1.0.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.opennlp/opennlp-tools/1.5.3/cb4360825c39c44da764a693b2ce21719072ef09/opennlp-tools-1.5.3-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.opennlp/opennlp-tools/1.5.3/826d34168b0e4870c9f599ed7f2b8fee4194ba3b/opennlp-tools-1.5.3.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.opennlp/opennlp-uima/1.5.3/d1d0f855836087a63826f8b32e9b7647cd9d8a63/opennlp-uima-1.5.3-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.opennlp/opennlp-uima/1.5.3/3a55d8023d1de340193899250b1fd872f751051c/opennlp-uima-1.5.3.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.opennlp/opennlp-maxent/3.0.3/599de6471c979ed2d754b18a06ce6f529827216a/opennlp-maxent-3.0.3-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.opennlp/opennlp-maxent/3.0.3/55e39e6b46e71f35229cdd6950e72d8cce3b5fd4/opennlp-maxent-3.0.3.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/677abe279b68c5e7490d6d50c6951376238d7d3e/log4j-1.2.17-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/5af35056b4d257e4b64b9e8069c0746e8b08629f/log4j-1.2.17.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-tools/2.6.0/579de60d15adb7862bffff1fa605aa67f129fee6/uimaj-tools-2.6.0-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-tools/2.6.0/2335ea436d3240e55f066a284c4ded6f67aebeb6/uimaj-tools-2.6.0.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/commons-lang/commons-lang/2.6/67313d715fbf0ea4fd0bdb69217fb77f807a8ce5/commons-lang-2.6-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/commons-lang/commons-lang/2.6/ce1edb914c94ebc388f086c6827e8bdeec71ac2/commons-lang-2.6.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.2/8d6b98f21262995489a8418fff8da992d7e25c1e/commons-io-2.2-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.2/83b5b8a7ba1c08f9e8c8ff2373724e33d3c1e22a/commons-io-2.2.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging-api/1.1/7d4cf5231d46c8524f9b9ed75bb2d1c69ab93322/commons-logging-api-1.1.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/3.1.2.RELEASE/87d5a67dcd08abd35c8a31e639f85929ad8fc722/spring-core-3.1.2.RELEASE-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/3.1.2.RELEASE/dd4295f0567deb2cc629dd647d2f055268c2fd3e/spring-core-3.1.2.RELEASE.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/3.1.2.RELEASE/f50389498695dc35fb9bf7134d4756a61d036eb7/spring-context-3.1.2.RELEASE-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/3.1.2.RELEASE/6787712741427c1014aaca503d24e3b3f05f396/spring-context-3.1.2.RELEASE.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-beans/3.1.2.RELEASE/35256eadac413df0d1e503182a0f18da39d6d026/spring-beans-3.1.2.RELEASE-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-beans/3.1.2.RELEASE/38ff7985f572a87d72023eedce3d720ce1ba4083/spring-beans-3.1.2.RELEASE.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/net.sf.jwordnet/jwnl/1.3.3/66183d789bb167f881b1677ce32147ed383e3458/jwnl-1.3.3-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/net.sf.jwordnet/jwnl/1.3.3/7108e5b6a8875fe0488d942238575407c7ab8649/jwnl-1.3.3.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/1dc37250fbc78e23a65a67fbbaf71d2e9cbc3c0b/hamcrest-core-1.3-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-cpe/2.6.0/966298a440467b4894ea874eadf29ae51cd8168f/uimaj-cpe-2.6.0-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-cpe/2.6.0/5ac43f566a2de67650d830c7c3582e86dfda9ba2/uimaj-cpe-2.6.0.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-asm/3.1.2.RELEASE/9a4962ca96a6a090ee6864bcf8db8bf7880e1302/spring-asm-3.1.2.RELEASE-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-asm/3.1.2.RELEASE/d45753d8048317099395ce7f2bbcdb1776a2e26c/spring-asm-3.1.2.RELEASE.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.1/f3f156cbff0e0fb0d64bfce31a352cce4a33bc19/commons-logging-1.1.1-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.1/5043bfebc3db072ed80fbd362e7caf00e885d8ae/commons-logging-1.1.1.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-aop/3.1.2.RELEASE/ebdc69d0cc4de7fbce0c0e9197c9a9f210196556/spring-aop-3.1.2.RELEASE-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-aop/3.1.2.RELEASE/a68c5ee96d735ac68c00e226e768ef70ae1d5c57/spring-aop-3.1.2.RELEASE.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/3.1.2.RELEASE/e66dba8f9c95213d2aec09c92f7595b3341f631d/spring-expression-3.1.2.RELEASE-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/3.1.2.RELEASE/c6d4aca58f993bda3cce2bc0536bd168cc9d7ed5/spring-expression-3.1.2.RELEASE.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-adapter-vinci/2.6.0/b9f082b234e49c62cec593119c7fbc8d0d444de3/uimaj-adapter-vinci-2.6.0-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/uimaj-adapter-vinci/2.6.0/12014d7cb6e654950a42e06da34831bb7f0f3799/uimaj-adapter-vinci-2.6.0.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/jVinci/2.6.0/998b4358cc8b86489a0ed274b7e5a7e55efaf06/jVinci-2.6.0-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/org.apache.uima/jVinci/2.6.0/994e5df5ced220df936e3885efebaf3c50ab22ad/jVinci-2.6.0.jar" exported="true"/>
-	<classpathentry sourcepath="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/4a4b6d692e17846a9f3da036438a7ac491d3c814/aopalliance-1.0-sources.jar" kind="lib" path="C:/Users/thompsow/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/235ba8b489512805ac13a8f9ea77a1ca5ebe3e8/aopalliance-1.0.jar" exported="true"/>
 </classpath>

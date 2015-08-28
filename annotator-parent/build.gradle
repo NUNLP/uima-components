@@ -5,6 +5,7 @@ allprojects {
 
     version = '1.0'
     group = 'org.northshore.cbri'
+	sourceCompatibility = '1.7'
 
     jar { manifest.attributes provider: 'NorthShore University HealthSystem' }
 
@@ -35,7 +36,7 @@ allprojects {
 }
 
 project(':') {
-    task wrapper(type: Wrapper) { gradleVersion = '2.0' }
+    task wrapper(type: Wrapper) { gradleVersion = '2.5' }
 
     dependencies {
         compile project(':type-system')
