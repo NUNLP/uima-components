@@ -5,3 +5,16 @@
 /.gradle
 
 /.settings
+/annotator-brat/
+/annotator-chunk/
+/annotator-conceptmapper/
+/annotator-dictionary/
+/annotator-groovy-dsl/
+/annotator-lex-normalize/
+/annotator-negation/
+/annotator-pos/
+/annotator-segment/
+/annotator-sentence/
+/annotator-time/
+/annotator-token/
+/type-system/
